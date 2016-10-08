@@ -1,0 +1,30 @@
+domain:
+  product:
+    enabled: true
+---
+
+spring:
+  profiles: env1
+domain:
+  employee:
+    enabled: false
+  product:
+    enabled: false
+---
+
+spring:
+  profiles: env2
+domain:
+  employee:
+    enabled: true
+  product:
+    enabled: false
+---
+
+spring:
+  profiles: default
+domain:
+  product:
+    enabled: true
+  recommendation:
+    enabled: true
