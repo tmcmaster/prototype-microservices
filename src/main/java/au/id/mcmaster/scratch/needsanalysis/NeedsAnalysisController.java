@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 import au.id.mcmaster.scratch.common.GenericController;
 import au.id.mcmaster.scratch.needsanalysis.domain.NeedsAnalysis;
 
-@RestController @RequestMapping("/needsAnalysis")
+@RestController @RequestMapping("/needsanalysis")
 @ConditionalOnExpression("${domain.needsanalysis.enabled:false}")
 public class NeedsAnalysisController extends GenericController<NeedsAnalysis, NeedsAnalysisRepository, NeedsAnalysisFactory> {}

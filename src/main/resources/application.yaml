@@ -1,7 +1,19 @@
 server:
   port: 8090
+gateway:
+  uri: http://localhost:8000
 domain:
   product:
+    mapping: "/product"
+    enabled: true
+  producthistory:
+    mapping: "/producthistory"
+    enabled: true
+  recommendation:
+    mapping: "/recommendation"
+    enabled: true
+  needsanalysis:
+    mapping: "/needsanalysis"
     enabled: true
 ---
 

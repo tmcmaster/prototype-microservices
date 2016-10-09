@@ -2,18 +2,20 @@ package au.id.mcmaster.scratch.recommendation;
 
 import java.util.List;
 
-public class Recommendation
+import au.id.mcmaster.scratch.needsanalysis.NeedsAnalysisRef;
+
+public class Recommendation extends RecommendationRef
 {
-    private String id;
+    private NeedsAnalysisRef needsAnalysisRef;
     private List<ProductSummary> productSummary;
 
-    public String getId()
+    public NeedsAnalysisRef getNeedsAnalysisRef()
     {
-        return id;
+        return needsAnalysisRef;
     }
-    public void setId(String id)
+    public void setNeedsAnalysisRef(NeedsAnalysisRef needsAnalysisRef)
     {
-        this.id = id;
+        this.needsAnalysisRef = needsAnalysisRef;
     }
     public List<ProductSummary> getProductSummary()
     {

@@ -4,12 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 public abstract class GenericController<T, R extends MongoRepository<T, String>, F extends DomainObjectFactory<T>>
 {
@@ -26,11 +28,25 @@ public abstract class GenericController<T, R extends MongoRepository<T, String>,
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<T> list()
+    public Page<T> list()
     {
-        return repository.findAll();
+        Pageable pageable = new PageRequest(0, 10);
+        return repository.findAll(pageable);
     }
 
+//    @RequestMapping(method = RequestMethod.GET)
+//    public Results<T> list()
+//    {
+//        Pageable pageable = new PageRequest(0, 10);
+//        return Results.create(repository.findAll(pageable));
+//    }
+
+//    @RequestMapping(method = RequestMethod.GET)
+//    public List<T> list()
+//    {
+//        return repository.findAll();
+//    }
+    
     @RequestMapping(method = RequestMethod.GET, value = "/{objectId}")
     public T get(@PathVariable String objectId)
     {

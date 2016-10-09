@@ -1,7 +1,5 @@
 package au.id.mcmaster.scratch.needsanalysis.domain;
 
-import java.util.List;
-
 public class NeedsAnalysis
 {
     private String id;

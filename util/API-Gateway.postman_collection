@@ -8,6 +8,108 @@
 	},
 	"item": [
 		{
+			"name": "NeedsAnalysis",
+			"description": "",
+			"item": [
+				{
+					"name": "NeedsAnalysis - Example",
+					"request": {
+						"url": "http://{{api-gateway}}/needsanalysis/example",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "NeedsAnalysis - List",
+					"request": {
+						"url": "http://{{api-gateway}}/needsanalysis",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "NeedsAnalysis - Get",
+					"request": {
+						"url": "http://{{api-gateway}}/needsanalysis/57fa2bd48149b330f4e59733",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "NeedsAnalysis - Create",
+					"request": {
+						"url": "http://{{api-gateway}}/needsanalysis",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": null\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "NeedsAnalysis - Delete",
+					"request": {
+						"url": "http://{{api-gateway}}/needsanalysis/57fa2be48149b330f4e59734",
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "NeedsAnalysis - Search",
+					"request": {
+						"url": "http://{{api-gateway}}/needsanalysis",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"57fa2bd48149b330f4e59733\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Product",
 			"description": "",
 			"item": [
@@ -89,6 +191,108 @@
 				},
 				{
 					"name": "Product - Search",
+					"request": {
+						"url": "http://localhost:8000/product",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Product Two\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ProductHistory",
+			"description": "",
+			"item": [
+				{
+					"name": "ProductHistory - Example",
+					"request": {
+						"url": "http://{{api-gateway}}/producthistory/example",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "ProductHistory - List",
+					"request": {
+						"url": "http://{{api-gateway}}/product",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "ProductHistory - Get",
+					"request": {
+						"url": "http://{{api-gateway}}/product/57f837b08149b3d4e8124d7c",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "ProductHistory - Create",
+					"request": {
+						"url": "http://{{api-gateway}}/product",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"New Product\",\n  \"description\": \"A new Test product.\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "ProductHistory - Delete",
+					"request": {
+						"url": "http://{{api-gateway}}/product/57f9a5d68149b3108860889e",
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "ProductHistory - Search",
 					"request": {
 						"url": "http://localhost:8000/product",
 						"method": "POST",
