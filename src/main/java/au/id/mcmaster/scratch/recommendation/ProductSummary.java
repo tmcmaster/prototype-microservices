@@ -5,6 +5,17 @@ public class ProductSummary
     private String productId;
     private String productTitle;
     
+    public ProductSummary()
+    {
+    	
+    }
+    
+    public ProductSummary(String id, String title)
+    {
+        this.productId = id;
+        this.productTitle = title;
+    }
+    
     public String getProductId()
     {
         return productId;

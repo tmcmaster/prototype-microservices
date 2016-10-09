@@ -1,0 +1,215 @@
+{
+	"variables": [],
+	"info": {
+		"name": "API Gateway",
+		"_postman_id": "b119d13d-50a9-7ce4-f0d9-de061dae798f",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Product",
+			"description": "",
+			"item": [
+				{
+					"name": "Product - Example",
+					"request": {
+						"url": "http://{{api-gateway}}/product/example",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Product - List",
+					"request": {
+						"url": "http://{{api-gateway}}/product",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Product - Get",
+					"request": {
+						"url": "http://{{api-gateway}}/product/57f837b08149b3d4e8124d7c",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Product - Create",
+					"request": {
+						"url": "http://{{api-gateway}}/product",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"New Product\",\n  \"description\": \"A new Test product.\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Product - Delete",
+					"request": {
+						"url": "http://{{api-gateway}}/product/57f9a5d68149b3108860889e",
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Product - Search",
+					"request": {
+						"url": "http://localhost:8000/product",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Product Two\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Recommendation",
+			"description": "",
+			"item": [
+				{
+					"name": "Recommendation - Example",
+					"request": {
+						"url": "http://{{api-gateway}}/recommendation/example",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Recommendation - List",
+					"request": {
+						"url": "http://{{api-gateway}}/recommendation",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Recommendation - Get",
+					"request": {
+						"url": "http://{{api-gateway}}/recommendation/57f8602b8149b3ddc6b25702",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Recommendation - Create",
+					"request": {
+						"url": "http://{{api-gateway}}/recommendation",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": null,\n  \"productSummary\": [\n    {\n      \"productId\": \"1\",\n      \"productTitle\": \"Product One\"\n    },\n    {\n      \"productId\": \"2\",\n      \"productTitle\": \"Product Two\"\n    }\n  ]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Recommendation - Delete",
+					"request": {
+						"url": "http://{{api-gateway}}/recommendation/57f99e708149b30e3ed08f18",
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Recommendation - Search",
+					"request": {
+						"url": "http://{{api-gateway}}/recommendation",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"57f8602b8149b3ddc6b25702\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
