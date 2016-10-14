@@ -1,9 +1,11 @@
-package au.id.mcmaster.scratch.product;
+package au.id.mcmaster.scratch.product.domain;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import au.id.mcmaster.scratch.common.DomainRef;
+
 @XmlRootElement
-public class Product extends ProductRef
+public class Product extends DomainRef
 {
     private String description;
     

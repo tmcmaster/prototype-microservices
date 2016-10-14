@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import au.id.mcmaster.scratch.common.DomainObjectFactory;
 import au.id.mcmaster.scratch.needsanalysis.NeedsAnalysisFactory;
-import au.id.mcmaster.scratch.product.ProductRef;
+import au.id.mcmaster.scratch.product.domain.ProductRef;
 
 @Component
 public class ProductHistoryFactory extends DomainObjectFactory<ProductHistory>

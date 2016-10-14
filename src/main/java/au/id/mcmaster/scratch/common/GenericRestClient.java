@@ -12,7 +12,7 @@ import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 
-import au.id.mcmaster.scratch.product.Product;
+import au.id.mcmaster.scratch.product.domain.Product;
 
 public abstract class GenericRestClient<T extends Object>
 {

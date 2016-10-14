@@ -4,11 +4,12 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import au.id.mcmaster.scratch.common.DomainRef;
 import au.id.mcmaster.scratch.needsanalysis.domain.NeedsAnalysis;
-import au.id.mcmaster.scratch.product.ProductRef;
+import au.id.mcmaster.scratch.product.domain.ProductRef;
 
 @XmlRootElement
-public class ProductHistory extends ProductHistoryRef
+public class ProductHistory extends DomainRef
 {
     private NeedsAnalysis needsAnalysis;
     private List<ProductRef> productList;

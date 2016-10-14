@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import au.id.mcmaster.scratch.needsanalysis.NeedsAnalysisClient;
-import au.id.mcmaster.scratch.needsanalysis.NeedsAnalysisRef;
 import au.id.mcmaster.scratch.needsanalysis.domain.NeedsAnalysis;
-import au.id.mcmaster.scratch.product.ProductRef;
+import au.id.mcmaster.scratch.needsanalysis.domain.NeedsAnalysisRef;
+import au.id.mcmaster.scratch.product.domain.ProductRef;
 
 @Service
 public class RecommendationService
@@ -26,7 +26,6 @@ public class RecommendationService
     
     private List<ProductRef> doSomeMagic(NeedsAnalysis needsAnalysis)
     {
-        List<ProductRef> productReferenceList = new ArrayList<ProductRef>();
         List<ProductRef> fromHistory = getProductListFromHistory(needsAnalysis);
         List<ProductRef> currentlyRelavent = filterToCurrenlyRelavent(fromHistory);
         return currentlyRelavent;
@@ -41,7 +40,9 @@ public class RecommendationService
 
     private List<ProductRef> filterToCurrenlyRelavent(List<ProductRef> fromHistory)
     {
+        List<ProductRef> relaventProducts = new ArrayList<ProductRef>();
         
-        return null;
+
+        return relaventProducts;
     }    
 }

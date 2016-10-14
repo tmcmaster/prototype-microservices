@@ -15,6 +15,9 @@ domain:
   needsanalysis:
     mapping: "/needsanalysis"
     enabled: true
+  lead:
+    mapping: "/lead"
+    enabled: true
 ---
 
 spring:
@@ -41,4 +44,7 @@ domain:
   product:
     enabled: true
   recommendation:
+    enabled: true
+  lead:
+    mapping: "/lead"
     enabled: true

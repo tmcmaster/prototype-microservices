@@ -1,4 +1,4 @@
-package au.id.mcmaster.scratch.needsanalysis;
+package au.id.mcmaster.scratch.needsanalysis.domain;
 
 public class NeedsAnalysisRef
 {

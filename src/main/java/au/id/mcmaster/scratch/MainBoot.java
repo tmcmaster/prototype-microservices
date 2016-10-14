@@ -37,4 +37,33 @@ public class MainBoot
  * Start Mongo CLI
  * docker exec -it 255d3236a576 mongo
  * 
+ * http://localhost:8080/v2/api-docs
+ * http://localhost:8080/env
+ * http://localhost:8080/swagger-ui.html
+ * 
+ * Elastic Search
+ * http://localhost:9200/
+ * 
+ * Kibana
+ * http://localhost:5601/
+ * 
+ * input {
+ *   udp {
+ *     type => json
+ *     port => 5000
+ *     codec => json
+ *   }
+ * }
+ * 
+ * output {
+ * elasticsearch {
+ *   hosts => ["localhost"]
+ *   sniffing => true
+ *   manage_template => false
+ *   index => "logstash"
+ *   document_type => "log"
+ * }
+}
+ * 
+ * 
  */

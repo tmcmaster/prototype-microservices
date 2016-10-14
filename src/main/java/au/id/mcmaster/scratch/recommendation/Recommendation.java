@@ -2,9 +2,10 @@ package au.id.mcmaster.scratch.recommendation;
 
 import java.util.List;
 
-import au.id.mcmaster.scratch.needsanalysis.NeedsAnalysisRef;
+import au.id.mcmaster.scratch.common.DomainRef;
+import au.id.mcmaster.scratch.needsanalysis.domain.NeedsAnalysisRef;
 
-public class Recommendation extends RecommendationRef
+public class Recommendation extends DomainRef
 {
     private NeedsAnalysisRef needsAnalysisRef;
     private List<ProductSummary> productSummary;

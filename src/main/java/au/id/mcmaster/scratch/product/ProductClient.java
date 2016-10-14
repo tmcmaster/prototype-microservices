@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import au.id.mcmaster.scratch.common.GenericRestClient;
+import au.id.mcmaster.scratch.product.domain.Product;
 
 @Component
 public class ProductClient extends GenericRestClient<Product>

@@ -8,5 +8,6 @@ import au.id.mcmaster.scratch.common.GenericController;
 
 @RestController @RequestMapping("/producthistory")
 @ConditionalOnExpression("${domain.producthistory.enabled:false}")
-public class ProductHistoryController extends GenericController<ProductHistory, ProductHistoryRepository, ProductHistoryFactory> {
+public class ProductHistoryController extends GenericController<ProductHistory, ProductHistoryRepository, ProductHistoryFactory>
+{
 }

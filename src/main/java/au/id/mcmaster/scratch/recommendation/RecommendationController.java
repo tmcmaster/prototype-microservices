@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import au.id.mcmaster.scratch.common.DomainRef;
 import au.id.mcmaster.scratch.common.GenericController;
-import au.id.mcmaster.scratch.needsanalysis.NeedsAnalysisRef;
-import au.id.mcmaster.scratch.product.ProductRef;
+import au.id.mcmaster.scratch.needsanalysis.domain.NeedsAnalysisRef;
+import au.id.mcmaster.scratch.product.domain.ProductRef;
 
 @RestController @RequestMapping("/recommendation")
 @ConditionalOnExpression("${domain.recommendation.enabled:false}")
@@ -20,13 +21,12 @@ public class RecommendationController extends GenericController<Recommendation, 
     private RecommendationService recommendationService;
     
     @RequestMapping(method = RequestMethod.POST, value="generate")
-    public RecommendationRef generate(NeedsAnalysisRef needsAnalysisRef)
+    public DomainRef generate(NeedsAnalysisRef needsAnalysisRef)
     {
         Recommendation recommendation = new Recommendation();
         recommendation.setNeedsAnalysisRef(needsAnalysisRef);
         List<ProductRef> recommendedProducts = recommendationService.getRecommendedProducts(needsAnalysisRef);
-        recommendation = create(recommendation);
-        RecommendationRef recommendationRef = new RecommendationRef();
+        DomainRef recommendationRef = create(recommendation);
         recommendationRef.setId(recommendation.getId());
         return recommendationRef;
     }

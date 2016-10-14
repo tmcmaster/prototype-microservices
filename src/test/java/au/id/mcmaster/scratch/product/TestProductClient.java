@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import au.id.mcmaster.scratch.MainBoot;
 import au.id.mcmaster.scratch.common.ClientSidePage;
+import au.id.mcmaster.scratch.product.domain.Product;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

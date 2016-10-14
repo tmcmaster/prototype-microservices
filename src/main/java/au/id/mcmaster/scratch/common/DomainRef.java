@@ -1,6 +1,6 @@
-package au.id.mcmaster.scratch.product;
+package au.id.mcmaster.scratch.common;
 
-public class ProductRef
+public class DomainRef
 {
     private String id;
     private String title;
