@@ -1,116 +1,157 @@
 {
-    "process": [
-        {
-            "name": "recommendationProcess",
-            "title": "Recommendation Process",
-            "component": [
-                {
-                    "name": "prince",
-                    "title": "PRINCE",
-                    "operation": [
-                        {
-                            "name": "listProducts",
-                            "title": "List Products"
-                        }
-                    ]
-                },
-                {
-                    "name": "website",
-                    "title": "Website",
-                    "operation": [
-                        {
-                            "name": "listProducts",
-                            "title": "List Products"
-                        }
-                    ]
-                },
-                {
-                    "name": "motorProxy",
-                    "title": "Motor Proxy",
-                    "operation": [
-                        {
-                            "name": "quotes",
-                            "title": "Quotes",
-                            "endpoint": "/quotes",
-                            "request": "{\n  \"RequestExample\": \"This needs to be defined properly.\"\n  \"contact\": {\n      \"name\": \"Mr Blah\",\n      \"phone\": \"0409 342 323\"\n  }\n}\n",
-                            "response": "{\n  \"ResponseExample\": \"This needs to be defined properly.\"\n}\n"
-                        },
-                        {
-                            "name": "excess",
-                            "title": "Excess",
-                            "endpoint": "/excess",
-                            "request": "{\n  \"RequestExample\": \"This needs to be defined properly.\"\n}\n",
-                            "response": "{\n  \"ResponseExample\": \"This needs to be defined properly.\"\n}\n"
-                        },
-                        {
-                            "name": "vehicle",
-                            "title": "Vehicle",
-                            "endpoint": "/vehicle",
-                            "request": "{\n  \"RequestExample\": \"This needs to be defined properly.\"\n}\n",
-                            "response": "{\n  \"ResponseExample\": \"This needs to be defined properly.\"\n}\n"
-                        }
-                    ]
-                },
-                {
-                    "name": "mulesoft",
-                    "title": "MuleSoft",
-                    "operation": [
-                        {
-                            "name": "quotes",
-                            "title": "Quotes",
-                            "endpoint": "/recommendation/quotes",
-                            "request": "{\n  \"RequestExample\": \"This needs to be defined properly.\"\n}\n",
-                            "response": "{\n  \"ResponseExample\": \"This needs to be defined properly.\"\n}\n"
-                        },
-                        {
-                            "name": "excess",
-                            "title": "Excess",
-                            "endpoint": "/recommendation/excess",
-                            "request": "{\n  \"RequestExample\": \"This needs to be defined properly.\"\n}\n",
-                            "response": "{\n  \"ResponseExample\": \"This needs to be defined properly.\"\n}\n"
-                        },
-                        {
-                            "name": "vehicle",
-                            "title": "Vehicle",
-                            "endpoint": "/motorweb/vehicle",
-                            "request": "{\n  \"RequestExample\": \"This needs to be defined properly.\"\n}\n",
-                            "response": "{\n  \"ResponseExample\": \"This needs to be defined properly.\"\n}\n"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "usecase": [
-                {
-                    "name": "princeGetRecommendation",
-                    "title": "PRINCE Get Recommendation",
-                    "sequence": [
-                        "prince-[quotes]>motorProxy",
-                        "motorProxy-[needs]>needsStore",
-                        "prince<[quotes]-motorProxy"
-                    ]
-                },
-                {
-                    "name": "websiteGetRecommendation",
-                    "title": "Website Get Recommendation",
-                    "sequence": [
-                        "website-[quotes]>motorProxy",
-                        "motorProxy-[needs]>needsStore",
-                        "website<[quotes]-motorProxy"
-                    ]
-                },
-                {
-                    "name": "salesforceGetRecommendation",
-                    "title": "SalesForce Get Recommendation",
-                    "sequence": [
-                        "salesforce-[quotes]>mulesoft",
-                        "mulesoft-[quotes]>motorProxy",
-                        "mulesoft<[quotes]-motorProxy",
-                        "salesforce<[quotes]-mulesoft"
-                    ]
-                }
-            ]
-        }
-    ]
+    "process": {
+        "name": "recommendationProcess",
+        "title": "Recommendation Process",
+        "component": [
+            {
+                "name": "prince",
+                "title": "PRINCE",
+                "operation": [
+                    {
+                        "name": "listProducts",
+                        "title": "List Products"
+                    }
+                ]
+            },
+            {
+                "name": "website",
+                "title": "Website",
+                "operation": [
+                    {
+                        "name": "listProducts",
+                        "title": "List Products"
+                    }
+                ]
+            },
+            {
+                "name": "motorProxy",
+                "title": "Motor Proxy",
+                "operation": [
+                    {
+                        "name": "quotes",
+                        "title": "Quotes",
+                        "endpoint": "/quotes",
+                        "request": "{\n  \"RequestExample\": \"This needs to be defined properly.\"\n  \"contact\": {\n      \"name\": \"Mr Blah\",\n      \"phone\": \"0409 342 323\"\n  }\n}\n",
+                        "response": "{\n  \"ResponseExample\": \"This needs to be defined properly.\"\n}\n"
+                    },
+                    {
+                        "name": "excess",
+                        "title": "Excess",
+                        "endpoint": "/excess",
+                        "request": "{\n  \"RequestExample\": \"This needs to be defined properly.\"\n}\n",
+                        "response": "{\n  \"ResponseExample\": \"This needs to be defined properly.\"\n}\n"
+                    },
+                    {
+                        "name": "vehicle",
+                        "title": "Vehicle",
+                        "endpoint": "/vehicle",
+                        "request": "{\n  \"RequestExample\": \"This needs to be defined properly.\"\n}\n",
+                        "response": "{\n  \"ResponseExample\": \"This needs to be defined properly.\"\n}\n"
+                    }
+                ]
+            },
+            {
+                "name": "mulesoft",
+                "title": "MuleSoft",
+                "operation": [
+                    {
+                        "name": "quotes",
+                        "title": "Quotes",
+                        "endpoint": "/recommendation/quotes",
+                        "request": "{\n  \"RequestExample\": \"This needs to be defined properly.\"\n}\n",
+                        "response": "{\n  \"ResponseExample\": \"This needs to be defined properly.\"\n}\n"
+                    },
+                    {
+                        "name": "excess",
+                        "title": "Excess",
+                        "endpoint": "/recommendation/excess",
+                        "request": "{\n  \"RequestExample\": \"This needs to be defined properly.\"\n}\n",
+                        "response": "{\n  \"ResponseExample\": \"This needs to be defined properly.\"\n}\n"
+                    },
+                    {
+                        "name": "vehicle",
+                        "title": "Vehicle",
+                        "endpoint": "/motorweb/vehicle",
+                        "request": "{\n  \"RequestExample\": \"This needs to be defined properly.\"\n}\n",
+                        "response": "{\n  \"ResponseExample\": \"This needs to be defined properly.\"\n}\n"
+                    }
+                ]
+            },
+            {
+                "name": "motorVendorA",
+                "title": "Vendor A",
+                "operation": [
+                    {
+                        "name": "getQuoteA",
+                        "title": "Get Quote",
+                        "endpoint": "/getQuoteA",
+                        "request": "<a:needs></a:needs>\n",
+                        "response": "<a:quote></a:quote>\n"
+                    }
+                ]
+            },
+            {
+                "name": "motorVendorB",
+                "title": "Vendor B",
+                "operation": [
+                    {
+                        "name": "getQuoteB",
+                        "title": "Get Quote",
+                        "endpoint": "/getQuoteB",
+                        "request": "<b:needs></b:needs>\n",
+                        "response": "<b:quote></b:quote>\n"
+                    }
+                ]
+            },
+            {
+                "name": "motorVendorC",
+                "title": "Vendor C",
+                "operation": [
+                    {
+                        "name": "getQuoteC",
+                        "title": "Get Quote",
+                        "endpoint": "/getQuoteC",
+                        "request": "<c:needs></c:needs>\n",
+                        "response": "<c:quote></c:quote>\n"
+                    }
+                ]
+            }
+        ],
+        "usecase": [
+            {
+                "name": "princeGetRecommendation",
+                "title": "PRINCE Get Recommendation",
+                "sequence": [
+                    "prince-[quotes]>motorProxy",
+                    "motorProxy-[getQuoteA]>motorVendorA",
+                    "motorProxy<[getQuoteA]-motorVendorA",
+                    "motorProxy-[getQuoteB]>motorVendorB",
+                    "motorProxy<[getQuoteB]-motorVendorB",
+                    "motorProxy-[getQuoteC]>motorVendorC",
+                    "motorProxy<[getQuoteC]-motorVendorC",
+                    "motorProxy-[needs]>needsStore",
+                    "prince<[quotes]-motorProxy"
+                ]
+            },
+            {
+                "name": "websiteGetRecommendation",
+                "title": "Website Get Recommendation",
+                "sequence": [
+                    "website-[quotes]>motorProxy",
+                    "motorProxy-[needs]>needsStore",
+                    "website<[quotes]-motorProxy"
+                ]
+            },
+            {
+                "name": "salesforceGetRecommendation",
+                "title": "SalesForce Get Recommendation",
+                "sequence": [
+                    "salesforce-[quotes]>mulesoft",
+                    "mulesoft-[quotes]>motorProxy",
+                    "mulesoft<[quotes]-motorProxy",
+                    "salesforce<[quotes]-mulesoft"
+                ]
+            }
+        ]
+    }
 }

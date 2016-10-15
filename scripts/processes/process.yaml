@@ -1,6 +1,6 @@
 #RAML 1.0
 process:
-  - name: "recommendationProcess"
+    name: "recommendationProcess"
     title: "Recommendation Process"
     component:
       - name: "prince"
@@ -89,12 +89,47 @@ process:
             {
               "ResponseExample": "This needs to be defined properly."
             }
-
-  - usecase:
+      - name: "motorVendorA"
+        title: "Vendor A"
+        operation:
+          - name: getQuoteA
+            title: "Get Quote"
+            endpoint: "/getQuoteA"
+            request: |
+              <a:needs></a:needs>
+            response: |
+              <a:quote></a:quote>
+      - name: "motorVendorB"
+        title: "Vendor B"
+        operation:
+          - name: getQuoteB
+            title: "Get Quote"
+            endpoint: "/getQuoteB"
+            request: |
+              <b:needs></b:needs>
+            response: |
+              <b:quote></b:quote>
+      - name: "motorVendorC"
+        title: "Vendor C"
+        operation:
+          - name: getQuoteC
+            title: "Get Quote"
+            endpoint: "/getQuoteC"
+            request: |
+              <c:needs></c:needs>
+            response: |
+              <c:quote></c:quote>
+    usecase:
     - name: "princeGetRecommendation"
       title: "PRINCE Get Recommendation"
       sequence:
         - "prince-[quotes]>motorProxy"
+        - "motorProxy-[getQuoteA]>motorVendorA"
+        - "motorProxy<[getQuoteA]-motorVendorA"
+        - "motorProxy-[getQuoteB]>motorVendorB"
+        - "motorProxy<[getQuoteB]-motorVendorB"
+        - "motorProxy-[getQuoteC]>motorVendorC"
+        - "motorProxy<[getQuoteC]-motorVendorC"
         - "motorProxy-[needs]>needsStore"
         - "prince<[quotes]-motorProxy"
     - name: "websiteGetRecommendation"
