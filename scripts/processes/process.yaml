@@ -1,0 +1,112 @@
+#RAML 1.0
+process:
+  - name: "recommendationProcess"
+    title: "Recommendation Process"
+    component:
+      - name: "prince"
+        title: "PRINCE"
+        operation:
+          - name: "listProducts"
+            title: "List Products"
+      - name: "website"
+        title: "Website"
+        operation:
+          - name: "listProducts"
+            title: "List Products"
+      - name: "motorProxy"
+        title: "Motor Proxy"
+        operation:
+        - name: "quotes"
+          title: "Quotes"
+          endpoint: "/quotes"
+          request: |
+            {
+              "RequestExample": "This needs to be defined properly."
+              "contact": {
+                  "name": "Mr Blah",
+                  "phone": "0409 342 323"
+              }
+            }
+          response: |
+            {
+              "ResponseExample": "This needs to be defined properly."
+            }
+        - name: "excess"
+          title: "Excess"
+          endpoint: "/excess"
+          request: |
+            {
+              "RequestExample": "This needs to be defined properly."
+            }
+          response: |
+            {
+              "ResponseExample": "This needs to be defined properly."
+            }
+        - name: "vehicle"
+          title: "Vehicle"
+          endpoint: "/vehicle"
+          request: |
+            {
+              "RequestExample": "This needs to be defined properly."
+            }
+          response: |
+            {
+              "ResponseExample": "This needs to be defined properly."
+            }
+      - name: "mulesoft"
+        title: "MuleSoft"
+        operation:
+        - name: "quotes"
+          title: "Quotes"
+          endpoint: "/recommendation/quotes"
+          request: |
+            {
+              "RequestExample": "This needs to be defined properly."
+            }
+          response: |
+            {
+              "ResponseExample": "This needs to be defined properly."
+            }
+        - name: "excess"
+          title: "Excess"
+          endpoint: "/recommendation/excess"
+          request: |
+            {
+              "RequestExample": "This needs to be defined properly."
+            }
+          response: |
+            {
+              "ResponseExample": "This needs to be defined properly."
+            }
+        - name: "vehicle"
+          title: "Vehicle"
+          endpoint: "/motorweb/vehicle"
+          request: |
+            {
+              "RequestExample": "This needs to be defined properly."
+            }
+          response: |
+            {
+              "ResponseExample": "This needs to be defined properly."
+            }
+
+  - usecase:
+    - name: "princeGetRecommendation"
+      title: "PRINCE Get Recommendation"
+      sequence:
+        - "prince-[quotes]>motorProxy"
+        - "motorProxy-[needs]>needsStore"
+        - "prince<[quotes]-motorProxy"
+    - name: "websiteGetRecommendation"
+      title: "Website Get Recommendation"
+      sequence:
+        - "website-[quotes]>motorProxy"
+        - "motorProxy-[needs]>needsStore"
+        - "website<[quotes]-motorProxy"
+    - name: "salesforceGetRecommendation"
+      title: "SalesForce Get Recommendation"
+      sequence:
+        - "salesforce-[quotes]>mulesoft"
+        - "mulesoft-[quotes]>motorProxy"
+        - "mulesoft<[quotes]-motorProxy"
+        - "salesforce<[quotes]-mulesoft"
