@@ -6,22 +6,12 @@
             {
                 "name": "prince",
                 "title": "PRINCE",
-                "operation": [
-                    {
-                        "name": "listProducts",
-                        "title": "List Products"
-                    }
-                ]
+                "operation": null
             },
             {
                 "name": "website",
                 "title": "Website",
-                "operation": [
-                    {
-                        "name": "listProducts",
-                        "title": "List Products"
-                    }
-                ]
+                "operation": null
             },
             {
                 "name": "motorProxy",
@@ -31,14 +21,28 @@
                         "name": "quotes",
                         "title": "Quotes",
                         "endpoint": "/quotes",
-                        "request": "{\n  \"RequestExample\": \"This needs to be defined properly.\"\n  \"contact\": {\n      \"name\": \"Mr Blah\",\n      \"phone\": \"0409 342 323\"\n  }\n}\n",
-                        "response": "{\n  \"ResponseExample\": \"This needs to be defined properly.\"\n}\n"
+                        "request": {
+                            "method": "POST",
+                            "type": "application/xml",
+                            "params": null,
+                            "schema": null,
+                            "payload": "<needs></needs>\n"
+                        },
+                        "response": {
+                            "type": "application/xml",
+                            "schema": "schema.xsd",
+                            "payload": "<quotes>\n  <quote></quote>\n  <quote></quote>\n  <quote></quote>\n</quote>\n"
+                        }
                     },
                     {
                         "name": "excess",
                         "title": "Excess",
                         "endpoint": "/excess",
-                        "request": "{\n  \"RequestExample\": \"This needs to be defined properly.\"\n}\n",
+                        "request": {
+                            "method": "POST",
+                            "params": null,
+                            "payload": "{\n  \"RequestExample\": \"This needs to be defined properly.\"\n}\n"
+                        },
                         "response": "{\n  \"ResponseExample\": \"This needs to be defined properly.\"\n}\n"
                     },
                     {

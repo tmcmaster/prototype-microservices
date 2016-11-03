@@ -21,7 +21,7 @@ public abstract class GenericController<T extends DomainRef, R extends MongoRepo
     @Autowired
     F factory;
     
-    @RequestMapping(method = RequestMethod.PUT, value = "/")
+    @RequestMapping(method = RequestMethod.PUT)
     public DomainRef create(@RequestBody T object)
     {
         return (DomainRef) repository.save(object);        

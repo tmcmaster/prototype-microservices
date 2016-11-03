@@ -6,89 +6,92 @@ process:
       - name: "prince"
         title: "PRINCE"
         operation:
-          - name: "listProducts"
-            title: "List Products"
       - name: "website"
         title: "Website"
         operation:
-          - name: "listProducts"
-            title: "List Products"
       - name: "motorProxy"
         title: "Motor Proxy"
         operation:
-        - name: "quotes"
-          title: "Quotes"
-          endpoint: "/quotes"
-          request: |
-            {
-              "RequestExample": "This needs to be defined properly."
-              "contact": {
-                  "name": "Mr Blah",
-                  "phone": "0409 342 323"
+          - name: "quotes"
+            title: "Quotes"
+            endpoint: "/quotes"
+            request:
+              method: "POST"
+              type: "application/xml"
+              params:
+              schema:
+              payload: |
+                <needs></needs>
+            response:
+              type: "application/xml"
+              schema: "schema.xsd"
+              payload: |
+                <quotes>
+                  <quote></quote>
+                  <quote></quote>
+                  <quote></quote>
+                </quote>
+          - name: "excess"
+            title: "Excess"
+            endpoint: "/excess"
+            request:
+              method: "POST"
+              params:
+              payload: |
+                {
+                  "RequestExample": "This needs to be defined properly."
+                }
+            response: |
+              {
+                "ResponseExample": "This needs to be defined properly."
               }
-            }
-          response: |
-            {
-              "ResponseExample": "This needs to be defined properly."
-            }
-        - name: "excess"
-          title: "Excess"
-          endpoint: "/excess"
-          request: |
-            {
-              "RequestExample": "This needs to be defined properly."
-            }
-          response: |
-            {
-              "ResponseExample": "This needs to be defined properly."
-            }
-        - name: "vehicle"
-          title: "Vehicle"
-          endpoint: "/vehicle"
-          request: |
-            {
-              "RequestExample": "This needs to be defined properly."
-            }
-          response: |
-            {
-              "ResponseExample": "This needs to be defined properly."
-            }
+          - name: "vehicle"
+            title: "Vehicle"
+            endpoint: "/vehicle"
+            request: |
+              {
+                "RequestExample": "This needs to be defined properly."
+              }
+            response: |
+              {
+                "ResponseExample": "This needs to be defined properly."
+              }
       - name: "mulesoft"
         title: "MuleSoft"
         operation:
-        - name: "quotes"
-          title: "Quotes"
-          endpoint: "/recommendation/quotes"
-          request: |
-            {
-              "RequestExample": "This needs to be defined properly."
-            }
-          response: |
-            {
-              "ResponseExample": "This needs to be defined properly."
-            }
-        - name: "excess"
-          title: "Excess"
-          endpoint: "/recommendation/excess"
-          request: |
-            {
-              "RequestExample": "This needs to be defined properly."
-            }
-          response: |
-            {
-              "ResponseExample": "This needs to be defined properly."
-            }
-        - name: "vehicle"
-          title: "Vehicle"
-          endpoint: "/motorweb/vehicle"
-          request: |
-            {
-              "RequestExample": "This needs to be defined properly."
-            }
-          response: |
-            {
-              "ResponseExample": "This needs to be defined properly."
-            }
+          - name: "quotes"
+            title: "Quotes"
+            endpoint: "/recommendation/quotes"
+            request: |
+              {
+                "RequestExample": "This needs to be defined properly."
+              }
+            response: |
+              {
+                "ResponseExample": "This needs to be defined properly."
+              }
+          - name: "excess"
+            title: "Excess"
+            endpoint: "/recommendation/excess"
+            request: |
+              {
+                "RequestExample": "This needs to be defined properly."
+              }
+            response: |
+              {
+                "ResponseExample": "This needs to be defined properly."
+              }
+          - name: "vehicle"
+            title: "Vehicle"
+            endpoint: "/motorweb/vehicle"
+            request: |
+              {
+                "RequestExample": "This needs to be defined properly."
+              }
+            response: |
+              {
+                "ResponseExample": "This needs to be defined properly."
+              }
       - name: "motorVendorA"
         title: "Vendor A"
         operation:
