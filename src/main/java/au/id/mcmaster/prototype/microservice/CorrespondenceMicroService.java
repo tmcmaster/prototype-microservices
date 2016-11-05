@@ -93,8 +93,10 @@ class CorrespondenceFactory extends DomainObjectFactory<Correspondence>
     @Override
     public Correspondence example()
     {
-        Correspondence Correspondence = new Correspondence();
-        return Correspondence;
+        Correspondence correspondence = new Correspondence();
+        correspondence.setTitle("Title");
+        correspondence.setDescription("Description");
+        return correspondence;
     }
 }
 

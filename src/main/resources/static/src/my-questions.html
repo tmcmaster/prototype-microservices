@@ -1,0 +1,86 @@
+<dom-module id="my-questions">
+    <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+    </style>
+
+    <iron-ajax id="listAction" auto method="GET" url="[[url]]" handle-as="json" last-response="{{data}}"></iron-ajax>
+    <iron-ajax id="createAction" method="PUT" url="[[url]]" body="[[newObject]]" content-type='application/json' handle-as="json"></iron-ajax>
+    <iron-ajax id="saveAction" method="PUT" url="[[objectUrl]]" content-type='application/json' body="[[selectedObject]]" handle-as="json"></iron-ajax>
+    <iron-ajax id="deleteAction" method="DELETE" url="[[objectUrl]]" handle-as="json"></iron-ajax>
+    <iron-ajax id="searchAction" method="POST" url="[[url]]" content-type='application/json' body="[[searchObject]]" handle-as="json" last-response="{{data}}"></iron-ajax>
+
+    <paper-toolbar>
+      <span class="title">[[type]] List</span>
+      <paper-icon-button icon="refresh" on-tap="refreshList"></paper-icon-button>
+      <paper-icon-button icon="search" on-tap="openSearch">+</paper-icon-button>
+      <paper-icon-button icon="add" on-tap="openAdd">+</paper-icon-button>
+    </paper-toolbar>
+
+    <template is="dom-if" if="[[add]]" restamp="true">
+      <div class="card">
+        <paper-card heading="Add [[type]]" class="add">
+          <paper-input label="Title" value="{{newObject.title}}"></paper-input>
+          <paper-input label="Description" value="{{newObject.description}}"></paper-input>
+          <paper-icon-button icon="cancel" on-tap="cancelAdd"></paper-icon-button>
+          <paper-icon-button icon="save" on-tap="addObject">+</paper-icon-button>
+        </paper-card>
+       </div>
+     </template>
+
+    <template is="dom-if" if="[[edit]]" restamp="true">
+       <div class="card">
+         <paper-card heading="Edit [[type]]" class="add">
+           <paper-input label="ID" value="{{selectedObject.id}}" disabled></paper-input>
+           <paper-input label="Title" value="{{selectedObject.title}}"></paper-input>
+           <paper-input label="Description" value="{{selectedObject.description}}"></paper-input>
+           <paper-icon-button icon="cancel" on-tap="cancelEdit"></paper-icon-button>
+           <paper-icon-button icon="save" on-tap="saveObject">+</paper-icon-button>
+         </paper-card>
+      </div>
+    </template>
+
+    <template is="dom-if" if="[[search]]" restamp="true">
+      <div class="card">
+        <paper-card heading="Search for [[type]]" class="add">
+          <paper-input label="Title" value="{{searchObject.title}}"></paper-input>
+          <paper-input label="Description" value="{{searchObject.description}}"></paper-input>
+          <paper-icon-button icon="cancel" on-tap="cancelSearch"></paper-icon-button>
+          <paper-icon-button icon="search" on-tap="filterList">+</paper-icon-button>
+        </paper-card>
+       </div>
+     </template>
+
+    <iron-list items="[[data.content]]">
+        <template>
+      	<div class="card">
+          <paper-card heading="{{item.title}}">
+            <div class="card-content">([[item.description]])</div>
+            <paper-icon-button icon="create" on-tap="openEdit" data-id$="[[item.id]]" data-title$="[[item.title]]" data-description$="[[item.description]]"></paper-icon-button>
+            <paper-icon-button icon="delete" on-tap="deleteObject" data-id$="[[item.id]]"></paper-icon-button>
+          </paper-card>
+        </div>
+      </template>
+    </iron-list>
+
+    </template>
+
+    <script>
+        Polymer({
+            is: 'my-questions',
+            behaviors: [Polymer.TM.Crudify],
+            ready: function() {
+                this.init({
+                  type: 'question',
+                  fields: ["title", "description"]
+                });
+                // this.type = "Question";
+                // this.url = "/question";
+                // this.fields = ['id', 'title', 'description'];
+            }
+        });
+    </script>
+</dom-module>

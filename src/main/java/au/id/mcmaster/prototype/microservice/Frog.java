@@ -20,7 +20,7 @@ import au.id.mcmaster.scratch.common.GenericController;
 import au.id.mcmaster.scratch.common.GenericRestClient;
 
 /**
- * Question MicroService
+ * Frog MicroService
  * 
  * @author Tim McMaster
  */
@@ -30,17 +30,17 @@ import au.id.mcmaster.scratch.common.GenericRestClient;
  */
 
 @RestController
-@RequestMapping("${domain.question.mapping:/question}")
-@ConditionalOnExpression("${domain.question.enabled:true}")
-class QuestionController extends GenericController<Question, QuestionRepository, QuestionFactory>
+@RequestMapping("${domain.frog.mapping:/frog}")
+@ConditionalOnExpression("${domain.frog.enabled:true}")
+class FrogController extends GenericController<Frog, FrogRepository, FrogFactory>
 {
     @Autowired
-    private QuestionService questionService;
+    private FrogService frogService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/test")
     public void test()
     {
-        questionService.test();
+        frogService.test();
     }
 }
 
@@ -48,7 +48,7 @@ class QuestionController extends GenericController<Question, QuestionRepository,
  * Service
  */
 @Service
-class QuestionService
+class FrogService
 {
     @Autowired
     private ProductClient productClient;
@@ -64,7 +64,7 @@ class QuestionService
  */
 
 @Component
-class QuestionHealth implements HealthIndicator
+class FrogHealth implements HealthIndicator
 {
 
     @Override
@@ -79,7 +79,7 @@ class QuestionHealth implements HealthIndicator
  * Repository
  */
 
-interface QuestionRepository extends MongoRepository<Question, String>
+interface FrogRepository extends MongoRepository<Frog, String>
 {
 }
 
@@ -88,15 +88,15 @@ interface QuestionRepository extends MongoRepository<Question, String>
  */
 
 @Component
-class QuestionFactory extends DomainObjectFactory<Question>
+class FrogFactory extends DomainObjectFactory<Frog>
 {
     @Override
-    public Question example()
+    public Frog example()
     {
-        Question question = new Question();
-        question.setTitle("Title");
-        question.setDescription("Description");
-        return question;
+        Frog frogObject = new Frog();
+        frogObject.setTitle("Title");
+        frogObject.setDescription("Description");
+        return frogObject;
     }
 }
 
@@ -105,11 +105,11 @@ class QuestionFactory extends DomainObjectFactory<Question>
  */
 
 @Component
-class QuestionClient extends GenericRestClient<Question>
+class FrogClient extends GenericRestClient<Frog>
 {
     @Autowired
-    public QuestionClient(@Value("${gateway.uri}") final String gatewayUri,
-            @Value("${domain.question.mapping:/question}") final String mapping)
+    public FrogClient(@Value("${gateway.uri}") final String gatewayUri,
+            @Value("${domain.frog.mapping:/frog}") final String mapping)
     {
         super(gatewayUri, mapping);
     }
@@ -120,7 +120,7 @@ class QuestionClient extends GenericRestClient<Question>
  */
 
 @XmlRootElement
-class Question extends DomainRef
+class Frog extends DomainRef
 {
     private String description;
 

@@ -93,8 +93,10 @@ class RecommendationFactory extends DomainObjectFactory<Recommendation>
     @Override
     public Recommendation example()
     {
-        Recommendation Recommendation = new Recommendation();
-        return Recommendation;
+        Recommendation recommendation = new Recommendation();
+        recommendation.setTitle("Title");
+        recommendation.setDescription("Description");
+        return recommendation;
     }
 }
 

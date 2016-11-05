@@ -90,8 +90,10 @@ class LeadFactory extends DomainObjectFactory<Lead>
     @Override
     public Lead example()
     {
-        Lead Lead = new Lead();
-        return Lead;
+        Lead lead = new Lead();
+        lead.setTitle("Title");
+        lead.setDescription("Description");
+        return lead;
     }
 }
 

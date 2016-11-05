@@ -80,6 +80,8 @@ class ProductFactory extends DomainObjectFactory<Product>
     public Product example()
     {
         Product product = new Product();
+        product.setTitle("Title");
+        product.setDescription("Description");
         return product;
     }
 }

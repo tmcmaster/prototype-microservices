@@ -1,0 +1,150 @@
+<script>
+    (function(Polymer) {
+        Polymer.TM = Polymer.TM || {};
+        Polymer.TM.Crudify = {
+            properties: {
+                type: {
+                    type: String,
+                    value: "Unknown"
+                },
+                url: {
+                    type: String,
+                    value: "/unknown"
+                },
+                fields: {
+                    type: Array,
+                    value: []
+                },
+                data: {
+                    type: Object,
+                    value: {}
+                },
+                add: {
+                    type: Boolean,
+                    value: false
+                },
+                edit: {
+                    type: Boolean,
+                    value: false
+                },
+                search: {
+                    type: Boolean,
+                    value: false
+                },
+                selectedObject: {
+                    type: Object,
+                    value: {}
+                },
+                selectedId: {
+                    type: String,
+                    value: ''
+                },
+                newObject: {
+                    type: Object,
+                    value: {}
+                },
+                searchObject: {
+                    type: Object,
+                    value: {}
+                },
+                objectUrl : {
+                  type: String,
+                  computed: '_generateObjectURL(url, selectedId)'
+                }
+            },
+            init: function(options) {
+                this.type = options.type.charAt(0).toUpperCase() + options.type.slice(1);
+                this.url = '/' + options.type;
+                this.fields = options.fields;
+                console.log(this.type + ' view has been crudified');
+            },
+            _generateObjectURL: function(url, selectedId) {
+                return url + '/' + selectedId;
+            },
+            refreshList: function() {
+                console.log('Refreshing ' + this.type + ' list.');
+                this.$.listAction.generateRequest();
+            },
+            openEdit: function() {
+                console.log('Opening edit for ' + this.type + '(' + event.target.dataset.id + ')');
+                copyFields(event.target.dataset, this.selectedObject, this.fields, true);
+                this.edit = true;
+            },
+            cancelEdit: function() {
+                console.log('Cancel Edit operation.');
+                this.edit = false;
+                clearFields(this.selectedObject, this.fields, true);
+            },
+            openAdd: function() {
+                console.log('Adding new ' + this.type + '.');
+                this.add = true;
+            },
+            cancelAdd: function() {
+                console.log('Cancel Add operation.');
+                this.add = false;
+                clearFields(this.newObject, this.fields, false);
+            },
+            openSearch: function() {
+                console.log('searching for ' + this.type + '.');
+                this.search = true;
+            },
+            cancelSearch: function() {
+                console.log('Cancel Search operation.');
+                this.search = false;
+            },
+            saveObject: function() {
+                console.log('Saving ' + this.type + '(' + this.selectedObject.id + ')');
+                this.edit = false;
+                this.$.saveAction.generateRequest();
+                clearFields(this.selectedObject, this.fields, true);
+                this.refreshList();
+            },
+            addObject: function() {
+                console.log('Adding ' + this.type);
+                this.add = false;
+                this.$.createAction.generateRequest();
+                clearFields(this.newObject, this.fields, false);
+                this.refreshList();
+            },
+            deleteObject: function() {
+                this.selectedId = event.target.dataset.id;
+                console.log('Deleting ' + this.type + '(' + this.selectedId + ')');
+                this.$.deleteAction.generateRequest();
+                this.selectedId = '';
+                this.refreshList();
+            },
+            filterList: function() {
+                console.log('Searching for ' + this.type);
+                this.search = false;
+                this.$.searchAction.generateRequest();
+            },
+            handleResponse: function(data) {
+                console.log('Data has been loaded.');
+                console.log(data);
+                //this.needs = data.detail.__data__.response.content;
+            }
+        };
+
+        function clearFields(toObject, fields, includeId) {
+          if (includeId == true)
+          {
+            toObject["id"] = '';
+          }
+          for (var f in fields) {
+            var field = fields[f];
+            toObject[field] = '';
+          }
+        }
+
+        function copyFields(fromObject, toObject, fields, includeId) {
+          if (includeId == true)
+          {
+            toObject["id"] = fromObject["id"];
+          }
+          for (var f in fields) {
+            var field = fields[f];
+            toObject[field] = fromObject[field];
+          }
+        }
+    })(window.Polymer);
+</script>

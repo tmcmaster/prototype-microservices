@@ -93,8 +93,10 @@ class OrderFactory extends DomainObjectFactory<Order>
     @Override
     public Order example()
     {
-        Order Order = new Order();
-        return Order;
+        Order order = new Order();
+        order.setTitle("Title");
+        order.setDescription("Description");
+        return order;
     }
 }
 

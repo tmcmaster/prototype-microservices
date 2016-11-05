@@ -1,0 +1,65 @@
+<dom-module id="my-products">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+    </style>
+
+    <iron-ajax id="ajax" auto method="GET" url="[[url]]" handle-as="json" last-response="{{data}}"></iron-ajax>
+
+    <paper-toolbar>
+      <span class="title">[[type]] List</span>
+      <paper-icon-button icon="refresh" on-tap="refreshData"></paper-icon-button>
+      <paper-icon-button icon="add" on-tap="addNeed">+</paper-icon-button>
+    </paper-toolbar>
+
+    <template is="dom-if" if="[[add]]" restamp="true">
+      <div class="card">
+        <paper-card heading="Add [[type]]" class="add">
+          <paper-input label="Title" value="{{newNeed.title}}"></paper-input>
+          <paper-input label="Description" value="{{newNeed.description}}"></paper-input>
+          <paper-icon-button icon="cancel" on-tap="closeAdd"></paper-icon-button>
+          <paper-icon-button icon="save" on-tap="saveAdd">+</paper-icon-button>
+        </paper-card>
+       </div>
+     </template>
+
+    <template is="dom-if" if="[[edit]]" restamp="true">
+       <div class="card">
+         <paper-card heading="Edit [[type]]" class="add">
+          <paper-input label="ID" value="{{existingNeed.id}}"></paper-input>
+           <paper-input label="Title" value="{{existingNeed.title}}"></paper-input>
+           <paper-input label="Description" value="{{existingNeed.description}}"></paper-input>
+           <paper-icon-button icon="cancel" on-tap="closeEdit"></paper-icon-button>
+           <paper-icon-button icon="save" on-tap="saveEdit">+</paper-icon-button>
+         </paper-card>
+        </div>
+      </template>
+
+    <iron-list items="[[data.content]]">
+        <template>
+        <div class="card">
+        <paper-card heading="{{item.title}}">
+          <div class="card-content">([[item.description]])</div>
+          <paper-icon-button icon="create" on-tap="aaa" data-title$="[[item.title]]" data-description$="[[item.description]]"></paper-icon-button>
+          <paper-icon-button icon="delete"></paper-icon-button>
+        </paper-card>
+        </div>
+      </template>
+    </iron-list>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'my-products',
+      behaviors: [Polymer.TM.Crudify],
+      ready: function() {
+        this.type = "Product";
+        this.url = "/product";
+      }
+    });
+  </script>
+</dom-module>

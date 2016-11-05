@@ -93,8 +93,10 @@ class QuoteFactory extends DomainObjectFactory<Quote>
     @Override
     public Quote example()
     {
-        Quote Quote = new Quote();
-        return Quote;
+        Quote quote = new Quote();
+        quote.setTitle("Title");
+        quote.setDescription("Description");
+        return quote;
     }
 }
 

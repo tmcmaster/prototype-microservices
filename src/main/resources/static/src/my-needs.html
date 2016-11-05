@@ -1,0 +1,120 @@
+<dom-module id="my-needs">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+    </style>
+
+    <iron-ajax id="dddd" auto method="GET" url="/need" handle-as="json" on-response="handleResponse" last-response="{{data}}"></iron-ajax>
+
+    <paper-toolbar>
+      <paper-icon-button icon="menu"></paper-icon-button>
+      <span class="title">Needs</span>
+      <paper-icon-button icon="refresh"></paper-icon-button>
+      <paper-icon-button icon="add" on-tap="addNeed">+</paper-icon-button>
+    </paper-toolbar>
+
+    <template is="dom-if" if="[[add]]" restamp="true">
+      <div class="card">
+        <paper-card heading="Add Need" class="add">
+          <paper-input label="Title" value="{{newNeed.title}}"></paper-input>
+          <paper-input label="Description" value="{{newNeed.description}}"></paper-input>
+          <paper-icon-button icon="save" on-tap="saveAdd">+</paper-icon-button>
+        </paper-card>
+       </div>
+     </template>
+
+    <template is="dom-if" if="[[edit]]" restamp="true">
+       <div class="card">
+         <paper-card heading="Edit Need" class="add">
+           <paper-input label="Title" value="{{existingNeed.title}}"></paper-input>
+           <paper-input label="Description" value="{{existingNeed.description}}"></paper-input>
+           <paper-icon-button icon="save" on-tap="saveEdit">+</paper-icon-button>
+         </paper-card>
+        </div>
+      </template>
+
+    <iron-list items="[[needs]]">
+        <template>
+      	<div class="card">
+        <paper-card heading="{{item.title}}">
+          <div class="card-content">all of the content ([[item.description]])</div>
+          <paper-icon-button icon="create" on-tap="aaa" data-title$="[[item.title]]" data-description$="[[item.description]]"></paper-icon-button>
+          <paper-icon-button icon="delete"></paper-icon-button>
+        </paper-card>
+        </div>
+      </template>
+    </iron-list>
+
+  </template>
+
+  <script>
+      Polymer({
+          is: 'my-needs',
+          properties: {
+              needs: {
+                  type: Array,
+                  value: [{
+                      title: 'Need One',
+                      description: 'Description of Need One'
+                  }, {
+                      title: 'Need Two',
+                      description: 'Description of Need Two'
+                  }]
+              },
+              data: {
+                  type: Object,
+                  value: {}
+              },
+              add: {
+                  type: Boolean,
+                  value: false
+              },
+              edit: {
+                  type: Boolean,
+                  value: false
+              },
+              newNeed: {
+                  type: Object,
+                  value: {}
+              },
+              existingNeed: {
+                  type: Object,
+                  value: {}
+              }
+          },
+          editNeed: function() {
+              this.editNeed.title = title;
+              this.editNeed.description = description;
+          },
+          addNeed: function() {
+              this.newNeed.title = '';
+              this.newNeed.description = '';
+              this.add = true;
+          },
+          saveAdd: function() {
+              console.log('Saving new need.');
+              this.add = false;
+          },
+          aaa: function(event, details) {
+              console.log('Edit need.');
+              this.existingNeed.title = event.target.dataset.title;
+              this.existingNeed.description = event.target.dataset.description;
+              this.edit = true;
+          },
+          saveEdit: function() {
+              console.log('Saving edited need.');
+              this.edit = false;
+          },
+          handleResponse: function(data) {
+              console.log(data);
+              this.needs = data.detail.__data__.response.content;
+          },
+          ready: function() {
+              this.$.dddd.generateRequest();
+          }
+      });
+  </script>
+</dom-module>

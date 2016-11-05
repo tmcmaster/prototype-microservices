@@ -93,8 +93,10 @@ class NeedFactory extends DomainObjectFactory<Need>
     @Override
     public Need example()
     {
-        Need Need = new Need();
-        return Need;
+        Need need = new Need();
+        need.setTitle("Title");
+        need.setDescription("Description");
+        return need;
     }
 }
 
