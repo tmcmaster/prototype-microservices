@@ -2,9 +2,14 @@
   <template>
     <style>
       :host { display: block; box-sizing: border-box;}
-      div.spec { width:40%; float:left; }
-      div.thing { width:58%; float:right; }
-      div.wrapper { display: inline-block; width:100%;}
+      div.spec { width:39%; float:left; }
+      div.thing { width:59%; float:right; }
+      div.wrapper {
+        display: inline-block;
+        box-sizing: border-box;
+        width:100%;
+        padding:20px;
+      }
     </style>
 
     <!-- <iron-ajax auto url="../data/energy-needs-questions.json" handle-as="json" last-response="{{questions}}"></iron-ajax> -->

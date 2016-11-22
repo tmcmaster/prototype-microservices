@@ -1,7 +1,7 @@
 <dom-module id="tm-thing-spec">
   <template>
     <style>
-      :host { display:inline-block; box-sizing:border-box; width:100%;}
+      :host { display:inline-block; box-sizing:border-box; width:100%; }
       tm-thing-item { padding:3px; width:100%;}
       paper-card { width: 100%; }
       .hide-true { display:none; }
@@ -9,8 +9,9 @@
       h2 { margin:0; }
       paper-icon-button { float:right; padding-top:0px; }
       paper-input, div.wrapper { width: 100%; }
+      div.children { display:inline-block; padding-top: 12px; }
     </style>
-    <paper-card>
+    <paper-card class="editor">
       <div class="card-content">
         <h2>[[spec.name]]<paper-icon-button icon="arrow-drop-up" on-tap="_minimise" class$="hide-[[_shouldHideDropUp(minimised)]]"></paper-icon-button>
           <paper-icon-button icon="arrow-drop-down" on-tap="_expand" class$="hide-[[_shouldHideDropDown(minimised)]]"></paper-icon-button>
@@ -19,16 +20,20 @@
           <content></content>
         </h2>
         <div class$="hide-[[minimised]] wrapper">
-          <paper-input label="Name" value="{{spec.name}}"></paper-input>
-          <paper-input label="Label" value="{{spec.label}}"></paper-input>
-          <!-- <paper-input label="Type" value="{{spec.type}}"></paper-input> -->
-          <tm-dropdown label="Type" value="{{spec.type}}" options="[[types]]"></tm-dropdown>
-          <paper-input label="Relevant" value="{{spec.relevant}}"></paper-input>
-          <template is="dom-if" if="[[_isGroup(spec.type)]]" restamp="true">
-            <template is="dom-repeat" items="[[spec.children]]" index-as="index">
-              <tm-thing-spec spec="{{item}}" siblings="{{spec.children}}" index="[[index]]"></tm-thing>
+          <div class="fields">
+            <paper-input label="Name" value="{{spec.name}}"></paper-input>
+            <paper-input label="Label" value="{{spec.label}}"></paper-input>
+            <tm-dropdown label="Type" value="{{spec.type}}" options="[[types]]"></tm-dropdown>
+            <paper-input label="Relevant" value="{{spec.relevant}}"></paper-input>
+            <tm-dropdown label="Size" value="{{spec.size}}" options="[[sizes]]"></tm-dropdown>
+          </div>
+          <div class="children">
+            <template is="dom-if" if="[[_isGroup(spec.type)]]" restamp="true">
+              <template is="dom-repeat" items="[[spec.children]]" index-as="index">
+                <tm-thing-spec spec="{{item}}" siblings="{{spec.children}}" index="[[index]]" minimised="true"></tm-thing>
+              </template>
             </template>
-          </template>
+          </div>
         </div>
       </div>
     </paper-card>
@@ -41,8 +46,9 @@
           spec: { type:Object, notify:true, value: {} },
           siblings: { type:Array, notify:true, value:[] },
           index: { type:Number, notify:true, value: -1 },
-          minimised: { type:Boolean, notify: true, value: false},
+          minimised: { type:Boolean, notify:true, value:false },
           types: { type:Array, value: [ 'group', 'text', 'checkbox', 'dropdown' ] },
+          sizes: { type:Array, value: [ 'small', 'medium', 'smallx2', 'large' ] }
         },
         observers: [
           '_specChanged(spec)',
@@ -78,6 +84,7 @@
             "name": "",
             "type": "text",
             "value": "",
+            "relevant": "",
             "visible": true,
             "children": [],
             "size": "small"
@@ -93,7 +100,7 @@
         },
         _isGroup: function(type) { return type === 'group'; },
         _isNotGroup: function(type) { return type !== 'group'; },
-        _minimise: function() { this.minimised = true; console.log(this.siblings) },
+        _minimise: function() { this.minimised = true; },
         _expand: function() { this.minimised = false; },
         ready: function() {
           //console.log('tm-thing-spec has been created.');
