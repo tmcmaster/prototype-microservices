@@ -1,0 +1,92 @@
+<dom-module id="is-radio-button">
+    <template>
+    <style>
+    #A_1 {
+        box-sizing: border-box;
+        color: rgb(249, 148, 0);
+        display: block;
+        float: left;
+        height: 108px;
+        text-align: center;
+        text-decoration: none;
+        text-size-adjust: 100%;
+        width: 106px;
+        column-rule-color: rgb(249, 148, 0);
+        perspective-origin: 53px 54px;
+        transform-origin: 53px 54px;
+        border: 0px none rgb(249, 148, 0);
+        border-radius: 4px 4px 4px 4px;
+        font: normal normal normal normal 16px / 23.2px sans-serif;
+        list-style: none outside none;
+        outline: rgb(249, 148, 0) none 0px;
+    }/*#A_1*/
+
+    #I_2 {
+        background-position: -112px 0px;
+        box-sizing: border-box;
+        color: rgb(249, 148, 0);
+        display: block;
+        height: 43px;
+        text-align: center;
+        text-size-adjust: 100%;
+        width: 53px;
+        column-rule-color: rgb(249, 148, 0);
+        perspective-origin: 26.5px 21.5px;
+        transform-origin: 26.5px 21.5px;
+        background: rgba(0, 0, 0, 0) url("http://energy.iselect.com.au/img/vert_ico.png") no-repeat scroll -112px 0px / auto padding-box border-box;
+        border: 0px none rgb(249, 148, 0);
+        font: italic normal normal normal 16px / 23.2px sans-serif;
+        list-style: none outside none;
+        margin: 10px 26.5px 0px;
+        outline: rgb(249, 148, 0) none 0px;
+    }/*#I_2*/
+
+    #SPAN_3 {
+        box-sizing: border-box;
+        color: rgb(121, 126, 133);
+        display: block;
+        height: 19px;
+        text-align: center;
+        text-size-adjust: 100%;
+        width: 106px;
+        column-rule-color: rgb(121, 126, 133);
+        perspective-origin: 53px 9.5px;
+        transform-origin: 53px 9.5px;
+        border: 0px none rgb(121, 126, 133);
+        font: normal normal normal normal 16px / 19px sans-serif;
+        list-style: none outside none;
+        margin: 10px 0px 0px;
+        outline: rgb(121, 126, 133) none 0px;
+    }/*#SPAN_3*/
+
+
+    </style>
+    <div style="display:inline-block;padding:3px">
+    <a href="javascript:void(0)" id="A_1" style="float: left; border-radius: 3px; background: #eef0f2;">
+      <i id="I_2" style$="background:[[_generateBackground(background)]]"></i>
+      <span id="SPAN_3">[[label]]</span>
+    </a>
+    </div>
+  </template>
+    <script>
+        (function(Polymer) {
+            Polymer({
+                is: 'is-radio-button',
+                properties: {
+                  imageURL: { type:String, value:'http://energy.iselect.com.au/img/vert_ico.png' },
+                  background: { type:String, value:'' },
+                  label: { type:String, value:'' }
+                },
+                _generateBackground: function(background) {
+                  const positions = {
+                    'elecGas': '0px 0px',
+                    'elec': '-56px 0px',
+                    'gas': '-112px 0px'
+                  };
+                  const position = (this.background in positions ? positions[this.background] : '-56px 0px');
+                  return 'rgba(0, 0, 0, 0) url("' + this.imageURL + '") no-repeat scroll ' + position + ' / auto padding-box border-box;'
+                }
+            });
+        })(window.Polymer);
+    </script>
+</dom-module>

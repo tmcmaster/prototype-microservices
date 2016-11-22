@@ -1,0 +1,122 @@
+<dom-module id="is-card-info">
+    <template>
+    <style>
+      :host { display:inline-block; }
+      ul {height:400px;}
+    #DIV_1 {
+        box-sizing: border-box;
+        color: rgb(72, 75, 81);
+        float: left;
+        height: 124px;
+        text-size-adjust: 100%;
+        width: 231px;
+        column-rule-color: rgb(72, 75, 81);
+        perspective-origin: 115.5px 62px;
+        transform-origin: 115.5px 62px;
+        background: rgb(223, 228, 231) none repeat scroll 0% 0% / auto padding-box border-box;
+        border: 0px none rgb(72, 75, 81);
+        border-radius: 7px 7px 7px 7px;
+        font: normal normal normal normal 14px / 20.3px "FS Albert Web Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        margin: 0px 0px 24px;
+        outline: rgb(72, 75, 81) none 0px;
+        padding: 21px;
+    }/*#DIV_1*/
+
+    #H2_2 {
+        box-sizing: border-box;
+        color: rgb(72, 75, 81);
+        height: 26px;
+        text-size-adjust: 100%;
+        width: 189px;
+        column-rule-color: rgb(72, 75, 81);
+        perspective-origin: 94.5px 13px;
+        transform-origin: 94.5px 13px;
+        border: 0px none rgb(72, 75, 81);
+        font: normal normal normal normal 25px / 26px "FS Albert Web Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        margin: 0px;
+        outline: rgb(72, 75, 81) none 0px;
+    }/*#H2_2*/
+
+    #UL_3 {
+        box-sizing: border-box;
+        color: rgb(72, 75, 81);
+        text-size-adjust: 100%;
+        width: 189px;
+        column-rule-color: rgb(72, 75, 81);
+        perspective-origin: 94.5px 0px;
+        transform-origin: 94.5px 0px;
+        border: 0px none rgb(72, 75, 81);
+        font: normal normal normal normal 14px / 20.3px "FS Albert Web Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        list-style: none outside none;
+        margin: 6px 0px 0px;
+        outline: rgb(72, 75, 81) none 0px;
+        padding: 0px;
+    }/*#UL_3*/
+
+    #UL_3 > li {
+        box-sizing: border-box;
+        color: rgb(72, 75, 81);
+        float: left;
+        height: 50px;
+        text-size-adjust: 100%;
+        width: 189px;
+        column-rule-color: rgb(72, 75, 81);
+        perspective-origin: 94.5px 25px;
+        transform-origin: 94.5px 25px;
+        border: 0px none rgb(72, 75, 81);
+        font: normal normal normal normal 14px / 20.3px "FS Albert Web Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        list-style: none outside none;
+        outline: rgb(72, 75, 81) none 0px;
+        padding: 0px 0px 10px;
+    }/*#LI_4*/
+
+    #UL_3 > li > strong {
+        box-sizing: border-box;
+        color: rgb(72, 75, 81);
+        text-align: left;
+        text-size-adjust: 100%;
+        column-rule-color: rgb(72, 75, 81);
+        border: 0px none rgb(72, 75, 81);
+        font: normal normal bold normal 14px / 20.3px "FS Albert Web Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        list-style: none outside none;
+        outline: rgb(72, 75, 81) none 0px;
+    }/*#STRONG_5*/
+
+    #UL_3 > li > br, #UL_3 > li > span {
+        box-sizing: border-box;
+        color: rgb(72, 75, 81);
+        text-align: left;
+        text-size-adjust: 100%;
+        column-rule-color: rgb(72, 75, 81);
+        border: 0px none rgb(72, 75, 81);
+        font: normal normal normal normal 14px / 20.3px "FS Albert Web Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        list-style: none outside none;
+        outline: rgb(72, 75, 81) none 0px;
+    }/*#BR_6, #SPAN_7*/
+
+    </style>
+    <div id="DIV_1" style$="height:[[height]]px;">
+    	<h2 id="H2_2">
+    		[[heading]]
+    	</h2>
+    	<ul id="UL_3">
+        <content></content>
+    	</ul>
+    	<!-- End of your summary section-->
+
+    </div>
+    </div>
+  </template>
+    <script>
+        (function(Polymer) {
+            Polymer({
+                is: 'is-card-info',
+                properties: {
+                  heading: { type:String, value:'' },
+                  body: { type:String, value:'' },
+                  height: { type:Number, value:137 }
+                }
+            });
+        })(window.Polymer);
+    </script>
+</dom-module>

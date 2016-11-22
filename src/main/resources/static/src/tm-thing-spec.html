@@ -1,0 +1,104 @@
+<dom-module id="tm-thing-spec">
+  <template>
+    <style>
+      :host { display:inline-block; box-sizing:border-box; width:100%;}
+      tm-thing-item { padding:3px; width:100%;}
+      paper-card { width: 100%; }
+      .hide-true { display:none; }
+      .hide-false { display: inline-block }
+      h2 { margin:0; }
+      paper-icon-button { float:right; padding-top:0px; }
+      paper-input, div.wrapper { width: 100%; }
+    </style>
+    <paper-card>
+      <div class="card-content">
+        <h2>[[spec.name]]<paper-icon-button icon="arrow-drop-up" on-tap="_minimise" class$="hide-[[_shouldHideDropUp(minimised)]]"></paper-icon-button>
+          <paper-icon-button icon="arrow-drop-down" on-tap="_expand" class$="hide-[[_shouldHideDropDown(minimised)]]"></paper-icon-button>
+          <paper-icon-button icon="add" on-tap="_addChild" class$="hide-[[_isNotGroup(spec.type)]]"></paper-icon-button>
+          <paper-icon-button icon="delete" on-tap="_deleteChild"></paper-icon-button>
+          <content></content>
+        </h2>
+        <div class$="hide-[[minimised]] wrapper">
+          <paper-input label="Name" value="{{spec.name}}"></paper-input>
+          <paper-input label="Label" value="{{spec.label}}"></paper-input>
+          <!-- <paper-input label="Type" value="{{spec.type}}"></paper-input> -->
+          <tm-dropdown label="Type" value="{{spec.type}}" options="[[types]]"></tm-dropdown>
+          <paper-input label="Relevant" value="{{spec.relevant}}"></paper-input>
+          <template is="dom-if" if="[[_isGroup(spec.type)]]" restamp="true">
+            <template is="dom-repeat" items="[[spec.children]]" index-as="index">
+              <tm-thing-spec spec="{{item}}" siblings="{{spec.children}}" index="[[index]]"></tm-thing>
+            </template>
+          </template>
+        </div>
+      </div>
+    </paper-card>
+  </template>
+  <script>
+    (function(Polymer) {
+      Polymer({
+        is: 'tm-thing-spec',
+        properties: {
+          spec: { type:Object, notify:true, value: {} },
+          siblings: { type:Array, notify:true, value:[] },
+          index: { type:Number, notify:true, value: -1 },
+          minimised: { type:Boolean, notify: true, value: false},
+          types: { type:Array, value: [ 'group', 'text', 'checkbox', 'dropdown' ] },
+        },
+        observers: [
+          '_specChanged(spec)',
+          '_valueChanged(spec.*)',
+          '_typeChanged(spec.type)',
+          'debug(siblings.*)'
+        ],
+        _specChanged: function(spec) {
+          if (this.spec.relevant === undefined) {
+            this.spec.relevant = "";
+            this.set('spec.relevant', this.spec.relevant);
+          }
+        },
+        debug: function(data) { console.log(data); console.log(this.siblings); },
+        _typeChanged: function(type) {
+          console.log('THING-SPEC) ****** type changed: ' + type);
+          if (type === 'group' && this.spec.children === undefined) {
+            this.spec.children = [];
+            this.set('spec.children', []);
+          }
+        },
+        _valueChanged: function(data) {
+          console.log(data);
+          this.fire('tm-changed', {name:data.base.name});
+        },
+        _shouldHideDropUp: function(minimised) { return minimised },
+        _shouldHideDropDown: function(minimised) { return !minimised },
+        _addChild: function() {
+          console.log('THING-SPEC) Need to add a new child.');
+          const newIndex = this.spec.children.length;
+          this.spec.children.push({
+            "label":"",
+            "name": "",
+            "type": "text",
+            "value": "",
+            "visible": true,
+            "children": [],
+            "size": "small"
+          });
+          //this.set('spec.children', this.spec.children);
+          this.notifySplices('spec.children', [
+            { index: newIndex, removed: [], addedCount: 1, object: this.spec.children, type: 'splice'}
+          ]);
+        },
+        _deleteChild: function() {
+          console.log('THING-SPEC) Removing child.');
+          this.splice('siblings', this.index, 1);
+        },
+        _isGroup: function(type) { return type === 'group'; },
+        _isNotGroup: function(type) { return type !== 'group'; },
+        _minimise: function() { this.minimised = true; console.log(this.siblings) },
+        _expand: function() { this.minimised = false; },
+        ready: function() {
+          //console.log('tm-thing-spec has been created.');
+        }
+      });
+    })(window.Polymer);
+  </script>
+</dom-module>

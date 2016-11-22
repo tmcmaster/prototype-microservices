@@ -1,0 +1,24 @@
+<dom-module id="tm-thing-bucket">
+  <template>
+    <style>
+      :host { display: block; }
+    </style>
+    <iron-ajax auto url="../data/energy-needs-questions.json" handle-as="json" last-response="{{questions}}"></iron-ajax>
+    <!-- <iron-ajax auto url="../data/test-two-way-binding.json" handle-as="json" last-response="{{questions}}"></iron-ajax> -->
+    <!-- <iron-ajax auto url="../data/energy-needs-answers.json" handle-as="json" last-response="{{answers}}"></iron-ajax> -->
+    <!-- <tm-horizon data="{{questions}}" collection="questions" uid="d70a61b2-eaa6-498a-8d4c-84f4fec53215"></tm-horizon> -->
+    <tm-horizon data="{{answers}}" collection="needs" uid="ac54dcfc-1f4e-4fbd-b29a-e0279294884a"></tm-horizon>
+    <tm-thing data="{{questions}}" answers="{{answers}}" class$="[[questions.size]]"></tm-thing>
+  </template>
+  <script>
+    (function(Polymer) {
+      Polymer({
+        is: 'tm-thing-bucket',
+        properties: {
+          questions: { type:Object, notify:true, value: {} },
+          answers: { type:Object, notify:true, value: {} },
+        }
+      });
+    })(window.Polymer);
+  </script>
+</dom-module>

@@ -1,120 +1,94 @@
 <dom-module id="my-needs">
-  <template>
+    <template>
     <style include="shared-styles">
       :host {
         display: block;
         padding: 10px;
       }
+
     </style>
 
-    <iron-ajax id="dddd" auto method="GET" url="/need" handle-as="json" on-response="handleResponse" last-response="{{data}}"></iron-ajax>
+    <iron-ajax id="listAction" auto method="GET" url="[[url]]" handle-as="json" last-response="{{data}}" on-response="handleResponse"></iron-ajax>
+    <iron-ajax id="createAction" method="PUT" url="[[url]]" body="[[newObject]]" content-type='application/json' handle-as="json"></iron-ajax>
+    <iron-ajax id="saveAction" method="PUT" url="[[objectUrl]]" content-type='application/json' body="[[selectedObject]]" handle-as="json"></iron-ajax>
+    <iron-ajax id="deleteAction" method="DELETE" url="[[objectUrl]]" handle-as="json"></iron-ajax>
+    <iron-ajax id="searchAction" method="POST" url="[[url]]" content-type='application/json' body="[[searchObject]]" handle-as="json" last-response="{{data}}"></iron-ajax>
 
     <paper-toolbar>
-      <paper-icon-button icon="menu"></paper-icon-button>
-      <span class="title">Needs</span>
-      <paper-icon-button icon="refresh"></paper-icon-button>
-      <paper-icon-button icon="add" on-tap="addNeed">+</paper-icon-button>
+      <span class="title">[[type]] List</span>
+      <paper-icon-button icon="refresh" on-tap="refreshList" disabled$="[[shouldDisableButtons(add,edit,search)]]"></paper-icon-button>
+      <paper-icon-button icon="search" on-tap="openSearch" disabled$="[[shouldDisableButtons(add,edit,search)]]"></paper-icon-button>
+      <paper-icon-button icon="add" on-tap="openAdd" disabled$="[[shouldDisableButtons(add,edit,search)]]"></paper-icon-button>
     </paper-toolbar>
 
     <template is="dom-if" if="[[add]]" restamp="true">
       <div class="card">
-        <paper-card heading="Add Need" class="add">
-          <paper-input label="Title" value="{{newNeed.title}}"></paper-input>
-          <paper-input label="Description" value="{{newNeed.description}}"></paper-input>
-          <paper-icon-button icon="save" on-tap="saveAdd">+</paper-icon-button>
+        <paper-card heading="Add [[type]]" class="add">
+          <paper-input label="Title" value="{{newObject.title}}"></paper-input>
+          <paper-input label="Description" value="{{newObject.description}}"></paper-input>
+          <paper-icon-button icon="cancel" on-tap="cancelAdd"></paper-icon-button>
+          <paper-icon-button icon="save" on-tap="addObject">+</paper-icon-button>
         </paper-card>
        </div>
      </template>
 
     <template is="dom-if" if="[[edit]]" restamp="true">
        <div class="card">
-         <paper-card heading="Edit Need" class="add">
-           <paper-input label="Title" value="{{existingNeed.title}}"></paper-input>
-           <paper-input label="Description" value="{{existingNeed.description}}"></paper-input>
-           <paper-icon-button icon="save" on-tap="saveEdit">+</paper-icon-button>
+         <paper-card heading="Edit [[type]]" class="add">
+           <paper-input label="ID" value="{{selectedObject.id}}" disabled></paper-input>
+           <paper-input label="Title" value="{{selectedObject.title}}"></paper-input>
+           <paper-input label="Description" value="{{selectedObject.description}}"></paper-input>
+           <paper-icon-button icon="cancel" on-tap="cancelEdit"></paper-icon-button>
+           <paper-icon-button icon="save" on-tap="saveObject">+</paper-icon-button>
          </paper-card>
-        </div>
-      </template>
+      </div>
+    </template>
 
-    <iron-list items="[[needs]]">
-        <template>
-      	<div class="card">
-        <paper-card heading="{{item.title}}">
-          <div class="card-content">all of the content ([[item.description]])</div>
-          <paper-icon-button icon="create" on-tap="aaa" data-title$="[[item.title]]" data-description$="[[item.description]]"></paper-icon-button>
-          <paper-icon-button icon="delete"></paper-icon-button>
+    <template is="dom-if" if="[[search]]" restamp="true">
+      <div class="card">
+        <paper-card heading="Search for [[type]]" class="add">
+          <paper-input label="Title" value="{{searchObject.title}}"></paper-input>
+          <paper-input label="Description" value="{{searchObject.description}}"></paper-input>
+          <paper-icon-button icon="cancel" on-tap="cancelSearch"></paper-icon-button>
+          <paper-icon-button icon="search" on-tap="filterList">+</paper-icon-button>
         </paper-card>
+       </div>
+     </template>
+
+    <iron-list id="aaaa" items="[[data.content]]" class="">
+      <template>
+      	<div class="card">
+          <paper-card heading="{{item.title}}">
+            <div class="card-content">([[item.description]])</div>
+            <paper-icon-button icon="create"
+            				   on-tap="openEdit"
+            				   disabled$="[[shouldDisableButtons(add,edit,search)]]"
+            				   data-id$="[[item.id]]"
+            				   data-title$="[[item.title]]"
+            				   data-description$="[[item.description]]">
+            </paper-icon-button>
+            <paper-icon-button icon="delete"
+                               on-tap="deleteObject"
+                               disabled$="[[shouldDisableButtons(add,edit,search)]]"
+            				   data-id$="[[item.id]]">
+            </paper-icon-button>
+          </paper-card>
         </div>
       </template>
     </iron-list>
 
-  </template>
+    </template>
 
-  <script>
-      Polymer({
-          is: 'my-needs',
-          properties: {
-              needs: {
-                  type: Array,
-                  value: [{
-                      title: 'Need One',
-                      description: 'Description of Need One'
-                  }, {
-                      title: 'Need Two',
-                      description: 'Description of Need Two'
-                  }]
-              },
-              data: {
-                  type: Object,
-                  value: {}
-              },
-              add: {
-                  type: Boolean,
-                  value: false
-              },
-              edit: {
-                  type: Boolean,
-                  value: false
-              },
-              newNeed: {
-                  type: Object,
-                  value: {}
-              },
-              existingNeed: {
-                  type: Object,
-                  value: {}
-              }
-          },
-          editNeed: function() {
-              this.editNeed.title = title;
-              this.editNeed.description = description;
-          },
-          addNeed: function() {
-              this.newNeed.title = '';
-              this.newNeed.description = '';
-              this.add = true;
-          },
-          saveAdd: function() {
-              console.log('Saving new need.');
-              this.add = false;
-          },
-          aaa: function(event, details) {
-              console.log('Edit need.');
-              this.existingNeed.title = event.target.dataset.title;
-              this.existingNeed.description = event.target.dataset.description;
-              this.edit = true;
-          },
-          saveEdit: function() {
-              console.log('Saving edited need.');
-              this.edit = false;
-          },
-          handleResponse: function(data) {
-              console.log(data);
-              this.needs = data.detail.__data__.response.content;
-          },
-          ready: function() {
-              this.$.dddd.generateRequest();
-          }
-      });
-  </script>
+    <script>
+        Polymer({
+            is: 'my-needs',
+            behaviors: [Polymer.TM.Crudify],
+            ready: function() {
+                this.init({
+                  type: 'need',
+                  fields: ["title", "description"]
+                });
+            }
+        });
+    </script>
 </dom-module>

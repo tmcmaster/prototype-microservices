@@ -1,0 +1,78 @@
+<dom-module id="is-radio-item">
+    <template>
+    <style>
+    #DIV_1 {
+        box-sizing: border-box;
+        color: rgb(121, 126, 133);
+        float: left;
+        height: 29px;
+        text-size-adjust: 100%;
+        width: 110px;
+        column-rule-color: rgb(121, 126, 133);
+        perspective-origin: 55px 14.5px;
+        transform-origin: 55px 14.5px;
+        background: rgb(244, 246, 248) none repeat scroll 0% 0% / auto padding-box border-box;
+        border: 1px solid rgb(206, 211, 213);
+        border-radius: 3px 0 0 3px;
+        font: normal normal normal normal 16px / 23.2px sans-serif;
+        outline: rgb(121, 126, 133) none 0px;
+    }/*#DIV_1*/
+
+    #LABEL_2 {
+        box-sizing: border-box;
+        color: rgb(121, 126, 133);
+        display: block;
+        float: left;
+        height: 29px;
+        text-align: center;
+        text-size-adjust: 100%;
+        width: 110px;
+        column-rule-color: rgb(121, 126, 133);
+        perspective-origin: 55px 14.5px;
+        transform-origin: 55px 14.5px;
+        border: 0px none rgb(121, 126, 133);
+        font: normal normal normal normal 14px / 26px sans-serif;
+        margin: 0px 0px -29px;
+        outline: rgb(121, 126, 133) none 0px;
+    }/*#LABEL_2*/
+
+    #INPUT_3 {
+        color: rgb(121, 126, 133);
+        cursor: pointer;
+        display: block;
+        float: left;
+        height: 29px;
+        opacity: 0;
+        text-size-adjust: 100%;
+        width: 110px;
+        column-rule-color: rgb(121, 126, 133);
+        perspective-origin: 55px 14.5px;
+        transform-origin: 55px 14.5px;
+        background: rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box;
+        border: 0px none rgb(121, 126, 133);
+        font: normal normal normal normal 16px / normal sans-serif;
+        outline: rgb(121, 126, 133) none 0px;
+        padding: 0px;
+    }/*#INPUT_3*/
+
+
+    </style>
+    <div id="DIV_1">
+
+    	<label for="ownproperty" id="LABEL_2">
+    		[[label]]
+    	</label>
+    	<input type="radio" id="INPUT_3" name="propertyOwner" value="Owner" />
+    </div>
+  </template>
+    <script>
+        (function(Polymer) {
+            Polymer({
+                is: 'is-radio-item',
+                properties: {
+                  label: {type:String, value:'' }
+                }
+            });
+        })(window.Polymer);
+    </script>
+</dom-module>

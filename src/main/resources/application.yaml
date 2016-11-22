@@ -1,5 +1,8 @@
 server:
   port: 8090
+neo4j:
+  user: "neo4j"
+  password: "AllIsGood"
 gateway:
   uri: http://localhost:8000
 domain:

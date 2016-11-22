@@ -1,0 +1,14 @@
+{
+  "name": "prototype-microservices",
+  "version": "1.0.0",
+  "keywords": [],
+  "author": "tim@mcmaster.id.au",
+  "license": "MIT",
+  "dependencies": {
+    "browserify": "^13.1.1",
+    "neo4j-driver": "^1.1.0-M02",
+    "require": "^2.4.20",
+    "requirejs": "^2.3.2",
+    "rethinkdb": "^2.3.3"
+  }
+}

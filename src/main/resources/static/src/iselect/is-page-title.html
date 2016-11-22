@@ -1,0 +1,50 @@
+<dom-module id="is-page-title">
+    <template>
+    <style>
+    :host {  width: 100%;  display:inline-block; }
+    #SPAN_1 {
+        box-sizing: border-box;
+        color: rgb(72, 75, 81);
+        display: block;
+        float: left;
+        height: 60px;
+        text-size-adjust: 100%;
+        width: 1000px;
+        column-rule-color: rgb(72, 75, 81);
+        perspective-origin: 500px 30px;
+        transform-origin: 500px 30px;
+        border: 0px none rgb(72, 75, 81);
+        font: normal normal 800 normal 32px / 46.4px "FS Albert Web ExtraBold", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        outline: rgb(72, 75, 81) none 0px;
+        padding: 10px 0px 4px;
+    }/*#SPAN_1*/
+    #P_1 {
+        box-sizing: border-box;
+        color: rgb(99, 102, 109);
+        float: left;
+        height: 31px;
+        text-size-adjust: 100%;
+        width: 1000px;
+        column-rule-color: rgb(99, 102, 109);
+        perspective-origin: 500px 15.5px;
+        transform-origin: 500px 15.5px;
+        border: 0px none rgb(99, 102, 109);
+        font: normal normal normal normal 14px / 20.3px sans-serif;
+        margin: 0px;
+        outline: rgb(99, 102, 109) none 0px;
+        padding: 0px 0px 11px;
+    }/*#P_1*/
+
+
+    </style>
+    <span id="SPAN_1">[[title]]</span>
+    <p id="P_1">[[subtitle]]</p>
+  </template>
+    <script>
+        (function(Polymer) {
+            Polymer({
+                is: 'is-page-title'
+            });
+        })(window.Polymer);
+    </script>
+</dom-module>

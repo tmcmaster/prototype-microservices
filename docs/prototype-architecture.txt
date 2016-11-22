@@ -1,0 +1,44 @@
+title Technologies use to Prototype Architecture (WIP)\n
+
+' Define all of the Actors
+actor "Web User" as WebUser
+actor "Mobile User" as MobileUser
+boundary "GUI" as GUI
+control "Polymer" as Polymer
+control "Kong API Gateway" as Gateway
+control "MicroServices" as MicroServices
+database "MongoDB" as MongoDB
+control "LogStash" as LogStash
+control "Elastic Search" as ElasticSearch
+control "PlantUML" as PlantUML
+boundary "Diagram Generator" as DiagramGenerator
+actor "Diagram Looker" as DiagramLooker
+
+
+' Group actors
+box "Interaction"
+  participant WebUser
+	participant MobileUser
+  participant GUI
+  participant Polymer
+end box
+box "\nOperation\n" #LightBlue
+	participant Gateway
+  participant MicroServices
+  participant MongoDB
+  participant LogStash
+  participant ElasticSearch
+end box
+box "Analysis"
+	participant PlantUML
+  participant DiagramGenerator
+  participant DiagramLooker
+end box
+
+' Sequence diagram definition
+
+== Do an Action ==
+
+
+
+== View Sequence Diagram of Action ==

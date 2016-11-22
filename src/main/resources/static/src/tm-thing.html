@@ -1,0 +1,114 @@
+<dom-module id="tm-thing">
+  <template>
+    <style>
+      :host { display:inline-block; box-sizing:border-box; }
+      tm-thing { padding:3px; width:100%;}
+      paper-card { width: 100%; }
+      div.large { width:100%; }
+      div.medium { width:49%; }
+      div.small { width:32%; }
+      div.smallx2 { width:65%; }
+      .visible-false { display:none }
+      .visible-true { display:inline-block; }
+    </style>
+    <template is="dom-if" if="[[_isType(data.type,'group')]]" restamp="true">
+      <paper-card heading="[[data.label]]">
+        <div class="card-content">
+            <template is="dom-repeat" items="[[data.children]]">
+                <div class$="visible-[[item.visible]] [[item.size]]">
+                  <tm-thing data="{{item}}" answers="{{answers}}"></tm-thing>
+                </div>
+            </template>
+        </div>
+      </paper-card>
+    </template>
+    <template is="dom-if" if="[[_isType(data.type,'text')]]" restamp="true">
+      <paper-input label="[[data.label]]" value="{{data.value}}" class$="[[data.size]]" ></paper-input>
+    </template>
+    <template is="dom-if" if="[[_isType(data.type,'checkbox')]]" restamp="true">
+      <paper-checkbox checked$="[[data.value]]" class$="[[data.size]]">[[data.label]]</paper-checkbox>
+    </template>
+    <template is="dom-if" if="[[_isType(data.type,'dropdown')]]" restamp="true">
+      <tm-dropdown label="[[data.label]]" value="{{data.value}}" options="[[data.options]]"></tm-dropdown>
+    </template>
+  </template>
+  <script>
+    (function(Polymer) {
+      Polymer({
+        is: 'tm-thing',
+        properties: {
+          data: { type:Object, notify:true },
+          answers: { type:Object, notify:true },
+          valueLoaded: { type:Boolean, notify:false, value:false },
+          answerLoaded: { type:Boolean, notify:false, value:false },
+          valueTemp: { type:String, notify:true, value:null }
+        },
+        behaviors: [Polymer.TM.SPELBehavior],
+        observers: [
+          '_valueChanged(data.value)',
+          //'_dataChanged(data.*)',
+          '_answerChanged(answers.*)',
+          'reviewRelevancy(answers.*)'
+        ],
+        _dataChanged: function(change) {
+          console.log('THING) Data has changed.');
+          console.log(change);
+        },
+        _isType: function(type,required) { return (type == required); },
+        _valueChanged: function(value) {
+          if (!this.valueLoaded) {
+            this.valueLoaded = true;
+            if (this.answerLoaded && this.valueTemp !== null) {
+              const newValue = this.valueTemp;
+              this.valueTemp = null;
+              this.set('data.value', newValue);
+            }
+          } else {
+            //console.log('THING) AAAA ' + this.data.name + ' = ' + value)
+            if (this.answers !== undefined && value !== null && value != 'null' && this.answers[this.data.name] !== value) {
+              console.log('THING) Updating answer: ' + this.data.name + ' = ' + value);
+              this.set('answers.' + this.data.name, value);
+            }
+          }
+
+        },
+        _answerChanged: function(answers) {
+          //console.log('THING) BBBB Update value: ' + this.data.name)
+          //console.log(answers);
+          if (!this.answerLoaded) {
+            this.answerLoaded = true;
+            if (this.valueLoaded && this.valueTemp !== null) {
+              const newValue = this.valueTemp;
+              this.valueTemp = null;
+              this.set('data.value', newValue);
+            }
+          } else {
+            if (this.answers !== undefined && this.data.value !== this.answers[this.data.name]) {
+              if (this.answers[this.data.name] === undefined) {
+                if (this.initialised) {
+                  console.log('THING) CCCC Updating answer: ' + this.data.name + ' = ' + this.answers[this.data.name]);
+                  this.set('answers.' + this.data.name, this.data.value);
+                }
+              } else {
+                console.log('THING) CCCC Updating value: ' + this.data.name + ' = ' + this.answers[this.data.name]);
+                this.set('data.value', this.answers[this.data.name]);
+              }
+            }
+          }
+        },
+        reviewRelevancy: function(answers) {
+          if (this.data && this.data.relevant) {
+            const visibility = this.resolveExpression(this.data.relevant, this.answers);
+            if (visibility !== this.data.visible)
+            {
+              console.log('THING) DDDD Updating visibility: ' + this.data.name + ' visibility is: ' + visibility);
+              this.set('data.visible', visibility);
+            }
+          }
+        },
+        ready: function() {
+        }
+      });
+    })(window.Polymer);
+  </script>
+</dom-module>

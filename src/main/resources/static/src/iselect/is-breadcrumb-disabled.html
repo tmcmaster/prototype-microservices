@@ -1,0 +1,41 @@
+<dom-module id="is-breadcrumb-disabled">
+    <template>
+    <style>
+    :host { display: inline-block; }
+    #A_1 {
+        background-position: 100% -50px;
+        box-sizing: border-box;
+        color: rgb(223, 228, 231);
+        display: block;
+        height: 50px;
+        text-align: left;
+        text-decoration: none;
+        text-size-adjust: 100%;
+        text-transform: uppercase;
+        width: 227px;
+        column-rule-color: rgb(223, 228, 231);
+        perspective-origin: 113.5px 25px;
+        transform-origin: 113.5px 25px;
+        background: rgba(0, 0, 0, 0) url("http://www.iselect.com.au/iselect-core/v5/images/progress_sprite.png?version=1902015") repeat scroll 100% -50px / auto padding-box border-box;
+        border: 0px none rgb(223, 228, 231);
+        font: normal normal bold normal 16px / 25px "FS Albert Web Bold", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        outline: rgb(223, 228, 231) none 0px;
+        padding: 0px 45px 0px 10px;
+    }/*#A_1*/
+
+
+    </style>
+<a href="javascript:void(0)" id="A_1" style$="width:[[width]]px;">[[label]]</a>
+  </template>
+    <script>
+        (function(Polymer) {
+            Polymer({
+                is: 'is-breadcrumb-disabled',
+                properties: {
+                  label: { type:String, value:'' },
+                  width: { type:Number, value:100 }
+                }
+            });
+        })(window.Polymer);
+    </script>
+</dom-module>

@@ -20,7 +20,7 @@ import au.id.mcmaster.scratch.common.GenericController;
 import au.id.mcmaster.scratch.common.GenericRestClient;
 
 /**
- * Frog MicroService
+ * Page MicroService
  * 
  * @author Tim McMaster
  */
@@ -30,17 +30,17 @@ import au.id.mcmaster.scratch.common.GenericRestClient;
  */
 
 @RestController
-@RequestMapping("${domain.frog.mapping:/frog}")
-@ConditionalOnExpression("${domain.frog.enabled:true}")
-class FrogController extends GenericController<Frog, FrogRepository, FrogFactory>
+@RequestMapping("${domain.page.mapping:/page}")
+@ConditionalOnExpression("${domain.page.enabled:true}")
+class PageController extends GenericController<PageMmicroService, PageRepository, PageFactory>
 {
     @Autowired
-    private FrogService frogService;
+    private PageService pageService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/test")
     public void test()
     {
-        frogService.test();
+        pageService.test();
     }
 }
 
@@ -48,14 +48,10 @@ class FrogController extends GenericController<Frog, FrogRepository, FrogFactory
  * Service
  */
 @Service
-class FrogService
+class PageService
 {
-    @Autowired
-    private ProductClient productClient;
-
     public void test()
     {
-        System.out.println("Number of products: " + productClient.list().getTotalElements());
     }
 }
 
@@ -64,7 +60,7 @@ class FrogService
  */
 
 @Component
-class FrogHealth implements HealthIndicator
+class PageHealth implements HealthIndicator
 {
 
     @Override
@@ -79,7 +75,7 @@ class FrogHealth implements HealthIndicator
  * Repository
  */
 
-interface FrogRepository extends MongoRepository<Frog, String>
+interface PageRepository extends MongoRepository<PageMmicroService, String>
 {
 }
 
@@ -88,15 +84,15 @@ interface FrogRepository extends MongoRepository<Frog, String>
  */
 
 @Component
-class FrogFactory extends DomainObjectFactory<Frog>
+class PageFactory extends DomainObjectFactory<PageMmicroService>
 {
     @Override
-    public Frog example()
+    public PageMmicroService example()
     {
-        Frog frogObject = new Frog();
-        frogObject.setTitle("Title");
-        frogObject.setDescription("Description");
-        return frogObject;
+        PageMmicroService pageObject = new PageMmicroService();
+        pageObject.setTitle("Title");
+        pageObject.setDescription("Description");
+        return pageObject;
     }
 }
 
@@ -105,11 +101,11 @@ class FrogFactory extends DomainObjectFactory<Frog>
  */
 
 @Component
-class FrogClient extends GenericRestClient<Frog>
+class PageClient extends GenericRestClient<PageMmicroService>
 {
     @Autowired
-    public FrogClient(@Value("${gateway.uri}") final String gatewayUri,
-            @Value("${domain.frog.mapping:/frog}") final String mapping)
+    public PageClient(@Value("${gateway.uri}") final String gatewayUri,
+            @Value("${domain.page.mapping:/page}") final String mapping)
     {
         super(gatewayUri, mapping);
     }
@@ -120,7 +116,7 @@ class FrogClient extends GenericRestClient<Frog>
  */
 
 @XmlRootElement
-class Frog extends DomainRef
+class PageMmicroService extends DomainRef
 {
     private String description;
 

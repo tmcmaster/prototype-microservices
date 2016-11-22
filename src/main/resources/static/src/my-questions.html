@@ -7,7 +7,7 @@
       }
     </style>
 
-    <iron-ajax id="listAction" auto method="GET" url="[[url]]" handle-as="json" last-response="{{data}}"></iron-ajax>
+    <iron-ajax id="listAction" auto method="GET" url="[[url]]" handle-as="json" last-response="{{data}}" on-response="handleResponse"></iron-ajax>
     <iron-ajax id="createAction" method="PUT" url="[[url]]" body="[[newObject]]" content-type='application/json' handle-as="json"></iron-ajax>
     <iron-ajax id="saveAction" method="PUT" url="[[objectUrl]]" content-type='application/json' body="[[selectedObject]]" handle-as="json"></iron-ajax>
     <iron-ajax id="deleteAction" method="DELETE" url="[[objectUrl]]" handle-as="json"></iron-ajax>
@@ -15,9 +15,9 @@
 
     <paper-toolbar>
       <span class="title">[[type]] List</span>
-      <paper-icon-button icon="refresh" on-tap="refreshList"></paper-icon-button>
-      <paper-icon-button icon="search" on-tap="openSearch">+</paper-icon-button>
-      <paper-icon-button icon="add" on-tap="openAdd">+</paper-icon-button>
+      <paper-icon-button icon="refresh" on-tap="refreshList" disabled$="[[shouldDisableButtons(add,edit,search)]]"></paper-icon-button>
+      <paper-icon-button icon="search" on-tap="openSearch" disabled$="[[shouldDisableButtons(add,edit,search)]]"></paper-icon-button>
+      <paper-icon-button icon="add" on-tap="openAdd" disabled$="[[shouldDisableButtons(add,edit,search)]]"></paper-icon-button>
     </paper-toolbar>
 
     <template is="dom-if" if="[[add]]" restamp="true">
@@ -54,18 +54,27 @@
        </div>
      </template>
 
-    <iron-list items="[[data.content]]">
+      <iron-list id="aaaa" items="[[data.content]]" class="">
         <template>
-      	<div class="card">
-          <paper-card heading="{{item.title}}">
-            <div class="card-content">([[item.description]])</div>
-            <paper-icon-button icon="create" on-tap="openEdit" data-id$="[[item.id]]" data-title$="[[item.title]]" data-description$="[[item.description]]"></paper-icon-button>
-            <paper-icon-button icon="delete" on-tap="deleteObject" data-id$="[[item.id]]"></paper-icon-button>
-          </paper-card>
-        </div>
-      </template>
-    </iron-list>
-
+        	<div class="card">
+            <paper-card heading="{{item.title}}">
+              <div class="card-content">([[item.description]])</div>
+              <paper-icon-button icon="create"
+              				   on-tap="openEdit"
+              				   disabled$="[[shouldDisableButtons(add,edit,search)]]"
+              				   data-id$="[[item.id]]"
+              				   data-title$="[[item.title]]"
+              				   data-description$="[[item.description]]">
+              </paper-icon-button>
+              <paper-icon-button icon="delete"
+                                 on-tap="deleteObject"
+                                 disabled$="[[shouldDisableButtons(add,edit,search)]]"
+              				   data-id$="[[item.id]]">
+              </paper-icon-button>
+            </paper-card>
+          </div>
+        </template>
+      </iron-list>
     </template>
 
     <script>
@@ -77,9 +86,6 @@
                   type: 'question',
                   fields: ["title", "description"]
                 });
-                // this.type = "Question";
-                // this.url = "/question";
-                // this.fields = ['id', 'title', 'description'];
             }
         });
     </script>

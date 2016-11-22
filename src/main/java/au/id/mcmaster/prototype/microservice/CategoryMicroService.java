@@ -20,7 +20,7 @@ import au.id.mcmaster.scratch.common.GenericController;
 import au.id.mcmaster.scratch.common.GenericRestClient;
 
 /**
- * Case MicroService
+ * Category MicroService
  * 
  * @author Tim McMaster
  */
@@ -30,17 +30,17 @@ import au.id.mcmaster.scratch.common.GenericRestClient;
  */
 
 @RestController
-@RequestMapping("${domain.case.mapping:/case}")
-@ConditionalOnExpression("${domain.case.enabled:true}")
-class CaseController extends GenericController<Case, CaseRepository, CaseFactory>
+@RequestMapping("${domain.category.mapping:/category}")
+@ConditionalOnExpression("${domain.category.enabled:true}")
+class CategoryController extends GenericController<CategoryMicroService, CategoryRepository, CategoryFactory>
 {
     @Autowired
-    private CaseService caseService;
+    private CategoryService categoryService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/test")
     public void test()
     {
-        caseService.test();
+        categoryService.test();
     }
 }
 
@@ -48,14 +48,10 @@ class CaseController extends GenericController<Case, CaseRepository, CaseFactory
  * Service
  */
 @Service
-class CaseService
+class CategoryService
 {
-    @Autowired
-    private ProductClient productClient;
-
     public void test()
     {
-        System.out.println("Number of products: " + productClient.list().getTotalElements());
     }
 }
 
@@ -64,7 +60,7 @@ class CaseService
  */
 
 @Component
-class CaseHealth implements HealthIndicator
+class CategoryHealth implements HealthIndicator
 {
 
     @Override
@@ -79,7 +75,7 @@ class CaseHealth implements HealthIndicator
  * Repository
  */
 
-interface CaseRepository extends MongoRepository<Case, String>
+interface CategoryRepository extends MongoRepository<CategoryMicroService, String>
 {
 }
 
@@ -88,15 +84,15 @@ interface CaseRepository extends MongoRepository<Case, String>
  */
 
 @Component
-class CaseFactory extends DomainObjectFactory<Case>
+class CategoryFactory extends DomainObjectFactory<CategoryMicroService>
 {
     @Override
-    public Case example()
+    public CategoryMicroService example()
     {
-        Case caseObject = new Case();
-        caseObject.setTitle("Title");
-        caseObject.setDescription("Description");
-        return caseObject;
+        CategoryMicroService categoryObject = new CategoryMicroService();
+        categoryObject.setTitle("Title");
+        categoryObject.setDescription("Description");
+        return categoryObject;
     }
 }
 
@@ -105,11 +101,11 @@ class CaseFactory extends DomainObjectFactory<Case>
  */
 
 @Component
-class CaseClient extends GenericRestClient<Case>
+class CategoryClient extends GenericRestClient<CategoryMicroService>
 {
     @Autowired
-    public CaseClient(@Value("${gateway.uri}") final String gatewayUri,
-            @Value("${domain.case.mapping:/case}") final String mapping)
+    public CategoryClient(@Value("${gateway.uri}") final String gatewayUri,
+            @Value("${domain.category.mapping:/category}") final String mapping)
     {
         super(gatewayUri, mapping);
     }
@@ -120,11 +116,10 @@ class CaseClient extends GenericRestClient<Case>
  */
 
 @XmlRootElement
-class Case extends DomainRef
+class CategoryMicroService extends DomainRef
 {
     private String description;
-    public String notes;
-    
+
     public String getDescription()
     {
         return description;

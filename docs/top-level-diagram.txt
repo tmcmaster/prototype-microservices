@@ -1,0 +1,42 @@
+@startuml
+
+'default
+top to bottom direction
+
+rectangle "Web" as Web {
+
+}
+
+rectangle "Integration" as Integration {
+
+}
+
+rectangle "MicroSerices" as MicroServices {
+    [SpringBoot] as SpringBoot
+    [NodeJS] as NodeJS
+    [Python] as Python
+    [Go] as Go
+    [DotNet] as DotNet
+}
+
+rectangle "CRM" as CRM {
+
+}
+
+rectangle "Data Stores" as DataStores {
+    database "MongoDB" as MongoDB
+    database "Neo4j" as Neo4j
+    database "Firebase" as Firebase
+    database "RDBMS" as RDBMS
+    database "SalesForce" as SalesForce
+}
+
+
+Integration -down-> MicroServices
+MicroServices -down-> DataStores
+CRM -down-> Integration
+CRM -down-> DataStores
+Web -down-> Integration
+Web -down-> DataStores
+
+@enduml

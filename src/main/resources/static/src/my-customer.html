@@ -1,0 +1,58 @@
+
+<link rel="import" href="../bower_components/deepstream.io-tools-polymer/ds-connection.html">
+<link rel="import" href="../bower_components/deepstream.io-tools-polymer/ds-login.html">
+<script src="../node_modules/requirejs/require.js"></script>
+<!-- <script src="../node_modules/rethinkdb/rethinkdb.js"></script> -->
+
+<dom-module id="my-customer">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <paper-toolbar>
+      <span class="title">Customer</span>
+      <paper-icon-button icon="refresh" on-tap="refreshList" disabled$="[[shouldDisableButtons(add,edit,search)]]"></paper-icon-button>
+      <paper-icon-button icon="search" on-tap="openSearch" disabled$="[[shouldDisableButtons(add,edit,search)]]"></paper-icon-button>
+      <paper-icon-button icon="add" on-tap="openAdd" disabled$="[[shouldDisableButtons(add,edit,search)]]"></paper-icon-button>
+    </paper-toolbar>
+    <paper-input label="State" value="[[connectionState]]"></paper-input>
+    <!-- <ds-connection url="localhost:6021" state="{{connectionState}}" ds="{{ds}}"></ds-connection>
+    <ds-login auto-login logged-in="{{loggedIn}}" ds="[[ds]]"></ds-login> -->
+  </template>
+  <script>
+    (function(Polymer) {
+      Polymer({
+        is: 'my-customer',
+        properties: {
+          connectionState: {
+            type:String,
+            notify:true
+          },
+          loggedIn: {
+            type: Boolean,
+            notify: true
+          },
+          ds: {
+            type: Object,
+            notify:true
+          }
+        },
+        observers: [
+          'debug(state)'
+        ],
+        debug: function(object) {
+          console.log(object);
+        },
+        ready: function() {
+          console.log('Element my-customer.html has been created.');
+          var r = requirejs("rethinkdb");
+
+          //console.log(r);
+        }
+      });
+    })(window.Polymer);
+  </script>
+</dom-module>

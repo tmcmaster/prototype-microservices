@@ -1,0 +1,165 @@
+CREATE
+    (m:Person:Male {name:'Michal', age:30}),
+    (d:Person:Female {name:'Daniela', age:20}),
+    (v:Person:Male {name:'Vince', age:40}),
+    (a:Person:Male {name:'Adam', age:30}),
+    (l:Person:Female {name:'Luanne', age:25}),
+    (c:Person:Male {name:'Christophe', age:60}),
+ 
+    (lon:City {name:'London'}),
+    (mum:City {name:'Mumbai'}),
+
+    (m)-[:FRIEND_OF]->(d),
+    (m)-[:FRIEND_OF]->(l),
+    (m)-[:FRIEND_OF]->(a),
+    (m)-[:FRIEND_OF]->(v),
+    (d)-[:FRIEND_OF]->(v),
+    (c)-[:FRIEND_OF]->(v),
+    (d)-[:LIVES_IN]->(lon),
+    (v)-[:LIVES_IN]->(lon),
+    (m)-[:LIVES_IN]->(lon),
+    (l)-[:LIVES_IN]->(mum);
+
+
+MATCH (me:Person {name: "Adam"})
+MATCH (me)-[:FRIEND_OF]-()-[:FRIEND_OF]-(potentialFriend)
+RETURN me, potentialFriend, COUNT(*) AS friendsInCommon
+
+==> +--------------------------------------------------------------------------------------+
+==> | me                             | potentialFriend                   | friendsInCommon |
+==> +--------------------------------------------------------------------------------------+
+==> | Node[1007]{name:"Adam",age:30} | Node[1006]{name:"Vince",age:40}   | 1               |
+==> | Node[1007]{name:"Adam",age:30} | Node[1005]{name:"Daniela",age:20} | 1               |
+==> | Node[1007]{name:"Adam",age:30} | Node[1008]{name:"Luanne",age:25}  | 1               |
+==> +--------------------------------------------------------------------------------------+
+==> 3 rows
+
+
+MATCH (me:Person {name: "Adam"})
+MATCH (me)-[:FRIEND_OF]-()-[:FRIEND_OF]-(potentialFriend)
+
+WITH me, potentialFriend, COUNT(*) AS friendsInCommon
+
+RETURN  me,
+        potentialFriend,
+        SIZE((potentialFriend)-[:LIVES_IN]->()<-[:LIVES_IN]-(me)) AS sameLocation
+
+==> +-----------------------------------------------------------------------------------+
+==> | me                             | potentialFriend                   | sameLocation |
+==> +-----------------------------------------------------------------------------------+
+==> | Node[1007]{name:"Adam",age:30} | Node[1006]{name:"Vince",age:40}   | 0            |
+==> | Node[1007]{name:"Adam",age:30} | Node[1005]{name:"Daniela",age:20} | 0            |
+==> | Node[1007]{name:"Adam",age:30} | Node[1008]{name:"Luanne",age:25}  | 0            |
+==> +-----------------------------------------------------------------------------------+
+==> 3 rows
+
+
+MATCH (me:Person {name: "Adam"})
+MATCH (me)-[:FRIEND_OF]-()-[:FRIEND_OF]-(potentialFriend)
+
+WITH me, potentialFriend, COUNT(*) AS friendsInCommon
+
+RETURN  me,
+        potentialFriend,
+        SIZE((potentialFriend)-[:LIVES_IN]->()<-[:LIVES_IN]-(me)) AS sameLocation,
+        LABELS(me) = LABELS(potentialFriend) AS gender
+
+==> +--------------------------------------------------------------------------------------------+
+==> | me                             | potentialFriend                   | sameLocation | gender |
+==> +--------------------------------------------------------------------------------------------+
+==> | Node[1007]{name:"Adam",age:30} | Node[1006]{name:"Vince",age:40}   | 0            | true   |
+==> | Node[1007]{name:"Adam",age:30} | Node[1005]{name:"Daniela",age:20} | 0            | false  |
+==> | Node[1007]{name:"Adam",age:30} | Node[1008]{name:"Luanne",age:25}  | 0            | false  |
+==> +--------------------------------------------------------------------------------------------+
+==> 3 rows
+
+
+MATCH (me:Person {name: "Adam"})
+MATCH (me)-[:FRIEND_OF]-()-[:FRIEND_OF]-(potentialFriend)
+
+WITH me, potentialFriend, COUNT(*) AS friendsInCommon
+
+RETURN me,
+       potentialFriend,
+       SIZE((potentialFriend)-[:LIVES_IN]->()<-[:LIVES_IN]-(me)) AS sameLocation,
+       abs( me.age - potentialFriend.age) AS ageDifference,
+       LABELS(me) = LABELS(potentialFriend) AS gender,
+       friendsInCommon
+
+==> +------------------------------------------------------------------------------------------------------------------------------+
+==> | me                             | potentialFriend                   | sameLocation | ageDifference | gender | friendsInCommon |
+==> +------------------------------------------------------------------------------------------------------------------------------+
+==> | Node[1007]{name:"Adam",age:30} | Node[1006]{name:"Vince",age:40}   | 0            | 10.0          | true   | 1               |
+==> | Node[1007]{name:"Adam",age:30} | Node[1005]{name:"Daniela",age:20} | 0            | 10.0          | false  | 1               |
+==> | Node[1007]{name:"Adam",age:30} | Node[1008]{name:"Luanne",age:25}  | 0            | 5.0           | false  | 1               |
+==> +------------------------------------------------------------------------------------------------------------------------------+
+==> 3 rows
+
+
+MATCH (me:Person {name: "Adam"})
+MATCH (me)-[:FRIEND_OF]-()-[:FRIEND_OF]-(potentialFriend)
+
+WITH me, potentialFriend, COUNT(*) AS friendsInCommon
+
+WITH me,
+     potentialFriend,
+     SIZE((potentialFriend)-[:LIVES_IN]->()<-[:LIVES_IN]-(me)) AS sameLocation,
+     abs( me.age - potentialFriend.age) AS ageDifference,
+     LABELS(me) = LABELS(potentialFriend) AS gender,
+     friendsInCommon
+
+WHERE NOT (me)-[:FRIEND_OF]-(potentialFriend)
+
+RETURN me,
+       potentialFriend,
+       SIZE((potentialFriend)-[:LIVES_IN]->()<-[:LIVES_IN]-(me)) AS sameLocation,
+       abs( me.age - potentialFriend.age) AS ageDifference,
+       LABELS(me) = LABELS(potentialFriend) AS gender,
+       friendsInCommon
+
+==> +------------------------------------------------------------------------------------------------------------------------------+
+==> | me                             | potentialFriend                   | sameLocation | ageDifference | gender | friendsInCommon |
+==> +------------------------------------------------------------------------------------------------------------------------------+
+==> | Node[1007]{name:"Adam",age:30} | Node[1006]{name:"Vince",age:40}   | 0            | 10.0          | true   | 1               |
+==> | Node[1007]{name:"Adam",age:30} | Node[1005]{name:"Daniela",age:20} | 0            | 10.0          | false  | 1               |
+==> | Node[1007]{name:"Adam",age:30} | Node[1008]{name:"Luanne",age:25}  | 0            | 5.0           | false  | 1               |
+==> +------------------------------------------------------------------------------------------------------------------------------+
+==> 3 rows
+
+
+MATCH (me:Person {name: "Adam"})
+MATCH (me)-[:FRIEND_OF]-()-[:FRIEND_OF]-(potentialFriend)
+
+WITH me, potentialFriend, COUNT(*) AS friendsInCommon
+
+WITH me,
+     potentialFriend,
+     SIZE((potentialFriend)-[:LIVES_IN]->()<-[:LIVES_IN]-(me)) AS sameLocation,
+     abs( me.age - potentialFriend.age) AS ageDifference,
+     LABELS(me) = LABELS(potentialFriend) AS gender,
+     friendsInCommon
+
+WHERE NOT (me)-[:FRIEND_OF]-(potentialFriend)
+
+WITH potentialFriend,
+       // 100 -> maxScore, 10 -> eightyPercentLevel, friendsInCommon -> score (from the formula above)
+       100 * (1 - exp((-1.0 * (log(5.0) / 10)) * friendsInCommon)) AS friendsInCommon,
+       sameLocation * 10 AS sameLocation,
+       -1 * (10 * (1 - exp((-1.0 * (log(5.0) / 20)) * ageDifference))) AS ageDifference,
+       CASE WHEN gender THEN 10 ELSE 0 END as sameGender
+
+RETURN potentialFriend,
+      {friendsInCommon: friendsInCommon,
+       sameLocation: sameLocation,
+       ageDifference:ageDifference,
+       sameGender: sameGender} AS parts,
+     friendsInCommon + sameLocation + ageDifference + sameGender AS score
+ORDER BY score DESC
+
+==> +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+==> | potentialFriend                   | parts                                                                                                           | score             |
+==> +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+==> | Node[1006]{name:"Vince",age:40}   | {friendsInCommon -> 14.86600774792154, sameLocation -> 0, ageDifference -> -5.52786404500042, sameGender -> 10} | 19.33814370292112 |
+==> | Node[1008]{name:"Luanne",age:25}  | {friendsInCommon -> 14.86600774792154, sameLocation -> 0, ageDifference -> -3.312596950235779, sameGender -> 0} | 11.55341079768576 |
+==> | Node[1005]{name:"Daniela",age:20} | {friendsInCommon -> 14.86600774792154, sameLocation -> 0, ageDifference -> -5.52786404500042, sameGender -> 0}  | 9.33814370292112  |
+==> +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+

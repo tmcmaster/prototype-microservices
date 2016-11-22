@@ -1,0 +1,44 @@
+
+<dom-module id="tm-dropdown">
+  <template>
+    <style>
+      :host { display: block; }
+      paper-dropdown-menu { width:100% }
+    </style>
+    <paper-dropdown-menu value="{{value}}" label="[[label]]">
+      <paper-listbox selected="[[_indexOf(value, options)]]" class="dropdown-content">
+        <template is="dom-repeat" items="[[options]]">
+          <paper-item>[[item]]</paper-item>
+        </template>
+      </paper-listbox>
+    </paper-dropdown-menu>
+  </template>
+  <script>
+    (function(Polymer) {
+      Polymer({
+        is: 'tm-dropdown',
+        properties: {
+          value: {
+            type:String,
+            notify:true
+          },
+          label: {
+            type:String,
+            notify:true
+          },
+          options: {
+            type: Array,
+            notify: true,
+            value: []
+          }
+        },
+        observers: [
+        ],
+        _indexOf: function(value,options) { return options.indexOf(value); },
+        ready: function() {
+          //console.log('Element tm-dropdown has been created.');
+        }
+      });
+    })(window.Polymer);
+  </script>
+</dom-module>

@@ -1,0 +1,126 @@
+<dom-module id="is-card-quote">
+    <template>
+    <style>
+    #DIV_1 {
+        background-position: 23.3333px 17.5px;
+        box-sizing: border-box;
+        color: rgb(72, 75, 81);
+        float: left;
+        height: 222.25px;
+        text-size-adjust: 100%;
+        width: 231px;
+        column-rule-color: rgb(72, 75, 81);
+        perspective-origin: 115.5px 111.125px;
+        transform-origin: 115.5px 111.125px;
+        background: rgb(255, 255, 255) url("http://www.iselect.com.au/iselect-core/v5/images/quotes.png?version=1902015") no-repeat scroll 23.3333px 17.5px / auto padding-box border-box;
+        border: 0px none rgb(72, 75, 81);
+        border-radius: 7px 7px 7px 7px;
+        font: normal normal normal normal 14px / 20.3px "FS Albert Web Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        margin: 0px 0px 24px;
+        outline: rgb(72, 75, 81) none 0px;
+        padding: 61.25px 21px 21px;
+    }/*#DIV_1*/
+
+    #Q_2 {
+        box-sizing: border-box;
+        color: rgb(72, 75, 81);
+        display: block;
+        height: 100px;
+        text-size-adjust: 100%;
+        width: 189px;
+        column-rule-color: rgb(72, 75, 81);
+        perspective-origin: 94.5px 50px;
+        transform-origin: 94.5px 50px;
+        border: 0px none rgb(72, 75, 81);
+        font: normal normal normal normal 14px / 20.3px "FS Albert Web Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        margin: 0px 0px 20px;
+        outline: rgb(72, 75, 81) none 0px;
+    }/*#Q_2*/
+
+    #Q_2:after {
+        box-sizing: border-box;
+        color: rgb(72, 75, 81);
+        content: '""';
+        display: none;
+        height: 100px;
+        text-size-adjust: 100%;
+        width: 189px;
+        column-rule-color: rgb(72, 75, 81);
+        perspective-origin: 94.5px 50px;
+        transform-origin: 94.5px 50px;
+        border: 0px none rgb(72, 75, 81);
+        font: normal normal normal normal 14px / 20.3px "FS Albert Web Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        outline: rgb(72, 75, 81) none 0px;
+    }/*#Q_2:after*/
+
+    #Q_2:before {
+        box-sizing: border-box;
+        color: rgb(72, 75, 81);
+        content: '""';
+        display: none;
+        height: 100px;
+        text-size-adjust: 100%;
+        width: 189px;
+        column-rule-color: rgb(72, 75, 81);
+        perspective-origin: 94.5px 50px;
+        transform-origin: 94.5px 50px;
+        border: 0px none rgb(72, 75, 81);
+        font: normal normal normal normal 14px / 20.3px "FS Albert Web Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        outline: rgb(72, 75, 81) none 0px;
+    }/*#Q_2:before*/
+
+    #CITE_3 {
+        box-sizing: border-box;
+        color: rgb(72, 75, 81);
+        display: block;
+        height: 20px;
+        text-size-adjust: 100%;
+        width: 189px;
+        column-rule-color: rgb(72, 75, 81);
+        perspective-origin: 94.5px 10px;
+        transform-origin: 94.5px 10px;
+        border: 0px none rgb(72, 75, 81);
+        font: normal normal normal normal 14px / 20.3px "FS Albert Web Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        outline: rgb(72, 75, 81) none 0px;
+    }/*#CITE_3*/
+
+    #SPAN_4 {
+        box-sizing: border-box;
+        color: rgb(72, 75, 81);
+        text-size-adjust: 100%;
+        column-rule-color: rgb(72, 75, 81);
+        border: 0px none rgb(72, 75, 81);
+        font: normal normal normal normal 14px / 20.3px "FS Albert Web Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        outline: rgb(72, 75, 81) none 0px;
+    }/*#SPAN_4*/
+
+    #SPAN_5 {
+        box-sizing: border-box;
+        color: rgb(227, 113, 10);
+        text-size-adjust: 100%;
+        column-rule-color: rgb(227, 113, 10);
+        border: 0px none rgb(227, 113, 10);
+        font: normal normal normal normal 14px / 20.3px "FS Albert Web Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        outline: rgb(227, 113, 10) none 0px;
+    }/*#SPAN_5*/
+
+
+    </style>
+    <div id="DIV_1">
+    	 <q id="Q_2">[[quote]]</q> <cite id="CITE_3"> <span id="SPAN_4">[[person]]</span><span id="SPAN_5"></span></cite>
+    </div>
+  </template>
+    <script>
+        (function(Polymer) {
+            Polymer({
+                is: 'is-card-quote',
+                properties: {
+                  quote: { type:String, value:'' },
+                  person: { type:String, value:'' }
+                },
+                observers: ['_quoteAA(quote,person)'],
+                _quoteAA: function(quote) {}
+            });
+        })(window.Polymer);
+    </script>
+</dom-module>

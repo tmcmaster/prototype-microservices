@@ -1,0 +1,26 @@
+<dom-module id="is-question-item">
+    <template>
+    <style>
+      :host {  width: 100%;  display:inline-block; }
+      is-question-text { float:left; padding-top: 10px; height:100%; width: 49%; display:inline-block; }
+      .options { float:right; height:100%; width: 48%; display:inline-block; }
+    </style>
+    <is-question-text label="[[label]]" hint="[[hint]]"
+                      required="[[required]]"></is-question-text>
+    <div class="options">
+      <content></content>
+    </div>
+  </template>
+    <script>
+        (function(Polymer) {
+            Polymer({
+                is: 'is-question-item',
+                properties: {
+                  label: { type: String, value: '' },
+                  hint: { type: String, value: '' },
+                  required: { type: Boolean, value: false }
+                }
+            });
+        })(window.Polymer);
+    </script>
+</dom-module>

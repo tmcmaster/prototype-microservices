@@ -1,0 +1,169 @@
+<dom-module id="is-question-text">
+    <template>
+    <style>
+    #DIV_1 {
+        box-sizing: border-box;
+        color: rgb(99, 102, 109);
+        float: left;
+        height: 37px;
+        text-indent: -30px;
+        text-size-adjust: 100%;
+        vertical-align: middle;
+        width: 323.516px;
+        column-rule-color: rgb(99, 102, 109);
+        perspective-origin: 161.75px 18.5px;
+        transform-origin: 161.75px 18.5px;
+        border: 0px none rgb(99, 102, 109);
+        font: normal normal normal normal 14px / 16px sans-serif;
+        margin: 0px 13.4688px 0px 0px;
+        outline: rgb(99, 102, 109) none 0px;
+        padding: 12px 0px 0px 27px;
+    }/*#DIV_1*/
+
+    #DIV_2 {
+        background-position: -64px -94px;
+        bottom: 0px;
+        box-sizing: border-box;
+        color: rgb(99, 102, 109);
+        cursor: pointer;
+        display: inline-block;
+        height: 25px;
+        left: 0px;
+        position: relative;
+        right: 0px;
+        text-indent: -30px;
+        text-size-adjust: 100%;
+        top: 0px;
+        vertical-align: middle;
+        width: 25px;
+        column-rule-color: rgb(99, 102, 109);
+        perspective-origin: 12.5px 12.5px;
+        transform-origin: 12.5px 12.5px;
+        background: rgba(0, 0, 0, 0) url("http://www.iselect.com.au/iselect-core/v5/images/icon_sprite.png?version=1902015") repeat scroll -64px -94px / auto padding-box border-box;
+        border: 0px none rgb(99, 102, 109);
+        font: normal normal normal normal 14px / 16px sans-serif;
+        outline: rgb(99, 102, 109) none 0px;
+    }/*#DIV_2*/
+
+    #SPAN_3 {
+        bottom: 25px;
+        box-shadow: rgb(99, 102, 109) 0px 0px 4px 1px;
+        box-sizing: border-box;
+        color: rgb(99, 102, 109);
+        cursor: default;
+        display: block;
+        height: 70px;
+        left: 15px;
+        max-width: 230px;
+        min-width: 250px;
+        opacity: 0;
+        position: absolute;
+        right: -240px;
+        text-size-adjust: 100%;
+        top: -65px;
+        visibility: hidden;
+        width: 250px;
+        z-index: 50;
+        column-rule-color: rgb(99, 102, 109);
+        perspective-origin: 125px 35px;
+        transform-origin: 125px 35px;
+        background: rgb(247, 249, 250) none repeat scroll 0% 0% / auto padding-box border-box;
+        border: 0px none rgb(99, 102, 109);
+        border-radius: 5px 5px 5px 0;
+        font: normal normal normal normal 13px / 18.85px "FS Albert Web Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        margin: -5px 0px 0px;
+        outline: rgb(99, 102, 109) none 0px;
+        padding: 8px 11px;
+        transition: opacity 0.2s ease-out 0s, visibility 0.2s ease-out 0s;
+    }/*#SPAN_3*/
+
+    #SPAN_3:after {
+        bottom: -5px;
+        box-sizing: border-box;
+        color: rgb(99, 102, 109);
+        content: '"' '"';
+        cursor: default;
+        display: block;
+        height: 10px;
+        left: 0px;
+        position: absolute;
+        right: 243px;
+        text-size-adjust: 100%;
+        top: 65px;
+        visibility: hidden;
+        width: 7px;
+        column-rule-color: rgb(99, 102, 109);
+        perspective-origin: 3.5px 5px;
+        transform-origin: 3.5px 5px;
+        border-top: 5px solid rgba(0, 0, 0, 0);
+        border-right: 0px solid rgba(0, 0, 0, 0);
+        border-bottom: 5px solid rgba(0, 0, 0, 0);
+        border-left: 7px solid rgb(247, 248, 249);
+        font: normal normal normal normal 13px / 18.85px "FS Albert Web Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        outline: rgb(99, 102, 109) none 0px;
+    }/*#SPAN_3:after*/
+
+    #SPAN_3:before {
+        bottom: -9px;
+        box-sizing: border-box;
+        color: rgb(99, 102, 109);
+        content: '"' '"';
+        cursor: default;
+        display: block;
+        height: 12px;
+        left: -2px;
+        position: absolute;
+        right: 244px;
+        text-size-adjust: 100%;
+        top: 67px;
+        visibility: hidden;
+        width: 8px;
+        column-rule-color: rgb(99, 102, 109);
+        perspective-origin: 4px 6px;
+        transform-origin: 4px 6px;
+        border-top: 6px solid rgba(0, 0, 0, 0);
+        border-right: 0px solid rgba(0, 0, 0, 0);
+        border-bottom: 6px solid rgba(0, 0, 0, 0);
+        border-left: 8px solid rgba(99, 102, 109, 0.4);
+        font: normal normal normal normal 13px / 18.85px "FS Albert Web Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        outline: rgb(99, 102, 109) none 0px;
+    }/*#SPAN_3:before*/
+
+    #SPAN_4 {
+        box-sizing: border-box;
+        color: rgb(243, 0, 0);
+        text-indent: -30px;
+        text-size-adjust: 100%;
+        column-rule-color: rgb(243, 0, 0);
+        border: 0px none rgb(243, 0, 0);
+        font: normal normal normal normal 14px / 16px sans-serif;
+        outline: rgb(243, 0, 0) none 0px;
+    }/*#SPAN_4*/
+
+    paper-tooltip {
+        --paper-tooltip-background: black;
+        --paper-tooltip-text-color: var(--paper-pink-100);
+        width: 200px;
+        height: 100px;
+      }
+    </style>
+    <div id="DIV_1">
+      <paper-tooltip for="DIV_1" position="right" offset="-100">[[hint]]</paper-tooltip>
+    	<div id="DIV_2">
+    		 <span id="SPAN_3"></span>
+    	</div> [[label]] <span id="SPAN_4">*</span>
+    </div>
+  </template>
+    <script>
+        (function(Polymer) {
+            Polymer({
+                is: 'is-question-text',
+                properties: {
+                  label: { type: String, value: '' },
+                  hint: { type: String, value: '' },
+                  required: { type: Boolean, value: false }
+                }
+            });
+        })(window.Polymer);
+    </script>
+</dom-module>

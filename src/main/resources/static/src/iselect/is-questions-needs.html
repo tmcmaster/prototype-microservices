@@ -1,0 +1,68 @@
+<dom-module id="is-questions-needs">
+    <template>
+      <style>
+        :host { background-color: #eef0f2; width:1115px; display:inline-block; }
+        is-card-panel > * { clear:both; float:left; }
+      </style>
+      <is-page-header>
+        <is-breadcrumb>
+          <is-breadcrumb-ticked></is-breadcrumb-ticked>
+          <is-breadcrumb-selected></is-breadcrumb-selected>
+          <is-breadcrumb-disabled width="227" label="YOUR PREFERENCES"></is-breadcrumb-disabled>
+          <is-breadcrumb-disabled width="182" label="YOUR DETAILS"></is-breadcrumb-disabled>
+          <is-breadcrumb-disabled width="142" label="COMPARE"></is-breadcrumb-disabled>
+          <is-breadcrumb-disabled width="152" label="APPLY NOW"></is-breadcrumb-disabled>
+        </is-breadcrumb>
+      </is-page-header>
+      <is-page-body>
+        <is-page-title title="Your Usage" subtitle="To find you a great plan we need to collect some details about you."></is-page-title>
+        <is-question-box>
+          <is-question-item label="What are you looking to compare?" required="true"
+                            hint="Select what you are looking to connect at your new property or looking to compare at your current property.">
+            <is-radio-button label="Electricity &amp; Gas" background="elecGas"></is-radio-button>
+            <is-radio-button label="Electricity" background="elec"></is-radio-button>
+            <is-radio-button label="Gas" background="gas"></is-radio-button>
+          </is-question-item>
+          <is-question-item label="Do you own or rent the property?" required="true"
+                            hint="Please select if you own or rent the property.">
+              <is-radio-select>
+                <is-radio-item label="Own"></is-radio-item>
+                <is-radio-item label="Rent"></is-radio-item>
+              </is-radio-select>
+          </is-question-item>
+          <is-question-item label="Are you moving into this property?" required="true"
+                            hint="Yes - you are moving into a property that has a meter installed.">
+              <is-radio-select>
+                <is-radio-item label="Yes"></is-radio-item>
+                <is-radio-item label="No"></is-radio-item>
+              </is-radio-select>
+          </is-question-item>
+        </is-question-box>
+        <is-card-panel>
+          <is-card-info heading="Your summary" height="110">
+              <li><strong>Your suburb is</strong><br/><span>Werribee, 3030</span></li>
+          </is-card-info>
+          <is-card-quote quote="Great idea, love having everything at my finger tips and I can see in black &amp; white how much its going to cost. Thank you iSelect."
+                         person="Nickole, Victoria"></is-card-quote>
+          <is-card-info heading="Did you know?" height="220">
+            <li>We've provided over 1,000,000 energy comparisons in Australia… and counting!</li>
+            <li>iSelect is a free service to you - we don't mark up the prices on any plans.</li>
+            <!-- <li>If you're not sure what to enter give one of our specialists a call on 13 19 20. We are here to help.</li>
+            <li>'kWh' stands for kilowatt hour and is the unit of measurement for your electricity bill.</li>
+            <li>If you're not sure what to enter give one of our specialists a call on 13 19 20. We are here to help.</li>
+            <li>'MJ' stands for mega joule and is the unit of measurement for your gas bill.</li>
+            <li>If you're not sure what to enter give one of our specialists a call on 13 19 20. We are here to help.</li>
+            <li>'kWh' stands for kilowatt hour and is the unit of measurement for your electricity bill.</li>
+            <li>'MJ' stands for mega joule and is the unit of measurement for your gas bill.</li> -->
+          </is-card-info>
+        </is-card-panel>
+      </is-page-body>
+    </template>
+    <script>
+        (function(Polymer) {
+            Polymer({
+                is: 'is-questions-needs'
+            });
+        })(window.Polymer);
+    </script>
+</dom-module>

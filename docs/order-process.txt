@@ -1,0 +1,133 @@
+title Orders Process (WIP)\n
+
+' Define all of the components
+
+actor "iSelect\nConsultant" as Consultant
+actor "Web\nCustomer" as WebCustomer
+boundary "SFDC\nUI" as SFDC
+boundary "Web\nUI" as WebUI
+control "MuleSoft" as MuleSoft
+actor "MuleSoft\nScheduler" as MuleSoftScheduler
+database "Energy\nDatabase" as EnergyDatabase
+control "Application\nProcessor" as ApplicationProcessor
+actor "Legacy\nScheduler" as LegacyScheduler
+actor "Vendor" as Vendor
+
+' Group the components
+box "Users" #FFB85F
+  participant Consultant
+  participant WebCustomer
+end box
+box "Business Logic" #FCF4D9
+  participant SFDC
+  participant WebUI
+  participant MuleSoft
+  participant MuleSoftScheduler
+end box
+box "Legacy Systems" #8ED2C9
+  participant EnergyDatabase
+  participant ApplicationProcessor
+  participant LegacyScheduler
+end box
+box "External" #00AAA0
+  participant Vendor
+end box
+
+' Sequence diagram definition
+
+== Creating an order in the Legacy System ==
+
+Consultant o-> SFDC: creates an application
+activate SFDC
+deactivate SFDC
+MuleSoftScheduler -> MuleSoft: submit orders
+activate MuleSoft
+    MuleSoft -> SFDC: gets application
+    activate SFDC
+    deactivate SFDC
+    MuleSoft -> EnergyDatabase: inserts an order
+    activate EnergyDatabase
+    deactivate EnergyDatabase
+    MuleSoft -> SFDC: update Application with orderId
+    activate SFDC
+    deactivate SFDC
+deactivate MuleSoft
+WebCustomer o-> WebUI: creates an order
+activate WebUI
+    WebUI -> EnergyDatabase: inserts order
+    activate EnergyDatabase
+    deactivate EnergyDatabase
+deactivate WebUI
+
+== Send outstanding orders to vendor ==
+
+LegacyScheduler o-> ApplicationProcessor: orders to vendor job
+activate ApplicationProcessor
+    ApplicationProcessor -> EnergyDatabase: get unsent orders
+    activate EnergyDatabase
+    deactivate EnergyDatabase
+    ApplicationProcessor -> Vendor: send orders to the vendor
+deactivate ApplicationProcessor
+
+== Process reconciliation file from vendor ==
+
+Vendor o-> SFDC: send reconciliation file
+activate SFDC
+    SFDC -> SFDC: create case\n<CAF file attachement>
+    SFDC -> MuleSoft: process CAF file\n<caseId/attachmentId>
+    activate MuleSoft
+        MuleSoft -> SFDC: <ack>
+    deactivate MuleSoft
+deactivate SFDC
+MuleSoft -> SFDC: get CAF attachment
+activate MuleSoft
+activate SFDC
+    SFDC --> MuleSoft: <response>
+deactivate SFDC
+
+    MuleSoft -> ApplicationProcessor: process CAF file
+    activate ApplicationProcessor
+        ApplicationProcessor -> EnergyDatabase: update database
+        activate EnergyDatabase
+        deactivate EnergyDatabase
+    deactivate ApplicationProcessor
+    MuleSoft -> SFDC: update case
+    activate SFDC
+        SFDC --> MuleSoft: <response>
+    deactivate SFDC
+    MuleSoft -> SFDC: Update status of Applications
+    activate SFDC
+        SFDC --> MuleSoft: <response>
+    deactivate SFDC
+    MuleSoft -> SFDC: Create cases for failed applications
+    activate SFDC
+        SFDC --> MuleSoft: <response>
+    deactivate SFDC
+deactivate MuleSoft
+
+== Fix reconciliation file when invalid ==
+
+Consultant o-> SFDC: download CAF file
+activate SFDC
+deactivate SFDC
+Consultant o-> Consultant: fix CAF file
+Consultant o-> SFDC: attach new CAF to case
+activate SFDC
+    SFDC -> MuleSoft: process CAF file\n<caseId/attachmentId>
+    activate MuleSoft
+        MuleSoft -> SFDC: get CAF attachment
+        MuleSoft -> ApplicationProcessor: process CAF file
+    deactivate MuleSoft
+deactivate SFDC
+    MuleSoft -> SFDC: update case
+    MuleSoft -> SFDC: Update status of Applications
+    MuleSoft -> SFDC: Create cases for failed applications
+
+== Fix Applications that need more information ==
+
+Consultant o-> SFDC: update Application details
+Consultant o-> SFDC: mark application ready
+MuleSoftScheduler o-> MuleSoft: submit orders
+MuleSoft -> SFDC: gets application
+MuleSoft -> EnergyDatabase: update order
+MuleSoft -> EnergyDatabase: update order log

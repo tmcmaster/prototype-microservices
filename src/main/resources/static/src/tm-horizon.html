@@ -1,0 +1,242 @@
+
+<!--
+
+  r.db("example_app").table("messages").get("ddcec248-3990-4297-8273-c8405c67057a")
+    .update({"contactEmail":"ddddddd"});
+
+-->
+<dom-module id="tm-horizon">
+  <link rel="import" href="horizon.html">
+
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+  </template>
+
+  <script>
+    (function(Polymer) {
+      Polymer({
+        is: 'tm-horizon',
+        properties: {
+          hostname: {
+            type: String,
+            notify: true,
+            value: 'localhost'
+          },
+          port: {
+            type: String,
+            notify: true,
+            value: '8181'
+          },
+          collection: {
+            type: String,
+            notify: true,
+            value: 'messages'
+          },
+          uid: {
+            type:String,
+            notify:true,
+            value: "ddcec248-3990-4297-8273-c8405c67057a"
+          },
+          data: {
+            type: Object,
+            notify: true,
+            value: {}
+          },
+          fromDatabase: {
+            type: Object,
+            notify: true,
+            value: {}
+          },
+          fromData: {
+            type: Object,
+            notify: true,
+            value: {}
+          }
+        },
+        observers: [
+          '_connectToDatabase(hostname,port)',
+          '_bindToDocument(collection,uid)',
+          '_dataToDatabase(data.*)'
+        ],
+        update: function(uidKey, uidValue, key, value) {
+          if (uidKey !== undefined && uidValue !== undefined && key !== undefined && value !== undefined) {
+            console.log('An object was updated: find ' + uidKey + '(' + uidValue + ') and set ' + key + '(' + value + ')');
+            const pathToObject = this.findPathToObject("root", this.data, uidKey, uidValue);
+            console.log('Path of changed object: ' + pathToObject.path);
+            console.log(pathToObject.object);
+            const table = this.horizon(collection);
+            const aa = table.find({"id":"4e65a483-27aa-4b99-a52a-1a3b931784a8"});
+            console.log(aa);
+            console.log('HORIZON) ----------------------');
+          }
+        },
+        save: function() {
+          const table = this.horizon(this.collection);
+          table.update(this.data);
+        },
+        findPathToObject: function(path, data, key, value) {
+          if (data[key] === value) {
+            return {path: path, object: data};
+          } else {
+            for (var i in data) {
+              var object = data[i];
+              if (object instanceof Object) {
+                 const resultPath = this.findPathToObject(path + '.' + i, object, key, value);
+                 if (resultPath !== undefined) { return resultPath; }
+              }
+            }
+          }
+          return undefined;
+        },
+        _dataToDatabase: function(data) {
+          //console.log('AAAA=================== ' + data.path);
+          // console.log(data);
+          if (data.path !== 'data' && data.value !== null)
+          {
+            const key = data.path.split('.')[1];
+            this.fromData[key] = data.value;
+            if (this.fromDatabase[key] !== data.value) {
+              const updateObject = generateUpdateObject(data.path, data.value);
+              // console.log('******** Update Object:');
+              // console.log(updateObject);
+              updateObject.id = this.uid;
+              const table = this.horizon(this.collection);
+              console.log('HORIZON) Updating database: ' + data.path + ' = ' + data.value);
+              table.update(updateObject);
+            }
+          }
+          // console.log('BBBB===================');
+        },
+        _databaseToData: function(item) {
+          console.log('==========================');
+          console.log(item);
+          console.log('==========================');
+          return;
+          //console.log(item);
+          //console.log('HORIZON) Updating object state from the database.');
+          for (i in this.data) {
+
+            //console.log('HORIZON) ** ' + i);
+            if (item[i] !== undefined && item[i] !== null && item[i] !== 'null')
+            {
+              this.fromDatabase[i] = item[i];
+              if (this.fromData[i] !== item[i]) {
+                console.log('HORIZON) self.set(data.' + i + ', ' + item[i] + ');');
+                this.set('data.' + i, item[i]);
+              }
+            }
+          }
+        },
+        _connectToDatabase: function(hostname,port) {
+          console.log('HORIZON) Connecting to database: horizon://' + hostname + ':' + port);
+          this.horizon = Horizon({host: hostname + ':' + port});
+        },
+        _bindToDocument: function(collection, uid) {
+          console.log('HORIZON) Binding to: horizon://' + this.hostname + ':' + this.port + '/' + collection + '/' + uid);
+          const table = this.horizon(collection);
+          var self = this;
+          var first = true;
+
+          console.log('HORIZON) AAA----------------------');
+          table.find({id:uid}).fetch().subscribe(function(response) {
+            console.log('HORIZON) Response received.  :-)');
+            console.log(response);
+            self.data = response;
+            console.log('HORIZON) BBB----------------------');
+            //const newObject = {};
+            //copyData(response, newObject);
+            //console.log(newObject);
+            //console.log('HORIZON) CCC----------------------');
+            //self.set('data', newObject)
+            table.find({id:uid}).watch().subscribe((item) => {
+              console.log('HORIZON) item changed.');
+              console.log(item);
+              self.set('data', item);
+            });
+          });
+
+
+
+          // table.find({id:uid}).watch().subscribe((item) => {
+          //   if (first) {
+          //     console.log('HORIZON) Initialising object state from the database.');
+          //     console.log(item);
+          //     first = false;
+          //     self.data = {};
+          //     this._createObjectFromItem(item);
+          //     // self.data = {
+          //     //   'name' : item.name,
+          //     //   'label' : item.label,
+          //     //   'type' : item.type,
+          //     //   'relevant' : item.relevant,
+          //     //   'children' : item.children.splices.indexSplices[0].object
+          //     // };
+          //   } else {
+          //     self._databaseToData(item);
+          //   }
+          // });
+        },
+        _createObjectFromItem: function(item) {
+          const object = {};
+          for (var i in item) {
+            const value = item[i];
+            if (value instanceof Object) {
+              this.data[i] = item.children.splices.indexSplices[0].object;
+            } else {
+              this.data[i] = item[i];
+            }
+          }
+        },
+        ready: function() {
+          // questions "ddcec248-3990-4297-8273-c8405c67057a"
+          // answers "2f19cbe1-7f48-4cb9-a95e-cf292bf68f9a"
+          //console.log('HORIZON) Element tm-horizon has been created.');
+        }
+      });
+
+      // function copyBeween(self, fromObject, toObject) {
+      //   for (i in toObject) {
+      //     //console.log('HORIZON) ** ' + i);
+      //     if (fromObject[i] !== undefined && fromObject[i] !== null && fromObject[i] !== 'null' && toObject[i] !== fromObject[i])
+      //     {
+      //       console.log('HORIZON) self.set(data.' + i + ', ' + item[i] + ');');
+      //       self.set('data.' + i, item[i]);
+      //     }
+      //   }
+      // }
+
+      function copyData(src, dest) {
+        for (var i in src) {
+          if (src[i] instanceof Array) {
+            dest[i] = src[i];
+            var object = src[i];
+            console.log(object);
+          } else if (src[i] instanceof Object) {
+            var object = src[i];
+            console.log(object);
+            //this.data[i] = item.children.splices.indexSplices[0].object;
+          } else {
+            dest[i] = src[i];
+          }
+        }
+      }
+      function generateUpdateObject(path, value) {
+        const items = (path.indexOf('.') ? path.split('.') : [path]);
+        const valueString = (value instanceof Object ? JSON.stringify(value) : '"' + value + '"');
+        const objectString = generateUpdateObjectString(items, valueString);
+        //console.log('Object String: ' + objectString);
+
+        eval ('var returnObject = ' + objectString);
+        return returnObject.data;
+      }
+
+      function generateUpdateObjectString(items, value) {
+        return '{' + items[0] + ':' + (items.length > 1 ? generateUpdateObjectString(items.splice(1), value) : value) + '}';
+      }
+    })(window.Polymer);
+  </script>
+</dom-module>

@@ -11,3 +11,4 @@ data
 scripts/node_modules
 src/main/resources/static/bower_components
 src/main/resources/static/junk
+.DS_Store

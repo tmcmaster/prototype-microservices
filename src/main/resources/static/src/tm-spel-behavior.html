@@ -1,0 +1,18 @@
+<script>
+  (function(Polymer) {
+    Polymer.TM = Polymer.TM || {};
+    Polymer.TM.SPELBehavior = {
+      resolveExpression: function(condition, state) {
+        //console.log('SPEL) Condition: ' + condition);
+        //console.log(state);
+        try {
+          var result = (new Function( "with(this) { return " + condition + "}")).call(state);
+          //console.log('SPEL) (' + condition + '): ' + result);
+          return result;
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    };
+  })(window.Polymer);
+</script>

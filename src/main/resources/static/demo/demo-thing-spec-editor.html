@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>Thing Bucket Demo</title>
+    <meta name="description" content="Thing Bucket Demo">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="black">
+    <link rel="icon" href="icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" href="apple-touch-icon.png">
+
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../bower_components/polymer/polymer.html">
+    <link rel="import" href="../bower_components/paper-input/paper-input.html">
+    <link rel="import" href="../bower_components/paper-card/paper-card.html">
+    <link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
+    <link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+    <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+    <link rel="import" href="../bower_components/paper-item/paper-item.html">
+    <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+
+    <dom-module id="tm-thing-spec">
+      <template>
+        <style>
+          :host { display:inline-block; box-sizing:border-box; }
+          tm-thing { padding:3px; }
+          tm-thing.label {  }
+          tm-thing.name {  }
+          tm-thing.type {  }
+          tm-thing.size {  }
+          tm-thing.visible {  }
+        </style>
+        <paper-card heading="[[label]]" class$="[[size]]">
+          <div class="card-content">
+            <paper-input label="Label" value="{{label}}" class="label"></paper-input>
+            <paper-input label="Name" value="{{name}}" class="name"></paper-input>
+            <paper-input label="Type" value="{{type}}" class="type"></paper-input>
+            <paper-input label="Size" value="{{size}}" class="size"></paper-input>
+            <paper-input label="Visible" value="{{label}}" class="visible"></paper-input>
+            <template is="dom-repeat" items="[[children]]">
+              <tm-thing-spec label="{{item.label}}" name="{{item.name}}" type="{{item.type}}"
+                size="{{item.size}}" children="[[item.children]]"
+                visible="[[item.visible]]" class$="[[item.size]]">
+              </tm-thing-spec>
+            </template>
+          </div>
+        </paper-card>
+      </template>
+      <script>
+        (function(Polymer) {
+          Polymer({
+            is: 'tm-thing-spec',
+            properties: {
+              label: { type:String, notify:true, value:'' },
+              name: { type:String, notify:true, value:'' },
+              type: { type:String, notify:true, value:'' },
+              size: { type:String, notify:true, size:'' },
+              visible: { type:Boolean, notify:true, value:true },
+              children: { type:Array, notify: true, value:[] }
+            }
+          });
+        })(window.Polymer);
+      </script>
+    </dom-module>
+
+    <dom-module id="tm-thing">
+      <template>
+        <style>
+          :host { display:inline-block; box-sizing:border-box; }
+          tm-thing { padding:3px; }
+          tm-thing > * { width:100%; }
+          tm-thing.large { width:100%; }
+          tm-thing.medium { width:49%; }
+          tm-thing.small { width:32%; }
+          tm-thing.smallx2 { width:64%; }
+        </style>
+        <template is="dom-if" if="[[_isType(type,'group')]]" restamp="true">
+          <paper-card heading="[[label]]" class$="[[size]]">
+            <div class="card-content">
+                <template is="dom-repeat" items="[[children]]">
+                    <template is="dom-if" if="[[item.visible]]" restamp="true">
+                      <tm-thing label="{{item.label}}" name="{{item.name}}" type="{{item.type}}"
+                        size="{{item.size}}" children="[[item.children]]"
+                        visible="[[item.visible]]" class$="[[item.size]]">
+                      </tm-thing>
+                    </template>
+                </template>
+            </div>
+          </paper-card>
+        </template>
+        <template is="dom-if" if="[[_isType(type,'text')]]" restamp="true">
+          <paper-input label="[[label]]" value="{{value}}" class$="[[size]]" ></paper-input>
+        </template>
+        <template is="dom-if" if="[[_isType(type,'checkbox')]]" restamp="true">
+          <paper-checkbox checked$="[[value]]" class$="[[size]]">[[label]]</paper-checkbox>
+        </template>
+      </template>
+      <script>
+        (function(Polymer) {
+          Polymer({
+            is: 'tm-thing',
+            properties: {
+              label: { type:String, notify:true, value:'' },
+              name: { type:String, notify:true, value:'' },
+              type: { type:String, notify:true, value:'' },
+              size: { type:String, notify:true, value:'' },
+              visible: { type:Boolean, notify:true, value:true },
+              children: { type:Array, notify: true, value:[] }
+            },
+            _isType: function(type,required) { return (type == required); }
+          });
+        })(window.Polymer);
+      </script>
+    </dom-module>
+
+  </head>
+  <body unresolved>
+    <template is="dom-bind">
+      <iron-ajax auto url="things.json" handle-as="json" last-response="{{data}}"></iron-ajax>
+      <tm-thing-spec label="{{data.label}}" name="{{data.name}}" type="{{data.type}}"
+          value="{{data.value}}" visible="{{data.visible}}"
+          size="{{data.size}}" children="{{data.children}}" class$="[[data.size]]">
+      </tm-thing-spec>
+      <tm-thing label="{{data.label}}" name="{{data.name}}" type="{{data.type}}"
+          value="{{data.value}}" visible="{{data.visible}}"
+          size="{{data.size}}" children="{{data.children}}" class$="[[data.size]]">
+      </tm-thing>
+    </template>
+  </body>
+</html>

@@ -77,7 +77,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <!-- Drawer content -->
       <app-drawer>
         <app-toolbar>POJOs at REST</app-toolbar>
+
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+          <hr/>
           <a name="questions" href="/questions">Questions</a>
           <a name="needs" href="/needs">Needs</a>
           <a name="recommendations" href="/recommendations">Recommendations</a>
@@ -87,6 +89,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <a name="leads" href="/leads">Leads</a>
           <a name="correspondence" href="/correspondence">Correspondence</a>
           <a name="cases" href="/cases">Case</a>
+          <hr/>
+          <a name="customer" href="/customer">Customer</a>
+          <a name="consultant" href="/consultant">Consultant</a>
+          <a name="vendor" href="/vendor">Vendor</a>
+          <hr/>
         </iron-selector>
       </app-drawer>
 
@@ -105,7 +112,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             attr-for-selected="name"
             fallback-selection="view404"
             role="main">
-          <my-questions name="questions"></my-questions>
+          <my-questions name="questions">
+            <template id="templ">
+              <paper-input label="Description2" value="{{item.description}}"></paper-input>
+          </template>
+          </my-questions>
           <my-needs name="needs"></my-needs>
           <my-recommendations name="recommendations"></my-recommendations>
           <my-products name="products"></my-products>
@@ -114,6 +125,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <my-leads name="leads"></my-leads>
           <my-correspondence name="correspondence"></my-correspondence>
           <my-cases name="cases"></my-cases>
+          <my-customer name="customer"></my-customer>
           <my-view404 name="view404"></my-view404>
         </iron-pages>
       </app-header-layout>
@@ -137,7 +149,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ],
 
       _routePageChanged: function(page) {
-        this.page = page || 'questions';
+        this.page = page || 'needs';
       },
 
       _pageChanged: function(page) {

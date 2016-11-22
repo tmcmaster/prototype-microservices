@@ -113,6 +113,9 @@
                 this.selectedId = '';
                 this.refreshList();
             },
+            shouldDisableButtons: function(add,edit,search) {
+               return (add || edit || search)
+            },
             filterList: function() {
                 console.log('Searching for ' + this.type);
                 this.search = false;

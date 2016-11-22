@@ -1,0 +1,98 @@
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+
+<dom-module id="tm-crudify-view">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      div.hide-true {
+        display: none;
+      }
+    </style>
+
+    <div>
+      <content select="#listTemplate"></content>
+      <content select="#viewTemplate"></content>
+    </div>
+
+    <paper-input label="Current State Mode" value="{{state.mode}}"></paper-input>
+
+    <template id="viewPlaceHolder" is="dom-template"></template>
+
+    <div id="bbb" class$="hide-[[_hide(mode, 'view')]]">
+
+      <!-- <template id="viewPlaceHolder" is="dom-bind"></template> -->
+
+      <!-- <template id="repeater" is="dom-repeat" items="[[data]]"></template> -->
+    </div>
+
+    <!-- <template id="aaa" is="dom-if" if="[[isListMode(mode)]]" restamp="true"> -->
+    <!-- <div class$="hide-[[_hide(mode, 'list')]]"> -->
+      <template id="listRepeat" is="dom-repeat" items="[[data]]">
+
+      </template>
+    <!-- </div> -->
+    <!-- </template> -->
+  </template>
+  <script>
+    (function(Polymer) {
+      Polymer({
+        is: 'tm-crudify-view',
+        properties: {
+          data: {
+            type:Array,
+            notify:true,
+            value: [
+              {title:"title 1", "description":"description 1"},
+              {title:"title 2", "description":"description 2"},
+              {title:"title 3", "description":"description 3"}
+            ]
+          },
+          test: {
+            type:String,
+            value:"sdfasdf"
+          },
+          mode: {
+            type: String,
+            notify: true,
+            value: "list"
+          },
+          state: {
+            type: Object,
+            notify: true,
+            value: {
+              mode: 'aaa',
+              test: 'AAA'
+            }
+          },
+          hack: {
+            type: Array,
+            value: []
+          }
+        },
+        observers: [
+          'debug(type)'
+        ],
+        isListMode: function(mode, requiredMode) {
+          console.log(requiredMode);
+          return true;
+        },
+        debug: function(object) {
+          console.log(object);
+        },
+        _hide: function(mode, isNotMode) {
+          return mode !== isNotMode;
+        },
+        ready: function() {
+          console.log('Element tm-crudify-view has been created.');
+          this.$.listRepeat.templatize(this.querySelector('#listTemplate'));
+          var t = this.querySelector('#viewTemplate');
+          this.$.viewPlaceHolder.templatize(t);
+          Polymer.dom.flush();
+        }
+      });
+    })(window.Polymer);
+  </script>
+</dom-module>

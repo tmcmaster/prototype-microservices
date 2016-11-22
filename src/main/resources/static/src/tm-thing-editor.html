@@ -1,0 +1,67 @@
+<dom-module id="tm-thing-editor">
+  <template>
+    <style>
+      :host { display: block; box-sizing: border-box;}
+      div.spec { width:40%; float:left; }
+      div.thing { width:58%; float:right; }
+      div.wrapper { display: inline-block; width:100%;}
+    </style>
+
+    <!-- <iron-ajax auto url="../data/energy-needs-questions.json" handle-as="json" last-response="{{questions}}"></iron-ajax> -->
+    <!-- <iron-ajax auto url="../data/energy-needs-answers.json" handle-as="json" last-response="{{answers}}"></iron-ajax> -->
+    <tm-horizon id="hzquestions" data="{{questions}}" collection="questions" uid="d70a61b2-eaa6-498a-8d4c-84f4fec53215"></tm-horizon>
+    <tm-horizon id="hzanswers" data="{{answers}}" collection="needs" uid="ac54dcfc-1f4e-4fbd-b29a-e0279294884a"></tm-horizon>
+
+    <div class="wrapper">
+      <div class="spec">
+        <tm-thing-spec spec="{{questions}}">
+          <paper-icon-button style="float:right; padding-top:0px;" on-tap="_saveDocument" icon="save" raised>Save</paper-icon-button>
+        </tm-thing>
+      </div>
+      <div class="thing">
+        <tm-thing data="{{questions}}" answers="{{answers}}" class$="[[questions.size]]" on-tm-changed="_listenForChange"></tm-thing>
+      </div>
+    </div>
+  </template>
+  <script>
+    (function(Polymer) {
+      Polymer({
+        is: 'tm-thing-editor',
+        properties: {
+          questions: { type:Object, notify:true },
+          answers: { type:Object, notify:true },
+        },
+        listeners: {
+          'tm-changed': '_listenForChange'
+        },
+        _listenForChange: function(object) {
+          console.log('GGGGGGGGG');
+          console.log(object);
+        },
+        _saveDocument: function() {
+          this.$.hzquestions.save();
+        },
+        ready: function() {
+          //console.log('tm-thing-editor has been created. :-)');
+          //console.log(this.questions);
+          //const self = this;
+          // this.querySelector('tm-thing-spec').addEventListener('valueChanged', function(ev) {
+          //   console.log(ev);
+          //   const key = ev.detail.change.path.split('.')[1];
+          //   const name = ev.detail.spec.name;
+          //   const label = ev.detail.spec.label;
+          //   const uidKey = (key === 'name' ? 'label' : 'name');
+          //   const uidValue = (key === 'name' ? label : name);
+          //   const value = ev.detail.change.value;
+          //   //self.$.horizon.update(uidKey, uidValue, key, value);
+          // });
+        }
+      });
+    })(window.Polymer);
+  </script>
+</dom-module>
+
+<!--
+{"children": [{}, {}, {"children": [{"label": "Customer DETAILS"}]}]}
+{"children": {"2" : {"children": {"0" : {"label": "Customer DETAILS"}}}}}
+-->

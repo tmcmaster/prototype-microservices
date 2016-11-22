@@ -1,0 +1,161 @@
+<dom-module id="tm-rethinkdb-test">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <iron-ajax id="review" url="http://localhost:8090/need/review/b3aa79ec-7abe-47b1-8061-26c465d06c41"></iron-ajax>
+
+    <paper-input label="Name" value="{{name}}"></paper-input>
+    <paper-input label="ID" value="{{object.id}}"></paper-input>
+    <paper-input label="Author" value="{{object.author}}"></paper-input>
+    <paper-input label="Text" value="{{object.text}}"></paper-input>
+    <paper-input label="StuffA" value="{{object.stuff.a}}"></paper-input>
+    <paper-input label="Relevant" value="{{object.relevant}}"></paper-input>
+    <paper-input label="Visible" value="{{object.visible}}"></paper-input>
+    <paper-input label="Type" value="{{object.type}}"></paper-input>
+    <paper-dropdown-menu value="{{object.type}}" label="Type">
+      <paper-listbox selected="1" class="dropdown-content">
+        <paper-item>text</paper-item>
+        <paper-item>checkbox</paper-item>
+      </paper-listbox>
+    </paper-dropdown-menu>
+    <paper-input label="Label" value="{{object.label}}"></paper-input>
+    <paper-input label="Value" value="{{object.value}}"></paper-input>
+
+    <template is="dom-if" if="[[object.visible]]" restamp="true">
+      <paper-card heading="Question Card">
+        <template is="dom-if" if="[[_isText(object.type)]]" restamp="true">
+          <div class="card-content">
+            <paper-input label="[[object.label]]" value="{{object.value}}"></paper-input>
+          </div>
+        </template>
+        <template is="dom-if" if="[[_isCheckbox(object.type)]]" restamp="true">
+          <div class="card-content">
+            <paper-checkbox checked$="[[happy]]">[[object.label]]</paper-checkbox>
+          </div>
+        </template>
+      </paper-card>
+    </template>
+
+  </template>
+  <script src="node_modules/\@horizon/client/dist/horizon.js"></script>
+  <script>
+    (function(Polymer) {
+
+      const horizon = Horizon({host: 'localhost:8181'});
+      const table = horizon('messages');
+
+      Polymer({
+        is: 'tm-rethinkdb-test',
+        properties: {
+          name: {
+            type:String,
+            notify:true,
+            value: 'sdafasfd'
+          },
+          object: {
+            type: Object,
+            notify: true,
+            value: {
+              id: 'id',
+              author: 'author',
+              text: 'This is some text',
+              type: 'text',
+              label: 'This is the label',
+              value: 'This is the value'
+            },
+            observer: '_objectChanged'
+          },
+          happy: {
+            type: Boolean,
+            notify: true,
+            computed: '_computeHappy(object.value)'
+          }
+        },
+        _computeHappy: function(value) {
+          return (value == 'true');
+        },
+        _objectChanged: function(oldValue, newValue) {
+            console.log('#### Object has changed.');
+            console.log(oldValue);
+            console.log(newValue);
+            console.log('####################');
+        },
+        observers: [
+          'debug(object.*)'
+        ],
+        _isText : function(type) {
+          return (type == 'text');
+        },
+        _isCheckbox: function(type) {
+          return (type == 'checkbox');
+        },
+        debug: function(object) {
+          console.log(object);
+          console.log(object.path + ' changed to ' + object.value);
+
+          if (object.path == 'object.text'
+                || object.path == 'object.relevant'
+                //|| object.path == 'object.type'
+                || object.path == 'object.label'
+                || object.path == 'object.value'
+                || object.path == 'object.author')
+          {
+            // update database
+            console.log('Building update object for: ' + object.path);
+            const updateObject = generateUpdateObject(object.path, object.value);
+            console.log('******** Update Object:');
+            console.log(updateObject);
+            updateObject.id = "b3aa79ec-7abe-47b1-8061-26c465d06c41";
+            table.update(updateObject);
+            // review new document server side
+            this.$.review.generateRequest();
+          }
+        },
+        ready: function() {
+          console.log('Element tm-rethinkdb-test has been created.');
+          table.fetch().subscribe((result) => {
+            console.log('Need to update local list');
+            console.log(result)
+            console.log('Local list should have been updated.');
+          });
+
+          table.find({id:"b3aa79ec-7abe-47b1-8061-26c465d06c41"}).watch().subscribe(
+            (item) => {
+              console.log(item);
+              for (i in item) {
+                console.log('** ' + i);
+                if (this.object[i] !== item[i])
+                {
+                  console.log('##' + i + 'from ' + this.object[i] + ' to ' + item[i]);
+                  //this.object[i] = item[i];
+                  this.set('object.' + i, item[i]);
+                }
+              }
+            }
+          );
+        }
+      });
+
+      //console.log('DEBUG: ');
+      //console.log(generateUpdateObject("a.b.c.d.e.f", 2));
+
+      function generateUpdateObject(path, value) {
+        const items = (path.indexOf('.') ? path.split('.') : [path]);
+        const valueString = (value instanceof Object ? JSON.stringify(value) : '"' + value + '"');
+        const objectString = generateUpdateObjectString(items, valueString);
+        console.log('Object String: ' + objectString);
+
+        eval ('var returnObject = ' + objectString);
+        return returnObject.object;
+      }
+
+      function generateUpdateObjectString(items, value) {
+        return '{' + items[0] + ':' + (items.length > 1 ? generateUpdateObjectString(items.splice(1), value) : value) + '}';
+      }
+
+    })(window.Polymer);
+  </script>
+</dom-module>

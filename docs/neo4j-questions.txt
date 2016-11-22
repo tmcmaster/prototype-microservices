@@ -1,0 +1,51 @@
+MATCH (n)-[r]-(m) delete r,n,m;
+
+CREATE
+    (questionnaireEnergy:Questionnaire {title: 'Energy Questions'}),
+
+    (contactPage:Page {title:'First Page', order:1}),
+    (miscPage:Page {title:'Second Page', order:2}),
+
+    (questionnaireEnergy)-[:CONTAINS]->(contactPage),
+    (questionnaireEnergy)-[:CONTAINS]->(miscPage),
+
+    (contactGroup:Group {title:'Contact Details', order:1}),
+    (addressGroup:Group {title:'Address', order:2}),
+    (miscGroup:Group {title:'', order:1}),
+
+    (titleQuestion:Question {title: 'Title', order:1}),
+    (nameQuestion:Question {title: 'Name', order:2}),
+    (mobileQuestion:Question {title: 'Mobile', order:3, relevant:'', required:'', readonly:'', constraint:'', calculate:''}),
+
+    (optionTitle1:Option {title: 'Mr', order:1}),
+    (optionTitle2:Option {title: 'Mrs', order:2}),
+    (optionTitle3:Option {title: 'Miss', order:3}),
+    (optionTitle4:Option {title: 'Ms', order:4}),
+    (optionTitle5:Option {title: 'Dr', order:5}),
+
+    (titleQuestion)-[:HAS_OPTION]->(optionTitle1),
+    (titleQuestion)-[:HAS_OPTION]->(optionTitle2),
+    (titleQuestion)-[:HAS_OPTION]->(optionTitle3),
+    (titleQuestion)-[:HAS_OPTION]->(optionTitle4),
+    (titleQuestion)-[:HAS_OPTION]->(optionTitle5),
+
+    (numberQuestion:Question {title: 'Number', order:1}),
+    (streetQuestion:Question {title: 'Street', order:2}),
+    (typeQuestion:Question {title: 'Type', order:3}),
+
+    (aaaQuestion:Question {title: 'AAA', order:1}),
+    (bbbQuestion:Question {title: 'BBB', order:2}),
+
+    (contactPage)-[:CONTAINS]->(contactGroup),
+    (contactGroup)-[:CONTAINS]->(titleQuestion),
+    (contactGroup)-[:CONTAINS]->(nameQuestion),
+    (contactGroup)-[:CONTAINS]->(mobileQuestion),
+
+    (contactPage)-[:CONTAINS]->(addressGroup),
+    (addressGroup)-[:CONTAINS]->(numberQuestion),
+    (addressGroup)-[:CONTAINS]->(streetQuestion),
+    (addressGroup)-[:CONTAINS]->(typeQuestion),
+
+    (miscPage)-[:CONTAINS]->(miscGroup),
+    (miscGroup)-[:Contains]->(aaaQuestion),
+    (miscGroup)-[:Contains]->(bbbQuestion);

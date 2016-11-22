@@ -1,0 +1,38 @@
+<dom-module id="is-question-box">
+    <template>
+    <style>
+    :host { display: inline-block; float:left; }
+    #DIV_1 {
+        box-sizing: border-box;
+        color: rgb(99, 102, 109);
+        height: 440px;
+        text-size-adjust: 100%;
+        width: 814px;
+        column-rule-color: rgb(99, 102, 109);
+        perspective-origin: 372px 220px;
+        transform-origin: 372px 220px;
+        background: rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box;
+        border: 0px none rgb(99, 102, 109);
+        border-radius: 7px 7px 7px 7px;
+        font: normal normal normal normal 16px / 23.2px sans-serif;
+        margin: 0px 0px 20px;
+        outline: rgb(99, 102, 109) none 0px;
+        padding: 35px;
+    }/*#DIV_1*/
+
+    </style>
+    <div id="DIV_1">
+      <content></content>
+    </div>
+  </template>
+    <script>
+        (function(Polymer) {
+            Polymer({
+                is: 'is-question-box',
+                properties: {
+                  title: { type:String, value:'' }
+                }
+            });
+        })(window.Polymer);
+    </script>
+</dom-module>

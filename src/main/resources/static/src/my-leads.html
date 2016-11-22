@@ -1,4 +1,4 @@
-<dom-module id="my-products">
+<dom-module id="my-leads">
     <template>
     <style include="shared-styles">
       :host {
@@ -54,37 +54,36 @@
        </div>
      </template>
 
-    <iron-list id="aaaa" items="[[data.content]]" class="">
-      <template>
-      	<div class="card">
-          <paper-card heading="{{item.title}}">
-            <div class="card-content">([[item.description]])</div>
-            <paper-icon-button icon="create"
-            				   on-tap="openEdit"
-            				   disabled$="[[shouldDisableButtons(add,edit,search)]]"
-            				   data-id$="[[item.id]]"
-            				   data-title$="[[item.title]]"
-            				   data-description$="[[item.description]]">
-            </paper-icon-button>
-            <paper-icon-button icon="delete"
-                               on-tap="deleteObject"
-                               disabled$="[[shouldDisableButtons(add,edit,search)]]"
-            				   data-id$="[[item.id]]">
-            </paper-icon-button>
-          </paper-card>
-        </div>
-      </template>
-    </iron-list>
-
+      <iron-list id="aaaa" items="[[data.content]]" class="">
+        <template>
+                <div class="card">
+            <paper-card heading="{{item.title}}">
+              <div class="card-content">([[item.description]])</div>
+              <paper-icon-button icon="create"
+                                           on-tap="openEdit"
+                                           disabled$="[[shouldDisableButtons(add,edit,search)]]"
+                                           data-id$="[[item.id]]"
+                                           data-title$="[[item.title]]"
+                                           data-description$="[[item.description]]">
+              </paper-icon-button>
+              <paper-icon-button icon="delete"
+                                 on-tap="deleteObject"
+                                 disabled$="[[shouldDisableButtons(add,edit,search)]]"
+                                           data-id$="[[item.id]]">
+              </paper-icon-button>
+            </paper-card>
+          </div>
+        </template>
+      </iron-list>
     </template>
 
     <script>
         Polymer({
-            is: 'my-products',
+            is: 'my-leads',
             behaviors: [Polymer.TM.Crudify],
             ready: function() {
                 this.init({
-                  type: 'product',
+                  type: 'lead',
                   fields: ["title", "description"]
                 });
             }
