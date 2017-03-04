@@ -18,6 +18,7 @@ import au.id.mcmaster.scratch.common.DomainObjectFactory;
 import au.id.mcmaster.scratch.common.DomainRef;
 import au.id.mcmaster.scratch.common.GenericController;
 import au.id.mcmaster.scratch.common.GenericRestClient;
+import io.swagger.annotations.Api;
 
 /**
  * Page MicroService
@@ -30,9 +31,10 @@ import au.id.mcmaster.scratch.common.GenericRestClient;
  */
 
 @RestController
+@Api(value = "/page", description = "Manages Pages with a RESTful CRUD API")
 @RequestMapping("${domain.page.mapping:/page}")
 @ConditionalOnExpression("${domain.page.enabled:true}")
-class PageController extends GenericController<PageMmicroService, PageRepository, PageFactory>
+class PageController extends GenericController<PageMicroService, PageRepository, PageFactory>
 {
     @Autowired
     private PageService pageService;
@@ -75,7 +77,7 @@ class PageHealth implements HealthIndicator
  * Repository
  */
 
-interface PageRepository extends MongoRepository<PageMmicroService, String>
+interface PageRepository extends MongoRepository<PageMicroService, String>
 {
 }
 
@@ -84,12 +86,12 @@ interface PageRepository extends MongoRepository<PageMmicroService, String>
  */
 
 @Component
-class PageFactory extends DomainObjectFactory<PageMmicroService>
+class PageFactory extends DomainObjectFactory<PageMicroService>
 {
     @Override
-    public PageMmicroService example()
+    public PageMicroService example()
     {
-        PageMmicroService pageObject = new PageMmicroService();
+        PageMicroService pageObject = new PageMicroService();
         pageObject.setTitle("Title");
         pageObject.setDescription("Description");
         return pageObject;
@@ -101,7 +103,7 @@ class PageFactory extends DomainObjectFactory<PageMmicroService>
  */
 
 @Component
-class PageClient extends GenericRestClient<PageMmicroService>
+class PageClient extends GenericRestClient<PageMicroService>
 {
     @Autowired
     public PageClient(@Value("${gateway.uri}") final String gatewayUri,
@@ -116,7 +118,7 @@ class PageClient extends GenericRestClient<PageMmicroService>
  */
 
 @XmlRootElement
-class PageMmicroService extends DomainRef
+class PageMicroService extends DomainRef
 {
     private String description;
 

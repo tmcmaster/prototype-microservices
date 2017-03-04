@@ -1,0 +1,33 @@
+
+<dom-module id="imov-book-a-call">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Book a Call</h2>
+  </template>
+  <script>
+    (function(Polymer) {
+      Polymer({
+        is: 'imov-book-a-call',
+        properties: {
+          data: {
+            type:String,
+            notify:true
+          }
+        },
+        observers: [
+          'debug(data)'
+        ],
+        debug: function(object) {
+          console.log(object);
+        },
+        ready: function() {
+          console.log('Element imov-book-a-cal has been created.');
+        }
+      });
+    })(window.Polymer);
+  </script>
+</dom-module>

@@ -18,6 +18,7 @@ import au.id.mcmaster.scratch.common.DomainObjectFactory;
 import au.id.mcmaster.scratch.common.DomainRef;
 import au.id.mcmaster.scratch.common.GenericController;
 import au.id.mcmaster.scratch.common.GenericRestClient;
+import io.swagger.annotations.Api;
 
 /**
  * Quote MicroService
@@ -30,6 +31,7 @@ import au.id.mcmaster.scratch.common.GenericRestClient;
  */
 
 @RestController
+@Api(value = "/quote", description = "Manages Quotes with a RESTful CRUD API")
 @RequestMapping("${domain.quote.mapping:/quote}")
 @ConditionalOnExpression("${domain.quote.enabled:true}")
 class QuoteController extends GenericController<Quote, QuoteRepository, QuoteFactory>

@@ -1,0 +1,63 @@
+
+<dom-module id="imov-prototype">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      paper-card {
+        width:100%;
+        height:500px;
+        border:solid blue 1px;
+      }
+      div.page {
+        padding:15px;
+      }
+    </style>
+    <tm-app-structure app-title="Movers"
+                      titles="Choose Service,
+                              Your Needs,
+                              Review Recommendations,
+                              More Plans,
+                              Change Sort Order,
+                              Plan Details,
+                              Add to Shortlist,
+                              Get Connected,
+                              Book a Call,
+                              Call Confirmation"
+                      selected="3">
+      <div class="page"><imov-choose-services/></div>
+      <div class="page"><imov-your-needs/></div>
+      <div class="page"><imov-review-recommendations/></div>
+      <div class="page"><imov-more-plans/></div>
+      <div class="page"><imov-change-sort-order/></div>
+      <div class="page"><imov-plan-details/></div>
+      <div class="page"><imov-sign-in/></div>
+      <div class="page"><imov-get-connected/></div>
+      <div class="page"><imov-book-a-call/></div>
+      <div class="page"><imov-call-confirmation/></div>
+    </tm-app-structure>
+  </template>
+  <script>
+    (function(Polymer) {
+      Polymer({
+        is: 'imov-prototype',
+        properties: {
+          data: {
+            type:String,
+            notify:true
+          }
+        },
+        observers: [
+          'debug(data)'
+        ],
+        debug: function(object) {
+          console.log(object);
+        },
+        ready: function() {
+          console.log('Element imov-prototype has been created.');
+        }
+      });
+    })(window.Polymer);
+  </script>
+</dom-module>

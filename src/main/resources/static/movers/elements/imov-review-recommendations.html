@@ -1,0 +1,53 @@
+
+<dom-module id="imov-review-recommendations">
+  <template>
+    <style>
+      :host {
+        display: block;
+        /*width:100%;
+        height:100%;
+        border:solid red 1px;*/
+      }
+      paper-card {
+        width: 100%;
+        height: 150px;
+        border: solid red 1px;
+      }
+    </style>
+    <h2>Review Recommendations</h2>
+    <template is="dom-repeat" items="[[products]]">
+      <paper-card>
+        <div class="card-content">[[item.title]]</div>
+      </paper-card>
+    </template>
+
+  </template>
+  <script>
+    (function(Polymer) {
+      Polymer({
+        is: 'imov-review-recommendations',
+        properties: {
+          products: {
+            type: Array,
+            notify:true,
+            value: [
+              {title: 'Product 1'},
+              {title: 'Product 2'},
+              {title: 'Product 3'},
+              {title: 'Product 4'}
+            ]
+          }
+        },
+        observers: [
+          'debug(products)'
+        ],
+        debug: function(object) {
+          console.log('Updating Products: ', object);
+        },
+        ready: function() {
+          console.log('Element imov-review-recommendations has been created.');
+        }
+      });
+    })(window.Polymer);
+  </script>
+</dom-module>

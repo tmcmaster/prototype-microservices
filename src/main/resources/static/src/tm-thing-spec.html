@@ -10,6 +10,8 @@
       paper-icon-button { float:right; padding-top:0px; }
       paper-input, div.wrapper { width: 100%; }
       div.children { display:inline-block; padding-top: 12px; }
+      .medium { width: 50%; box-sizing: border-box; margin:0px; display: inline-block; }
+      .small { width: 24%; box-sizing: border-box; margin:0px; display: inline-block; }
     </style>
     <paper-card class="editor">
       <div class="card-content">
@@ -21,11 +23,14 @@
         </h2>
         <div class$="hide-[[minimised]] wrapper">
           <div class="fields">
-            <paper-input label="Name" value="{{spec.name}}"></paper-input>
+            <paper-input label="Name" value="{{spec.name}}" class="medium"></paper-input>
+            <tm-dropdown label="Type" value="{{spec.type}}" options="[[types]]" class="small"></tm-dropdown>
+            <tm-dropdown label="Size" value="{{spec.size}}" options="[[sizes]]" class="small"></tm-dropdown>
             <paper-input label="Label" value="{{spec.label}}"></paper-input>
-            <tm-dropdown label="Type" value="{{spec.type}}" options="[[types]]"></tm-dropdown>
             <paper-input label="Relevant" value="{{spec.relevant}}"></paper-input>
-            <tm-dropdown label="Size" value="{{spec.size}}" options="[[sizes]]"></tm-dropdown>
+            <paper-input label="Required" value="{{spec.required}}"></paper-input>
+            <paper-input label="Readonly" value="{{spec.readonly}}"></paper-input>
+            <paper-input label="Calculated" value="{{spec.calculated}}"></paper-input>
           </div>
           <div class="children">
             <template is="dom-if" if="[[_isGroup(spec.type)]]" restamp="true">

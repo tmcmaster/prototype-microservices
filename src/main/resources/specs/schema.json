@@ -1,0 +1,320 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+        "order": {
+            "type": "object",
+            "properties": {
+                "contactDetails": {
+                    "type": "object",
+                    "properties": {
+                        "primaryAccount": {
+                            "type": "object",
+                            "properties": {
+                                "title": {
+                                    "type": "string"
+                                },
+                                "firstName": {
+                                    "type": "string"
+                                },
+                                "surName": {
+                                    "type": "string"
+                                },
+                                "mobileNumber": {
+                                    "type": "string"
+                                },
+                                "workNumber": {
+                                    "type": "string"
+                                },
+                                "otherNumber": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "dob": {
+                                    "type": "string"
+                                },
+                                "hasSecondaryAccount": {
+                                    "type": "string"
+                                },
+                                "hasbusinessAccount": {
+                                    "type": "string"
+                                },
+                                "secondaryAccount": {
+                                    "type": "object",
+                                    "properties": {
+                                        "title": {
+                                            "type": "string"
+                                        },
+                                        "firstName": {
+                                            "type": "string"
+                                        },
+                                        "surName": {
+                                            "type": "string"
+                                        },
+                                        "dob": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "title",
+                                        "firstName",
+                                        "surName",
+                                        "dob"
+                                    ]
+                                },
+                                "businessAccount": {
+                                    "type": "object",
+                                    "properties": {
+                                        "businessAbn": {
+                                            "type": "string"
+                                        },
+                                        "businessAcn": {
+                                            "type": "string"
+                                        },
+                                        "businessName": {
+                                            "type": "string"
+                                        },
+                                        "tradeName": {
+                                            "type": "string"
+                                        },
+                                        "industryType": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "businessName",
+                                        "industryType"
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "title",
+                                "firstName",
+                                "surName",
+                                "email",
+                                "dob",
+                                "hasSecondaryAccount"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "primaryAccount"
+                    ]
+                },
+                "personalDetails": {
+                    "type": "object",
+                    "properties": {
+                        "identityType": {
+                            "type": "string"
+                        },
+                        "identityNumber": {
+                            "type": "string"
+                        },
+                        "identityExpiryDate": {
+                            "type": "string"
+                        },
+                        "consessionCard": {
+                            "type": "string"
+                        },
+                        "consessionCardNumber": {
+                            "type": "string"
+                        },
+                        "consessionCardStartDate": {
+                            "type": "string"
+                        },
+                        "consessionCardExpiryDate": {
+                            "type": "string"
+                        },
+                        "consessionEligibility": {
+                            "type": "string"
+                        },
+                        "lifeSupportOnOutage": {
+                            "type": "string"
+                        },
+                        "lifeSupportElectricity": {
+                            "type": "string"
+                        },
+                        "lifeSupportGas": {
+                            "type": "string"
+                        },
+                        "providerToken": {
+                            "type": "string"
+                        },
+                        "solarFit": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "identityType",
+                        "identityNumber",
+                        "identityExpiryDate",
+                        "lifeSupportOnOutage",
+                        "lifeSupportElectricity",
+                        "lifeSupportGas"
+                    ]
+                },
+                "connectionDetails": {
+                    "type": "object",
+                    "properties": {
+                        "buildingNumber": {
+                            "type": "string"
+                        },
+                        "floorNumber": {
+                            "type": "string"
+                        },
+                        "lotNumber": {
+                            "type": "string"
+                        },
+                        "unitNumber": {
+                            "type": "string"
+                        },
+                        "streetNumber": {
+                            "type": "string"
+                        },
+                        "streetName": {
+                            "type": "string"
+                        },
+                        "streetType": {
+                            "type": "string"
+                        },
+                        "postCode": {
+                            "type": "string"
+                        },
+                        "suburb": {
+                            "type": "string"
+                        },
+                        "postalAddressSame": {
+                            "type": "string"
+                        },
+                        "postalAddress": {
+                            "type": "object",
+                            "properties": {
+                                "buildingNumber": {
+                                    "type": "string"
+                                },
+                                "floorNumber": {
+                                    "type": "string"
+                                },
+                                "lotNumber": {
+                                    "type": "string"
+                                },
+                                "unitNumber": {
+                                    "type": "string"
+                                },
+                                "streetNumber": {
+                                    "type": "string"
+                                },
+                                "streetName": {
+                                    "type": "string"
+                                },
+                                "streetType": {
+                                    "type": "string"
+                                },
+                                "postCode": {
+                                    "type": "string"
+                                },
+                                "suburb": {
+                                    "type": "string"
+                                },
+                                "poBox": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "streetNumber",
+                                "streetName",
+                                "streetType",
+                                "postCode",
+                                "suburb"
+                            ]
+                        },
+                        "moving": {
+                            "type": "string"
+                        },
+                        "fastConnection": {
+                            "type": "string"
+                        },
+                        "moveInDate": {
+                            "type": "string"
+                        },
+                        "ownOrRent": {
+                            "type": "string"
+                        },
+                        "planToRenovate": {
+                            "type": "string"
+                        },
+                        "renovationComplete": {
+                            "type": "string"
+                        },
+                        "meterInstructions": {
+                            "type": "string"
+                        },
+                        "nmiNumber": {
+                            "type": "string"
+                        },
+                        "mrnNumber": {
+                            "type": "string"
+                        },
+                        "providerToken": {
+                            "type": "string"
+                        },
+                        "electricityMeterNumber": {
+                            "type": "string"
+                        },
+                        "gasMeterNumber": {
+                            "type": "string"
+                        },
+                        "needVisualInspection": {
+                            "type": "string"
+                        },
+                        "electricityMeterType": {
+                            "type": "string"
+                        },
+                        "emailRatesAllMeterTypes": {
+                            "type": "string"
+                        },
+                        "solarFit": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "streetNumber",
+                        "streetName",
+                        "streetType",
+                        "postCode",
+                        "suburb",
+                        "postalAddressSame",
+                        "moving"
+                    ]
+                },
+                "termsAndConditions": {
+                    "type": "object",
+                    "properties": {
+                        "emailConsent": {
+                            "type": "string"
+                        },
+                        "marketConsent": {
+                            "type": "string"
+                        },
+                        "rateRiseConsent": {
+                            "type": "string"
+                        },
+                        "scriptConsent": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "required": [
+                "contactDetails",
+                "personalDetails",
+                "connectionDetails"
+            ]
+        }
+    },
+    "required": [
+        "order"
+    ]
+}

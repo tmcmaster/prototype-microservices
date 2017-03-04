@@ -18,6 +18,7 @@ import au.id.mcmaster.scratch.common.DomainObjectFactory;
 import au.id.mcmaster.scratch.common.DomainRef;
 import au.id.mcmaster.scratch.common.GenericController;
 import au.id.mcmaster.scratch.common.GenericRestClient;
+import io.swagger.annotations.Api;
 
 /**
  * Case MicroService
@@ -30,6 +31,7 @@ import au.id.mcmaster.scratch.common.GenericRestClient;
  */
 
 @RestController
+@Api(value = "/case", description = "Manages Cases with a RESTful CRUD API")
 @RequestMapping("${domain.case.mapping:/case}")
 @ConditionalOnExpression("${domain.case.enabled:true}")
 class CaseController extends GenericController<Case, CaseRepository, CaseFactory>

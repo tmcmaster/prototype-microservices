@@ -24,8 +24,25 @@
     <link rel="import" href="../polymer-components.html">
     <link rel="import" href="is-components.html">
 
+    <style>
+      body {
+        width:100%;
+        height:800px;
+        display:inline-block;
+        border: solid blue 1px;}
+      body > div {
+        border:solid red 1px;
+        display:inline-block;
+        width: 100%;
+        height:100%;
+        //position: relative;
+      }
+      is-questions-needs { width:1110px; margin-left:auto; margin-right:auto; position: absolute; }
+    </style>
   </head>
   <body unresolved>
-    <is-questions-needs></is-questions-needs>
+    <div>
+      <is-questions-needs></is-questions-needs>
+    </div>
   </body>
 </html>

@@ -18,6 +18,7 @@ import au.id.mcmaster.scratch.common.DomainObjectFactory;
 import au.id.mcmaster.scratch.common.DomainRef;
 import au.id.mcmaster.scratch.common.GenericController;
 import au.id.mcmaster.scratch.common.GenericRestClient;
+import io.swagger.annotations.Api;
 
 /**
  * Question MicroService
@@ -30,6 +31,7 @@ import au.id.mcmaster.scratch.common.GenericRestClient;
  */
 
 @RestController
+@Api(value = "/question", description = "Manages Questions with a RESTful CRUD API")
 @RequestMapping("${domain.question.mapping:/question}")
 @ConditionalOnExpression("${domain.question.enabled:true}")
 class QuestionController extends GenericController<Question, QuestionRepository, QuestionFactory>

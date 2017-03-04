@@ -1,0 +1,149 @@
+
+<dom-module id="tm-thing-viewer">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      h2.center { width:100%; text-align:center; }
+      .page {
+        box-sizing: border-box;
+        //height:400px;
+        width:100%;
+        padding: 0px 10px 10px 10px;
+      }
+      .card-actions {
+        @apply(--layout-vertical);
+        @apply(--layout-wrap);
+        box-sizing: border-box;
+        height:85%;
+      }
+      div.page > paper-card {
+        width:100%;
+        height:100%;
+      }
+      .card-content {
+        height:40px;
+      }
+      div.nav {
+        display:inline-block;
+        height:50px;
+        float:right;
+      }
+      div.verticals {
+        @apply(--layout-vertical);
+        @apply(--layout-wrap);
+      }
+      h1 { margin-top:0px; }
+      div.nav { margin-top:-6px;}
+      div.center { text-align:center }
+      paper-material { display:inline-block; width:100%; height: 100%;}
+    </style>
+
+    <iron-ajax auto url="[[needsUrl]]" handle-as="json" last-response="{{needs}}"></iron-ajax>
+    <tm-horizon data="{{answers}}" collection="needs" uid="ac54dcfc-1f4e-4fbd-b29a-e0279294884a"></tm-horizon>
+
+    <paper-drawer-panel id="verticals" class="flex">
+      <paper-header-panel drawer>
+        <paper-toolbar>
+          <h2 class="center">Verticals</h2>
+        </paper-toolbar>
+        <div class="verticals">
+          <template is="dom-repeat" items="[[verticals]]" as="vertical" index-as="index">
+            <paper-button raised on-tap="_selectVertical" vertical-index="[[index]]">[[vertical.title]]</paper-button>
+          </template>
+        </div>
+      </paper-header-panel>
+      <paper-header-panel main>
+        <paper-toolbar>
+          <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+          <h2>[[needs.label]]</h2>
+        </paper-toolbar>
+        <paper-material elevation="1">
+          <paper-tabs selected="{{selectedPage}}">
+            <template is="dom-repeat" items="{{needs.children}}" index-as="index">
+              <paper-tab>[[item.label]]</paper-tab>
+            </template>
+          </paper-tabs>
+          <iron-pages selected="[[selectedPage]]">
+            <template is="dom-repeat" items="{{needs.children}}" as="child" index-as="index">
+              <div class="page">
+                <paper-card>
+                  <div class="card-content">
+                    <h1>[[child.label]]<div class="nav">
+                      <paper-icon-button icon="chevron-left">Prev</paper-icon-button>
+                      <paper-icon-button icon="chevron-right">Next</paper-icon-button>
+                    </div></h1>
+                  </div>
+                  <div class="card-actions">
+                    <tm-thing data="{{child}}" answers="{{answers}}"></tm-thing>
+                  </div>
+                </paper-card>
+              <div>
+            </template>
+          </iron-pages>
+        </paper-material>
+      </paper-header-panel>
+    </paper-drawer-panel>
+
+
+  </template>
+  <script>
+    (function(Polymer) {
+      Polymer({
+        is: 'tm-thing-viewer',
+        properties: {
+          //spec: { type:Object, notify:true },
+          answers: { type:Object, notify:true, value: {} },
+          needs: { type:Object, notify:true },
+          needsUrl: { type:String, notify:true, computed: '_generateNeedsUrl(verticalObject)'},
+          selectedPage: { type:Number, notify:true, value:0 },
+          selectedVertical: { type:Number, notify:true, value:0 },
+          verticals: { type:Array, notify:true, value:[
+            { title:'Health Insurance', name:'health' },
+            { title:'Overseas Visitors Cover', name:'overseas' },
+            { title:'Electricity & Gas', name:'energy' },
+            { title:'Car Insurance', name:'motor' },
+            { title:'Broadband', name:'telco' },
+            { title:'Life Insurance', name:'life' },
+            { title:'Income Protection', name:'income' },
+            { title:'Funeral Insurance', name:'funeral' },
+            { title:'Home Loans', name:'home' },
+            { title:'Credit Cards', name:'credit' },
+            { title:'Travel Insurance', name:'travel' },
+            { title:'Mobile Phones & Plans', name:'mobile' }
+          ]},
+          verticalObject: {type:Object, notify:true, computed:'_getVerticalTitle(selectedVertical)'}
+        },
+        observers: [
+          'debug(needs)',
+        ],
+        _selectVertical: function(ev) {
+          const verticalIndex = ev.srcElement.verticalIndex;
+          console.log(this.verticals[verticalIndex].title);
+          this.set('selectedVertical', verticalIndex);
+          this.$.verticals.closeDrawer();
+        },
+        _generateNeedsUrl: function(verticalObject) {
+          return (verticalObject.name === undefined ? undefined : '../data/' + verticalObject.name +  '-needs-questions.json');
+        },
+        _getVerticalTitle: function(selectedVertical) {
+          console.log('Going to get the selected vertical title: ' + selectedVertical);
+          console.log(this.verticals);
+          return (this.verticals !== undefined ? this.verticals[selectedVertical] : 'Please select a vertical');
+        },
+        _recalculateSelected: function() {
+          //return this.selected;
+        },
+        debug: function(object) {
+          console.log(object);
+        },
+        ready: function() {
+          console.log('Element tm-thing-viewer has been created.');
+          console.log(this.verticals);
+          this.$.verticals.openDrawer();
+        }
+      });
+    })(window.Polymer);
+  </script>
+</dom-module>

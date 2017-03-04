@@ -18,6 +18,7 @@ import au.id.mcmaster.scratch.common.DomainObjectFactory;
 import au.id.mcmaster.scratch.common.DomainRef;
 import au.id.mcmaster.scratch.common.GenericController;
 import au.id.mcmaster.scratch.common.GenericRestClient;
+import io.swagger.annotations.Api;
 
 /**
  * Order MicroService
@@ -30,6 +31,7 @@ import au.id.mcmaster.scratch.common.GenericRestClient;
  */
 
 @RestController
+@Api(value = "/order", description = "Manages Orders with a RESTful CRUD API")
 @RequestMapping("${domain.order.mapping:/order}")
 @ConditionalOnExpression("${domain.order.enabled:true}")
 class OrderController extends GenericController<Order, OrderRepository, OrderFactory>

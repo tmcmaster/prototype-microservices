@@ -1,0 +1,32 @@
+
+<dom-module id="tm-swagger-ui">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+  </template>
+  <script>
+    (function(Polymer) {
+      Polymer({
+        is: 'tm-swagger-ui',
+        properties: {
+          : {
+            type:String,
+            notify:true
+          }
+        },
+        observers: [
+          'debug()'
+        ],
+        debug: function(object) {
+          console.log(object);
+        },
+        ready: function() {
+          console.log('Element tm-swagger-ui has been created.');
+        }
+      });
+    })(window.Polymer);
+  </script>
+</dom-module>

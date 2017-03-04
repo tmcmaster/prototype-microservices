@@ -1,0 +1,34 @@
+
+<dom-module id="imov-choose-services">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+    </style>
+    <h2>asdfdsafasdfasdfadfs</h2>
+  </template>
+  <script>
+    (function(Polymer) {
+      Polymer({
+        is: 'imov-choose-services',
+        properties: {
+          list: {
+            type:String,
+            notify:true
+          }
+        },
+        observers: [
+          'debug(list)'
+        ],
+        debug: function(object) {
+          console.log(object);
+        },
+        ready: function() {
+          console.log('Element imov-choose-services has been created.');
+        }
+      });
+    })(window.Polymer);
+  </script>
+</dom-module>

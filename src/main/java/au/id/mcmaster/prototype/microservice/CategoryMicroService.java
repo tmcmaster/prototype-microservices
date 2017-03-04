@@ -18,6 +18,7 @@ import au.id.mcmaster.scratch.common.DomainObjectFactory;
 import au.id.mcmaster.scratch.common.DomainRef;
 import au.id.mcmaster.scratch.common.GenericController;
 import au.id.mcmaster.scratch.common.GenericRestClient;
+import io.swagger.annotations.Api;
 
 /**
  * Category MicroService
@@ -30,6 +31,7 @@ import au.id.mcmaster.scratch.common.GenericRestClient;
  */
 
 @RestController
+@Api(value = "/category", description = "Manages Categories with a RESTful CRUD API")
 @RequestMapping("${domain.category.mapping:/category}")
 @ConditionalOnExpression("${domain.category.enabled:true}")
 class CategoryController extends GenericController<CategoryMicroService, CategoryRepository, CategoryFactory>

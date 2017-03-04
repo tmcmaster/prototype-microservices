@@ -16,6 +16,7 @@ import au.id.mcmaster.scratch.common.DomainObjectFactory;
 import au.id.mcmaster.scratch.common.DomainRef;
 import au.id.mcmaster.scratch.common.GenericController;
 import au.id.mcmaster.scratch.common.GenericRestClient;
+import io.swagger.annotations.Api;
 
 /**
  * Product MicroService
@@ -28,7 +29,9 @@ import au.id.mcmaster.scratch.common.GenericRestClient;
  * Controller
  */
 
-@RestController @RequestMapping("${domain.product.mapping}")
+@RestController 
+@Api(value = "/product", description = "Manages Products with a RESTful CRUD API")
+@RequestMapping("${domain.product.mapping:/product}")
 @ConditionalOnExpression("${domain.product.enabled:false}")
 class ProductController extends GenericController<Product, ProductRepository, ProductFactory> {
 }

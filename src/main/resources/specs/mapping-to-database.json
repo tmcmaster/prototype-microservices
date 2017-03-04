@@ -1,0 +1,16 @@
+{
+    "order": {
+      "__table" : "orders",
+        "contactDetails": {
+            "primaryAccount": {
+                "title": {
+                  "__column" : "contact_title",
+                  "__mapping" : {
+                    "Mr" : "mr",
+                    "Mrs" : "mrs"
+                  }
+                }
+            }
+        }
+    }
+}

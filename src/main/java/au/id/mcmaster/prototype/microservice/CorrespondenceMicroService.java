@@ -18,6 +18,7 @@ import au.id.mcmaster.scratch.common.DomainObjectFactory;
 import au.id.mcmaster.scratch.common.DomainRef;
 import au.id.mcmaster.scratch.common.GenericController;
 import au.id.mcmaster.scratch.common.GenericRestClient;
+import io.swagger.annotations.Api;
 
 /**
  * Correspondence MicroService
@@ -30,6 +31,7 @@ import au.id.mcmaster.scratch.common.GenericRestClient;
  */
 
 @RestController
+@Api(value = "/correspondence", description = "Manages Conrespondence with a RESTful CRUD API")
 @RequestMapping("${domain.correspondence.mapping:/correspondence}")
 @ConditionalOnExpression("${domain.correspondence.enabled:true}")
 class CorrespondenceController extends GenericController<Correspondence, CorrespondenceRepository, CorrespondenceFactory>

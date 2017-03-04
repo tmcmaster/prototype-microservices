@@ -1,0 +1,67 @@
+<dom-module id="imov-prototype">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      footer {
+        height: 64px;
+        line-height: 64px;
+        text-align: center;
+        background-color: #3f51b5;
+        font-size: 14px;
+        color: white;
+      }
+      div.panel {
+        padding:15px;
+      }
+      paper-drawer-panel {
+        border:solid red 1px;
+      }
+    </style>
+      <paper-drawer-panel force-narrow>
+        <paper-scroll-header-panel drawer class="flex" condenses>
+          <paper-toolbar>Menu</paper-toolbar>
+          <paper-button raised>sdffd</paper-button>
+        </paper-scroll-header-panel>
+        <paper-scroll-header-panel main class="flex">
+          <paper-toolbar>
+            <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+            <h2>iMovers Prototype</h2>
+            <!-- <div class="flex">iMovers Prototype</div> -->
+          </paper-toolbar>
+          <div class="panel">
+            <iron-pages selected="0">
+              <imov-choose-services></imov-choose-services>
+            </iron-pages>
+          </div>
+          <footer>
+            <h2>iMovers Prototype</h2>
+          </footer>
+        </paper-scroll-header-panel>
+      </paper-drawer-panel>
+  </template>
+  <script>
+    (function(Polymer) {
+      Polymer({
+        is: 'imov-prototype',
+        properties: {
+          data: {
+            type:String,
+            notify:true
+          }
+        },
+        observers: [
+          'debug(data)'
+        ],
+        debug: function(object) {
+          console.log(object);
+        },
+        ready: function() {
+          console.log('Element imov-prototype has been created.');
+        }
+      });
+    })(window.Polymer);
+  </script>
+</dom-module>

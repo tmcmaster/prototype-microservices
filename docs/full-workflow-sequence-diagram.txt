@@ -1,0 +1,98 @@
+actor Customer
+actor Consultant as "Customer\nConsultant"
+actor Business as "Business\nManager"
+
+boundary CustomerUI as "Customer\nUI"
+boundary ConsultantUI as "Consultant\nUI"
+boundary AdminUI as "Admin\nUI"
+boundary InternalAPIs as "API\nGateway"
+
+control NeedsSpec
+control NeedsQuestions
+control NeedsData
+control OrdersSpec
+control OrdersQuestions
+control OrdersData
+control Catalog
+control CatalogSpec
+control Order
+control Product
+
+control DataWarehouse as "Data\nWarehouse"
+control SFDC
+control CPQ
+control RecEngine as "Recommendation\nEngine"
+
+boundary ExternalAPIs as "API\nGateway"
+actor External as "External\nSystems"
+
+box "Users" #8ED2C9
+    participant Customer
+    participant Consultant
+    participant Business
+end box
+
+box "User Interfaces" #FCF4D9
+    participant CustomerUI
+    participant ConsultantUI
+    participant AdminUI
+end box
+box "Internal APIs" #FCF4D9
+    participant InternalAPIs
+end box
+box "Business Logic" #FCF4D9
+    participant NeedsSpec
+    participant NeedsQuestions
+    participant NeedsData
+    participant OrdersSpec
+    participant OrdersQuestions
+    participant OrdersData
+    participant Catalog
+    participant CatalogSpec
+    participant Order
+    participant Product
+end box
+box "Existing Infrastructure" #FFB85F
+    participant DataWarehouse
+    participant SFDC
+    participant CPQ
+    participant RecEngine
+end box
+box "External APIs" #FCF4D9
+    participant ExternalAPIs
+end box
+box "Partners" #8ED2C9
+    participant External
+end box
+
+== Partner defines category specifications ==
+
+== Partner adds products to a category ==
+
+== Business manager activates category and product changes ==
+
+== Customer Selects a product ==
+
+Customer -> CustomerUI: view categories
+  CustomerUI -> Catalog: get the category list
+  CustomerUI <- Catalog: <category list>
+Customer <- CustomerUI: display category list
+Customer -> CustomerUI: choose a category
+  
+  CustomerUI -> Needs: gets the question specs
+  activate InternalAPIs
+  activate Needs
+  CustomerUI <- Needs: <question specs>
+  deactivate Needs
+  deactivate InternalAPIs
+Customer <- CustomerUI:displays the questions
+
+== Customer Orders a Product ==
+
+== Partner excepts the product order ==
+
+== Partner rejects the product order ==
+
+== Data warehouse informed of changes ==
+
+

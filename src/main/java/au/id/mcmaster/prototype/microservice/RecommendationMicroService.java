@@ -18,6 +18,7 @@ import au.id.mcmaster.scratch.common.DomainObjectFactory;
 import au.id.mcmaster.scratch.common.DomainRef;
 import au.id.mcmaster.scratch.common.GenericController;
 import au.id.mcmaster.scratch.common.GenericRestClient;
+import io.swagger.annotations.Api;
 
 /**
  * Recommendation MicroService
@@ -30,6 +31,7 @@ import au.id.mcmaster.scratch.common.GenericRestClient;
  */
 
 @RestController
+@Api(value = "/recommendation", description = "Manages Recommendations with a RESTful CRUD API")
 @RequestMapping("${domain.recommendation.mapping:/recommendation}")
 @ConditionalOnExpression("${domain.recommendation.enabled:true}")
 class RecommendationController extends GenericController<Recommendation, RecommendationRepository, RecommendationFactory>

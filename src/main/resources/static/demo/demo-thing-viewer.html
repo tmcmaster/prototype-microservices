@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 
-    <title>Customer View</title>
+    <title>Consultant View</title>
     <meta name="description" content="Thing Bucket Demo">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="mobile-web-app-capable" content="yes">
@@ -14,23 +14,24 @@
     <link rel="apple-touch-icon-precomposed" href="apple-touch-icon.png">
 
     <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="../bower_components/polymer/polymer.html">
-    <link rel="import" href="../bower_components/paper-input/paper-input.html">
-    <link rel="import" href="../bower_components/paper-card/paper-card.html">
-    <link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
-    <link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
-    <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
-    <link rel="import" href="../bower_components/paper-item/paper-item.html">
-    <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-
-    <link rel="import" href="../src/tm-horizon.html">
+    <link rel="import" href="../src/polymer-components.html">
+    <link rel="import" href="../src/tm-thing-viewer.html">
     <link rel="import" href="../src/tm-spel-behavior.html">
     <link rel="import" href="../src/tm-dropdown.html">
     <link rel="import" href="../src/tm-thing.html">
-    <link rel="import" href="../src/tm-thing-bucket.html">
+    <link rel="import" href="../src/horizon.html">
+    <link rel="import" href="../src/tm-horizon.html">
 
+    <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
+    <style>
+      tm-thing-viewer {display:inline-block; height:100%}
+    </style>
   </head>
   <body unresolved>
-    <tm-thing-bucket></tm-thing-bucket>
+    <template is="dom-bind">
+      <!-- <iron-ajax auto url="../data/energy-needs-questions.json" handle-as="json" last-response="{{spec}}"></iron-ajax> -->
+      <!-- <tm-thing-viewer spec="{{spec}}" state="{{answers}}"></tm-thing-viewer> -->
+      <tm-thing-viewer></tm-thing-viewer>
+    </template>
   </body>
 </html>
