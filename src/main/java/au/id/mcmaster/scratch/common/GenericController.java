@@ -1,5 +1,7 @@
 package au.id.mcmaster.scratch.common;
 
+import javax.ws.rs.Produces;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+@Produces(value="application/json")
 public abstract class GenericController<T extends DomainRef, R extends MongoRepository<T, String>, F extends DomainObjectFactory<T>>
 {
     @Autowired

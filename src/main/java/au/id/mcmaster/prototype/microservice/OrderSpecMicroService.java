@@ -1,5 +1,8 @@
 package au.id.mcmaster.prototype.microservice;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +21,9 @@ import au.id.mcmaster.scratch.common.DomainObjectFactory;
 import au.id.mcmaster.scratch.common.DomainRef;
 import au.id.mcmaster.scratch.common.GenericController;
 import au.id.mcmaster.scratch.common.GenericRestClient;
-import io.swagger.annotations.Api;
 
 /**
- * Quote MicroService
+ * OrderSpec MicroService
  * 
  * @author Tim McMaster
  */
@@ -31,18 +33,17 @@ import io.swagger.annotations.Api;
  */
 
 @RestController
-@Api(value = "/quote", description = "Manages Quotes with a RESTful CRUD API")
-@RequestMapping("${domain.quote.mapping:/quote}")
-@ConditionalOnExpression("${domain.quote.enabled:true}")
-class QuoteController extends GenericController<Quote, QuoteRepository, QuoteFactory>
+@RequestMapping("${domain.orderspec.mapping:/orderspec}")
+@ConditionalOnExpression("${domain.orderspec.enabled:true}")
+class OrderSpecController extends GenericController<OrderSpec, OrderSpecRepository, OrderSpecFactory>
 {
     @Autowired
-    private QuoteService quoteService;
+    private OrderSpecService orderspecService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/test")
     public void test()
     {
-        quoteService.test();
+        orderspecService.test();
     }
 }
 
@@ -50,7 +51,7 @@ class QuoteController extends GenericController<Quote, QuoteRepository, QuoteFac
  * Service
  */
 @Service
-class QuoteService
+class OrderSpecService
 {
     @Autowired
     private ProductClient productClient;
@@ -66,7 +67,7 @@ class QuoteService
  */
 
 @Component
-class QuoteHealth implements HealthIndicator
+class OrderSpecHealth implements HealthIndicator
 {
 
     @Override
@@ -81,7 +82,7 @@ class QuoteHealth implements HealthIndicator
  * Repository
  */
 
-interface QuoteRepository extends MongoRepository<Quote, String>
+interface OrderSpecRepository extends MongoRepository<OrderSpec, String>
 {
 }
 
@@ -90,15 +91,17 @@ interface QuoteRepository extends MongoRepository<Quote, String>
  */
 
 @Component
-class QuoteFactory extends DomainObjectFactory<Quote>
+class OrderSpecFactory extends DomainObjectFactory<OrderSpec>
 {
     @Override
-    public Quote example()
+    public OrderSpec example()
     {
-        Quote quote = new Quote();
-        quote.setTitle("Title");
-        quote.setDescription("Description");
-        return quote;
+        OrderSpec orderSpecObject = new OrderSpec();
+        orderSpecObject.setTitle("Title");
+        List<OrderSpecItem> orderSpecItems = new ArrayList<OrderSpecItem>();
+        orderSpecItems.add(new OrderSpecItemFactory().example());
+        orderSpecObject.setOrderSpecItems(orderSpecItems);
+        return orderSpecObject;
     }
 }
 
@@ -107,11 +110,11 @@ class QuoteFactory extends DomainObjectFactory<Quote>
  */
 
 @Component
-class QuoteClient extends GenericRestClient<Quote>
+class OrderSpecClient extends GenericRestClient<OrderSpec>
 {
     @Autowired
-    public QuoteClient(@Value("${gateway.uri}") final String gatewayUri,
-            @Value("${domain.quote.mapping:/quote}") final String mapping)
+    public OrderSpecClient(@Value("${gateway.uri}") final String gatewayUri,
+            @Value("${domain.orderspec.mapping:/orderspec}") final String mapping)
     {
         super(gatewayUri, mapping);
     }
@@ -122,17 +125,17 @@ class QuoteClient extends GenericRestClient<Quote>
  */
 
 @XmlRootElement
-class Quote extends DomainRef
+class OrderSpec extends DomainRef
 {
-    private String description;
+    private List<OrderSpecItem> orderSpecItems;
 
-    public String getDescription()
+    public List<OrderSpecItem> getOrderSpecItems()
     {
-        return description;
+        return orderSpecItems;
     }
 
-    public void setDescription(String description)
+    public void setOrderSpecItems(List<OrderSpecItem> orderSpecItems)
     {
-        this.description = description;
+        this.orderSpecItems = orderSpecItems;
     }
 }

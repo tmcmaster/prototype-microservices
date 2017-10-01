@@ -1,5 +1,8 @@
 package au.id.mcmaster.prototype.microservice;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,8 +99,15 @@ class OrderFactory extends DomainObjectFactory<Order>
     public Order example()
     {
         Order order = new Order();
-        order.setTitle("Title");
-        order.setDescription("Description");
+        order.setTitle("Example Title");
+        order.setDescription("Example Description");
+        order.setCustomerId("Customer-001");
+        order.setProductId("Product-001");
+        order.setProductType("ProductType-001");
+        order.setStatusCode("Pending");
+        order.setStatusDescription("Waiting for order response.");
+        order.setValue("FieldOne", "ValueOne");
+        order.setValue("FieldTwo", "ValueTwo");
         return order;
     }
 }
@@ -125,7 +135,32 @@ class OrderClient extends GenericRestClient<Order>
 class Order extends DomainRef
 {
     private String description;
+    private String customerId;
+    private String productId;
+    private String productType;
+    private String statusCode;
+    private String statusDescription;
+    private Map<String,String> payload = new HashMap<String,String>();
+    
+    public Order() {
+        payload.put("FieldOne", "ValueOne");
+        payload.put("FieldTwo", "ValueTwo");
+    }
+    
+    public Map<String, String> getPayload()
+    {
+        return payload;
+    }
 
+    public void setPayload(Map<String, String> payload)
+    {
+        this.payload = payload;
+    }
+
+    public void setValue(String key, String value) {
+        this.payload.put(key, value);
+    }
+    
     public String getDescription()
     {
         return description;
@@ -134,5 +169,55 @@ class Order extends DomainRef
     public void setDescription(String description)
     {
         this.description = description;
+    }
+
+    public String getCustomerId()
+    {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId)
+    {
+        this.customerId = customerId;
+    }
+
+    public String getProductId()
+    {
+        return productId;
+    }
+
+    public void setProductId(String productId)
+    {
+        this.productId = productId;
+    }
+
+    public String getProductType()
+    {
+        return productType;
+    }
+
+    public void setProductType(String productType)
+    {
+        this.productType = productType;
+    }
+
+    public String getStatusCode()
+    {
+        return statusCode;
+    }
+
+    public void setStatusCode(String statusCode)
+    {
+        this.statusCode = statusCode;
+    }
+
+    public String getStatusDescription()
+    {
+        return statusDescription;
+    }
+
+    public void setStatusDescription(String statusDescription)
+    {
+        this.statusDescription = statusDescription;
     }
 }

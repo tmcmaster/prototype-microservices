@@ -105,6 +105,7 @@
                 this.$.createAction.generateRequest();
                 clearFields(this.newObject, this.fields, false);
                 this.refreshList();
+                this.notifyPath('data.content');
             },
             deleteObject: function() {
                 this.selectedId = event.target.dataset.id;
@@ -112,6 +113,7 @@
                 this.$.deleteAction.generateRequest();
                 this.selectedId = '';
                 this.refreshList();
+                this.notifyPath('data.content');
             },
             shouldDisableButtons: function(add,edit,search) {
                return (add || edit || search)
